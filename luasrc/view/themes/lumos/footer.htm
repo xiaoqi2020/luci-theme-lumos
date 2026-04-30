@@ -1,0 +1,29 @@
+        </main>
+        
+        <footer id="footer" class="footer glass-panel">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <span class="copyright">Powered by OpenWrt <%=ver.distversion%></span>
+                    <span class="theme-name">LumOS Theme</span>
+                </div>
+                <div class="footer-center">
+                    <span class="sys-load">CPU: <span id="cpu-load">--</span>%</span>
+                    <span class="sys-mem">MEM: <span id="mem-load">--</span>%</span>
+                </div>
+                <div class="footer-right">
+                    <a href="<%=controller%>/admin/status/overview" class="footer-link">
+                        <span class="link-icon">📊</span>
+                        <span>Status</span>
+                    </a>
+                    <a href="<%=controller%>/admin/system/reboot" class="footer-link">
+                        <span class="link-icon">🔄</span>
+                        <span>Reboot</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="<%=media%>/js/main.js"></script>
+</body>
+</html>

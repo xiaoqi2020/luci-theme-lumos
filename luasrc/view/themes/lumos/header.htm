@@ -1,0 +1,79 @@
+<%
+    require("luci.http").prepare_content("text/html")
+    local ver = require("luci.version")
+-%>
+<!DOCTYPE html>
+<html lang="<%=luci.i18n.context.lang%>">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <title><%=striptags( (boardinfo.hostname or "?") .. ( (node and node.title) and ' - ' .. translate(node.title) or '') )%> - OpenWrt</title>
+    
+    <link rel="stylesheet" href="<%=media%>/css/style.css">
+    <link rel="stylesheet" href="<%=media%>/css/dark.css">
+    <link rel="stylesheet" href="<%=media%>/css/light.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark">
+    <div class="bg-container">
+        <div class="bg-gradient"></div>
+        <div class="bg-glow glow-1"></div>
+        <div class="bg-glow glow-2"></div>
+        <div class="bg-glow glow-3"></div>
+        <div class="bg-particles"></div>
+    </div>
+    
+    <div class="page-container">
+        <header id="header" class="header glass-panel">
+            <div class="header-left">
+                <div class="logo-wrapper">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text"><%=luci.sys.hostname()%></span>
+                </div>
+            </div>
+            
+            <nav id="mainmenu" class="mainmenu">
+                <% if luci.sys.call("ls /usr/lib/lua/luci/controller/admin/*.lua | head -1 >/dev/null 2>&1") == 0 then %>
+                    <ul class="menu-items">
+                        <% for _, entry in ipairs(luci.sys.menu("admin")) do %>
+                            <li class="menu-item">
+                                <a href="<%=controller%>/admin/<%=entry[1]%>" class="menu-link">
+                                    <span class="menu-icon"><%=entry[2].icon or "📦"%></span>
+                                    <span class="menu-label"><%=translate(entry[2].title)%></span>
+                                </a>
+                            </li>
+                        <% end %>
+                    </ul>
+                <% end %>
+            </nav>
+            
+            <div class="header-right">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <span class="toggle-icon">🌙</span>
+                </button>
+                <div class="sys-info">
+                    <span class="sys-time" id="sys-time"></span>
+                </div>
+            </div>
+        </header>
+        
+        <main id="maincontent" class="main-content glass-panel">
+            <div class="content-header">
+                <h1 class="page-title"><% if node then %><%=translate(node.title)%><% end %></h1>
+                <div class="breadcrumb">
+                    <% if node and node.path then %>
+                        <% for i, p in ipairs(node.path) do %>
+                            <a href="<%=p.url%>"><%=translate(p.title)%></a>
+                            <% if i < #node.path then %><span class="breadcrumb-separator">/</span><% end %>
+                        <% end %>
+                    <% end %>
+                </div>
+            </div>

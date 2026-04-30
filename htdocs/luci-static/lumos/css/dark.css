@@ -1,0 +1,48 @@
+body.dark {
+    --bg-dark: #0f0f1a;
+    --bg-darker: #0a0a12;
+    --bg-card: rgba(30, 30, 50, 0.6);
+    --bg-card-hover: rgba(40, 40, 70, 0.7);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-light: rgba(255, 255, 255, 0.2);
+}
+
+body.dark .bg-gradient {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+body.dark .glow-1 {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+}
+
+body.dark .glow-2 {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+}
+
+body.dark .glow-3 {
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, transparent 70%);
+}
+
+body.dark input[type="text"],
+body.dark input[type="password"],
+body.dark input[type="number"],
+body.dark input[type="email"],
+body.dark select,
+body.dark textarea {
+    background: rgba(15, 15, 30, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark input:focus,
+body.dark select:focus,
+body.dark textarea:focus {
+    border-color: #6366f1;
+    background: rgba(15, 15, 30, 0.8);
+}
+
+body.dark .footer-link:hover {
+    background: rgba(99, 102, 241, 0.15);
+}

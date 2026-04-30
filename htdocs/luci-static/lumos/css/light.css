@@ -1,0 +1,127 @@
+body.light {
+    --bg-dark: #f8fafc;
+    --bg-darker: #f1f5f9;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --bg-card-hover: rgba(255, 255, 255, 0.9);
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-light: rgba(0, 0, 0, 0.15);
+}
+
+body.light .bg-gradient {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+}
+
+body.light .glow-1 {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+}
+
+body.light .glow-2 {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+}
+
+body.light .glow-3 {
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+}
+
+body.light .logo-text {
+    background: linear-gradient(135deg, #4f46e5, #1e293b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.light .page-title {
+    background: linear-gradient(135deg, #1e293b, #475569);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.light .menu-link {
+    color: #475569;
+}
+
+body.light .menu-link:hover {
+    color: #1e293b;
+    background: rgba(99, 102, 241, 0.1);
+}
+
+body.light .menu-link.active {
+    color: #4f46e5;
+    background: rgba(99, 102, 241, 0.1);
+}
+
+body.light input[type="text"],
+body.light input[type="password"],
+body.light input[type="number"],
+body.light input[type="email"],
+body.light select,
+body.light textarea {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #1e293b;
+}
+
+body.light input:focus,
+body.light select:focus,
+body.light textarea:focus {
+    border-color: #6366f1;
+    background: white;
+}
+
+body.light input::placeholder,
+body.light textarea::placeholder {
+    color: #94a3b8;
+}
+
+body.light .theme-toggle {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.light .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+body.light .sys-info {
+    background: rgba(0, 0, 0, 0.05);
+    color: #475569;
+}
+
+body.light .footer-link {
+    color: #475569;
+}
+
+body.light .footer-link:hover {
+    color: #1e293b;
+    background: rgba(99, 102, 241, 0.1);
+}
+
+body.light .copyright {
+    color: #94a3b8;
+}
+
+body.light .theme-name {
+    color: #4f46e5;
+}
+
+body.light .sys-load,
+body.light .sys-mem {
+    color: #475569;
+}
+
+body.light tr:hover {
+    background: rgba(99, 102, 241, 0.05);
+}
+
+body.light .btn-secondary {
+    background: rgba(0, 0, 0, 0.05);
+    color: #475569;
+}
+
+body.light .btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #1e293b;
+}
