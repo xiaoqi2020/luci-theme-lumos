@@ -11,7 +11,6 @@ define Package/luci-theme-lumos
   CATEGORY:=LuCI
   SUBMENU:=Themes
   TITLE:=LumOS Theme - Modern Immersive UI
-  DESCRIPTION:=A beautiful, modern theme with glassmorphism effects and smooth animations
   DEPENDS:=+luci-base
   PKGARCH:=all
 endef
