@@ -1,4 +1,4 @@
-name: Build OpenWrt Package
+name: Build and Release OpenWrt Package
 
 on:
   push:
@@ -6,6 +6,21 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+    inputs:
+      target:
+        description: 'Target platform'
+        required: true
+        default: 'x86_64'
+        type: choice
+        options:
+          - x86_64
+          - arm_cortex-a9
+          - aarch64_generic
+      release:
+        description: 'Create release'
+        required: false
+        default: false
+        type: boolean
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -26,17 +41,33 @@ jobs:
           zlib1g-dev gawk git gettext libssl-dev xsltproc wget unzip python3 \
           python3-distutils python3-setuptools rsync flex bison patch curl \
           python2 bc
+        sudo ln -sf /usr/bin/python2 /usr/bin/python
     
     - name: Download OpenWrt 19.07 SDK for x86_64
+      if: ${{ github.event.inputs.target == 'x86_64' || !github.event.inputs.target }}
       run: |
         wget -q https://downloads.openwrt.org/releases/19.07.10/targets/x86/64/openwrt-sdk-19.07.10-x86-64_gcc-7.5.0_musl.Linux-x86_64.tar.xz
         tar -xJf openwrt-sdk-19.07.10-x86-64_gcc-7.5.0_musl.Linux-x86_64.tar.xz
         mv openwrt-sdk-19.07.10-x86-64_gcc-7.5.0_musl.Linux-x86_64 openwrt-sdk
     
+    - name: Download OpenWrt 19.07 SDK for arm_cortex-a9
+      if: ${{ github.event.inputs.target == 'arm_cortex-a9' }}
+      run: |
+        wget -q https://downloads.openwrt.org/releases/19.07.10/targets/ath79/generic/openwrt-sdk-19.07.10-ath79-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+        tar -xJf openwrt-sdk-19.07.10-ath79-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+        mv openwrt-sdk-19.07.10-ath79-generic_gcc-7.5.0_musl.Linux-x86_64 openwrt-sdk
+    
+    - name: Download OpenWrt 19.07 SDK for aarch64_generic
+      if: ${{ github.event.inputs.target == 'aarch64_generic' }}
+      run: |
+        wget -q https://downloads.openwrt.org/releases/19.07.10/targets/armvirt/64/openwrt-sdk-19.07.10-armvirt-64_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+        tar -xJf openwrt-sdk-19.07.10-armvirt-64_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+        mv openwrt-sdk-19.07.10-armvirt-64_gcc-7.5.0_musl.Linux-x86_64 openwrt-sdk
+    
     - name: Copy theme to SDK
       run: |
         mkdir -p openwrt-sdk/package/luci-theme-lumos
-        cp -r htdocs luasrc root Makefile README.md .github openwrt-sdk/package/luci-theme-lumos/
+        cp -r htdocs luasrc root Makefile README.md openwrt-sdk/package/luci-theme-lumos/
     
     - name: Update feeds
       run: |
@@ -57,6 +88,7 @@ jobs:
         PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
         if [ -n "$PACKAGE_PATH" ]; then
           echo "package_path=$PACKAGE_PATH" >> $GITHUB_OUTPUT
+          echo "package_filename=$(basename "$PACKAGE_PATH")" >> $GITHUB_OUTPUT
           ls -la "$PACKAGE_PATH"
         else
           echo "Package not found!"
@@ -67,5 +99,43 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: luci-theme-lumos-x86_64
+        name: luci-theme-lumos-${{ github.event.inputs.target || 'x86_64' }}
         path: openwrt-sdk/${{ steps.find_package.outputs.package_path }}
+    
+    - name: Create Release
+      if: ${{ github.event.inputs.release == true || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.0-${{ github.event.inputs.target || 'x86_64' }}
+        release_name: LumOS Theme v1.0.0 (${{ github.event.inputs.target || 'x86_64' }})
+        body: |
+          **LumOS Theme** - Modern OpenWrt theme with glassmorphism effects.
+          
+          **Platform**: ${{ github.event.inputs.target || 'x86_64' }}
+          **Version**: 1.0.0
+          
+          **Features**:
+          - Immersive lighting effects
+          - Glassmorphism design
+          - Smooth animations
+          - Light/dark theme switching
+          
+          **Installation**:
+          ```bash
+          opkg install luci-theme-lumos_*.ipk
+          ```
+        draft: false
+        prerelease: false
+    
+    - name: Upload Release Asset
+      if: ${{ github.event.inputs.release == true || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: openwrt-sdk/${{ steps.find_package.outputs.package_path }}
+        asset_name: ${{ steps.find_package.outputs.package_filename }}
+        asset_content_type: application/octet-stream
