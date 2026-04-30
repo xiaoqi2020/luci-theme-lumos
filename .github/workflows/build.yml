@@ -6,10 +6,21 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+    inputs:
+      target:
+        description: 'Target platform'
+        required: true
+        default: 'x86_64'
+        type: choice
+        options:
+          - x86_64
+          - arm_cortex-a9
+          - aarch64_generic
 
 jobs:
   build:
     runs-on: ubuntu-22.04
+    timeout-minutes: 180
     
     steps:
     - name: Checkout source code
@@ -22,7 +33,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y build-essential libncurses5-dev libncursesw5-dev \
           zlib1g-dev gawk git gettext libssl-dev xsltproc wget unzip python3 \
-          python3-distutils python3-setuptools rsync
+          python3-distutils python3-setuptools rsync flex bison patch curl
     
     - name: Clone OpenWrt 19.07
       uses: actions/checkout@v4
@@ -37,18 +48,20 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a
     
-    - name: Install feeds
+    - name: Install dependencies
       run: |
         cd openwrt
         ./scripts/feeds install luci-base
         ./scripts/feeds install luci-lib-ipkg
+        ./scripts/feeds install luci-mod-admin-full
     
     - name: Copy theme to package directory
       run: |
         mkdir -p openwrt/package/luci-theme-lumos
         cp -r luci-theme-lumos/* openwrt/package/luci-theme-lumos/
     
-    - name: Configure build
+    - name: Configure build for x86_64
+      if: ${{ github.event.inputs.target == 'x86_64' || !github.event.inputs.target }}
       run: |
         cd openwrt
         echo "CONFIG_TARGET_x86=y" >> .config
@@ -58,21 +71,45 @@ jobs:
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
         make defconfig
     
+    - name: Configure build for arm_cortex-a9
+      if: ${{ github.event.inputs.target == 'arm_cortex-a9' }}
+      run: |
+        cd openwrt
+        echo "CONFIG_TARGET_ath79=y" >> .config
+        echo "CONFIG_TARGET_ath79_generic=y" >> .config
+        echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
+        echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
+        make defconfig
+    
+    - name: Configure build for aarch64_generic
+      if: ${{ github.event.inputs.target == 'aarch64_generic' }}
+      run: |
+        cd openwrt
+        echo "CONFIG_TARGET_armvirt=y" >> .config
+        echo "CONFIG_TARGET_armvirt_64=y" >> .config
+        echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
+        echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
+        make defconfig
+    
     - name: Build package
       run: |
         cd openwrt
-        make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1 | tail -100
+        make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1 | tail -150
     
     - name: Find built package
       id: find_package
       run: |
         cd openwrt
         PACKAGE_PATH=$(find bin/packages -name "luci-theme-lumos_*.ipk" | head -1)
+        if [ -z "$PACKAGE_PATH" ]; then
+          echo "Package not found!"
+          exit 1
+        fi
         echo "package_path=$PACKAGE_PATH" >> $GITHUB_OUTPUT
         echo "Found package: $PACKAGE_PATH"
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: luci-theme-lumos
+        name: luci-theme-lumos-${{ github.event.inputs.target || 'x86_64' }}
         path: openwrt/${{ steps.find_package.outputs.package_path }}
