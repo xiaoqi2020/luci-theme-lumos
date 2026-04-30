@@ -35,7 +35,8 @@ jobs:
     
     - name: Copy theme to SDK
       run: |
-        cp -r . openwrt-sdk/package/luci-theme-lumos
+        mkdir -p openwrt-sdk/package/luci-theme-lumos
+        cp -r ./* openwrt-sdk/package/luci-theme-lumos/
     
     - name: Update feeds
       run: |
