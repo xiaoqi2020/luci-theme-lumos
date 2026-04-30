@@ -57,10 +57,11 @@ jobs:
         ./scripts/feeds install luci-lib-ipkg
         ./scripts/feeds install luci-mod-admin-full
     
-    - name: Copy theme to package directory
+    - name: Copy theme to luci feeds directory
       run: |
-        mkdir -p openwrt/package/luci-theme-lumos
-        cp -r luci-theme-lumos/* openwrt/package/luci-theme-lumos/
+        cd openwrt
+        mkdir -p package/feeds/luci/luci-theme-lumos
+        cp -r ../luci-theme-lumos/* package/feeds/luci/luci-theme-lumos/
     
     - name: Configure build for x86_64
       if: ${{ github.event.inputs.target == 'x86_64' || !github.event.inputs.target }}
