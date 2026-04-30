@@ -17,6 +17,9 @@ on:
           - arm_cortex-a9
           - aarch64_generic
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -34,8 +37,10 @@ jobs:
         sudo apt-get install -y build-essential libncurses5-dev libncursesw5-dev \
           zlib1g-dev gawk git gettext libssl-dev xsltproc wget unzip python3 \
           python3-distutils python3-setuptools rsync flex bison patch curl \
-          python2
+          python2 bc
         sudo ln -sf /usr/bin/python2 /usr/bin/python
+        python --version
+        python3 --version
     
     - name: Clone OpenWrt 19.07
       uses: actions/checkout@v4
@@ -50,6 +55,10 @@ jobs:
         cd openwrt
         mkdir -p package/luci-theme-lumos
         cp -r ../luci-theme-lumos/* package/luci-theme-lumos/
+        echo "=== Package contents ==="
+        ls -la package/luci-theme-lumos/
+        echo "=== Makefile ==="
+        cat package/luci-theme-lumos/Makefile
     
     - name: Update feeds
       run: |
@@ -67,64 +76,62 @@ jobs:
       if: ${{ github.event.inputs.target == 'x86_64' || !github.event.inputs.target }}
       run: |
         cd openwrt
-        echo "CONFIG_TARGET_x86=y" >> .config
+        rm -f .config
+        echo "CONFIG_TARGET_x86=y" > .config
         echo "CONFIG_TARGET_x86_64=y" >> .config
         echo "CONFIG_TARGET_x86_64_Generic=y" >> .config
         echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
-        make defconfig
+        echo "CONFIG_DEVEL=y" >> .config
+        echo "CONFIG_BUILD_LOG=y" >> .config
     
     - name: Configure build for arm_cortex-a9
       if: ${{ github.event.inputs.target == 'arm_cortex-a9' }}
       run: |
         cd openwrt
-        echo "CONFIG_TARGET_ath79=y" >> .config
+        rm -f .config
+        echo "CONFIG_TARGET_ath79=y" > .config
         echo "CONFIG_TARGET_ath79_generic=y" >> .config
         echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
-        make defconfig
     
     - name: Configure build for aarch64_generic
       if: ${{ github.event.inputs.target == 'aarch64_generic' }}
       run: |
         cd openwrt
-        echo "CONFIG_TARGET_armvirt=y" >> .config
+        rm -f .config
+        echo "CONFIG_TARGET_armvirt=y" > .config
         echo "CONFIG_TARGET_armvirt_64=y" >> .config
         echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
-        make defconfig
     
-    - name: Build dependencies first
+    - name: Run make defconfig
       run: |
         cd openwrt
-        make package/luci-base/compile V=s -j$(nproc) 2>&1 | tail -50
+        make defconfig
+    
+    - name: Show final config
+      run: |
+        cd openwrt
+        cat .config | grep -E "(TARGET|luci|CONFIG_PACKAGE)" | head -30
+    
+    - name: Build toolchain first
+      run: |
+        cd openwrt
+        make toolchain/install -j$(nproc) V=s 2>&1 | tail -100
     
     - name: Build luci-theme-lumos package
       run: |
         cd openwrt
-        make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1 | tail -100
+        make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1 | tail -150
     
-    - name: List bin directory
+    - name: Check build result
+      if: ${{ always() }}
       run: |
         cd openwrt
-        ls -la bin/
-        ls -la bin/packages/ 2>/dev/null || echo "bin/packages not found"
-        find bin -name "*.ipk" | head -20
-    
-    - name: Find built package
-      id: find_package
-      run: |
-        cd openwrt
-        PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
-        if [ -z "$PACKAGE_PATH" ]; then
-          echo "Package not found!"
-          exit 1
-        fi
-        echo "package_path=$PACKAGE_PATH" >> $GITHUB_OUTPUT
-        echo "Found package: $PACKAGE_PATH"
-    
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: luci-theme-lumos-${{ github.event.inputs.target || 'x86_64' }}
-        path: openwrt/${{ steps.find_package.outputs.package_path }}
+        echo "=== Checking bin directory ==="
+        ls -la bin/ 2>/dev/null || echo "bin directory not found"
+        echo "=== Looking for IPK files ==="
+        find . -name "luci-theme-lumos*.ipk" 2>/dev/null || echo "IPK not found"
+        echo "=== Build logs ==="
+        cat logs/compile.log 2>/dev/null || echo "No compile log"
