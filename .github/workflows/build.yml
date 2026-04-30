@@ -24,13 +24,13 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     timeout-minutes: 240
-    
+
     steps:
     - name: Checkout source code
       uses: actions/checkout@v4
       with:
         path: luci-theme-lumos
-    
+
     - name: Set up environment
       run: |
         sudo apt-get update
@@ -40,7 +40,7 @@ jobs:
           python2 bc
         sudo ln -sf /usr/bin/python2 /usr/bin/python
         python --version
-    
+
     - name: Clone OpenWrt 19.07
       uses: actions/checkout@v4
       with:
@@ -48,26 +48,29 @@ jobs:
         ref: openwrt-19.07
         path: openwrt
         fetch-depth: 1
-    
+
     - name: Copy theme to package directory
       run: |
         cd openwrt
-        mkdir -p package/luci-theme-lumos
-        cp -r ../luci-theme-lumos/* package/luci-theme-lumos/
+        rm -rf package/luci-theme-lumos
+        cp -r ../luci-theme-lumos package/luci-theme-lumos
         echo "=== Package contents ==="
         ls -la package/luci-theme-lumos/
-    
+        echo "=== Source files check ==="
+        ls -la package/luci-theme-lumos/luasrc/view/themes/lumos/ 2>/dev/null || echo "luasrc not found"
+        ls -la package/luci-theme-lumos/htdocs/luci-static/lumos/ 2>/dev/null || echo "htdocs not found"
+
     - name: Update feeds
       run: |
         cd openwrt
         ./scripts/feeds update -a
-    
+
     - name: Install luci feeds
       run: |
         cd openwrt
         ./scripts/feeds install luci-base
         ./scripts/feeds install luci-lib-ipkg
-    
+
     - name: Configure build for x86_64
       if: ${{ github.event.inputs.target == 'x86_64' || !github.event.inputs.target }}
       run: |
@@ -80,7 +83,7 @@ jobs:
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
         echo "CONFIG_ALL=y" >> .config
         echo "CONFIG_DEVEL=y" >> .config
-    
+
     - name: Configure build for arm_cortex-a9
       if: ${{ github.event.inputs.target == 'arm_cortex-a9' }}
       run: |
@@ -90,7 +93,7 @@ jobs:
         echo "CONFIG_TARGET_ath79_generic=y" >> .config
         echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
-    
+
     - name: Configure build for aarch64_generic
       if: ${{ github.event.inputs.target == 'aarch64_generic' }}
       run: |
@@ -100,24 +103,24 @@ jobs:
         echo "CONFIG_TARGET_armvirt_64=y" >> .config
         echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
-    
+
     - name: Run make defconfig
       run: |
         cd openwrt
         make defconfig
         echo "=== Config done ==="
         cat .config | grep -E "(TARGET|luci-theme|CONFIG_PACKAGE)" | head -20
-    
+
     - name: Build toolchain first
       run: |
         cd openwrt
         make toolchain/install -j$(nproc) V=s 2>&1 | tail -100
-    
+
     - name: Build luci-theme-lumos package
       run: |
         cd openwrt
         make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1
-    
+
     - name: Check build result
       if: ${{ always() }}
       run: |
@@ -126,7 +129,5 @@ jobs:
         ls -la
         echo "=== Bin directory ==="
         ls -la bin/ 2>/dev/null || echo "bin not found"
-        echo "=== Staging directory ==="
-        ls -la staging_dir/ 2>/dev/null || echo "staging_dir not found"
         echo "=== Looking for IPK files ==="
         find . -name "*.ipk" 2>/dev/null | head -30
