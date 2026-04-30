@@ -1,0 +1,10 @@
+*.ipk
+*.tar.gz
+*.zip
+.DS_Store
+*.swp
+*.bak
+__pycache__/
+node_modules/
+build/
+dist/
