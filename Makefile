@@ -23,6 +23,13 @@ define Package/luci-theme-lumos/description
  - Light/dark theme switching
 endef
 
+define Build/Prepare
+	mkdir -p $(PKG_BUILD_DIR)
+	cp -r $(CURDIR)/luasrc $(PKG_BUILD_DIR)/
+	cp -r $(CURDIR)/htdocs $(PKG_BUILD_DIR)/
+	cp -r $(CURDIR)/root $(PKG_BUILD_DIR)/
+endef
+
 define Build/Compile
 endef
 
