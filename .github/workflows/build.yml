@@ -121,13 +121,50 @@ jobs:
         cd openwrt
         make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1
 
-    - name: Check build result
-      if: ${{ always() }}
+    - name: Find built package
+      id: find_package
       run: |
         cd openwrt
-        echo "=== Directory listing ==="
-        ls -la
-        echo "=== Bin directory ==="
-        ls -la bin/ 2>/dev/null || echo "bin not found"
-        echo "=== Looking for IPK files ==="
-        find . -name "*.ipk" 2>/dev/null | head -30
+        PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
+        if [ -z "$PACKAGE_PATH" ]; then
+          echo "Package not found!"
+          find bin -name "*.ipk" | head -30
+          exit 1
+        fi
+        echo "package_path=$PACKAGE_PATH" >> $GITHUB_OUTPUT
+        echo "package_filename=$(basename "$PACKAGE_PATH")" >> $GITHUB_OUTPUT
+        echo "Found package: $PACKAGE_PATH"
+        ls -lh "$PACKAGE_PATH"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: luci-theme-lumos-${{ github.event.inputs.target || 'x86_64' }}
+        path: openwrt/${{ steps.find_package.outputs.package_path }}
+
+    - name: Create Release
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v1.0.0-${{ github.event.inputs.target || 'x86_64' }}
+        name: LumOS Theme v1.0.0 (${{ github.event.inputs.target || 'x86_64' }})
+        body: |
+          **LumOS Theme** - Modern OpenWrt theme with glassmorphism effects
+          **Platform**: ${{ github.event.inputs.target || 'x86_64' }}
+          **Version**: 1.0.0
+          
+          **Features**:
+          - Immersive lighting effects
+          - Glassmorphism design
+          - Smooth animations
+          - Light/dark theme switching
+          
+          **Installation**:
+          ```bash
+          opkg install luci-theme-lumos_*.ipk
+          ```
+        draft: false
+        prerelease: false
+        files: openwrt/${{ steps.find_package.outputs.package_path }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
