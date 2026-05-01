@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuCI - LumOS</title>
+    <link rel="stylesheet" href="<%=media%>/css/fonts.css">
+    <link rel="stylesheet" href="<%=media%>/css/style.css">
+    <script src="<%=media%>/js/main.js"></script>
+</head>
+<body class="luci">
+
+<div class="lumos-bg">
+    <div class="lumos-orb lumos-orb-1"></div>
+    <div class="lumos-orb lumos-orb-2"></div>
+    <div class="lumos-orb lumos-orb-3"></div>
+    <div class="lumos-particles"></div>
+</div>
+
+<div class="lumos-login-container">
+    <div class="lumos-login-box glass-panel">
+        <div class="lumos-login-header">
+            <div class="lumos-logo">
+                <span class="lumos-icon lumos-font">L</span>
+                <span class="lumos-title lumos-font-display">LumOS</span>
+            </div>
+            <p class="lumos-subtitle"><%:Welcome to LuCI%></p>
+        </div>
+        
+        <form class="lumos-login-form" method="post" action="<%=controller%>/login">
+            <input type="hidden" name="token" value="<%=token%>">
+            
+            <div class="lumos-form-group">
+                <label class="lumos-label"><%:Username%></label>
+                <input type="text" name="username" class="lumos-input" placeholder="<%:Enter username%>" required>
+            </div>
+            
+            <div class="lumos-form-group">
+                <label class="lumos-label"><%:Password%></label>
+                <input type="password" name="password" class="lumos-input" placeholder="<%:Enter password%>" required>
+            </div>
+            
+            <% if error then %>
+            <div class="lumos-error">
+                <%:Invalid username or password%>
+            </div>
+            <% end %>
+            
+            <button type="submit" class="lumos-btn lumos-btn-primary">
+                <%:Login%>
+            </button>
+        </form>
+        
+        <div class="lumos-login-footer">
+            <%:Powered by OpenWrt LuCI%>
+        </div>
+    </div>
+</div>
+
+<script>
+Lumos.initLogin();
+</script>
+
+</body>
+</html>
