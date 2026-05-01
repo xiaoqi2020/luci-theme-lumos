@@ -1,6 +1,8 @@
 #!/bin/sh
-uci set luci.themes.@luci-theme-lumos[0].name=LumOS
-uci set luci.themes.@luci-theme-lumos[0].mediaurlbase=/luci-static/lumos
-uci set luci.main.mediaurlbase=/luci-static/lumos
+
+uci add luci themes
+uci set luci.@themes[-1].name=LumOS
+uci set luci.@themes[-1].mediaurlbase=/luci-static/lumos
 uci commit luci
+
 exit 0
