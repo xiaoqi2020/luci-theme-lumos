@@ -8,9 +8,5 @@ function themePath()
 	return "/luci-static/lumos"
 end
 
-function themeVars()
-	return {}
-end
-
 function themeInit()
 end

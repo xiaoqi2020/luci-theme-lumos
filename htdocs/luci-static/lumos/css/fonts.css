@@ -1,0 +1,29 @@
+@font-face {
+	font-family: 'LumOS';
+	src: url('/luci-static/lumos/fonts/lumos.eot');
+	src: url('/luci-static/lumos/fonts/lumos.eot#iefix') format('embedded-opentype'),
+		 url('/luci-static/lumos/fonts/lumos.woff') format('woff'),
+		 url('/luci-static/lumos/fonts/lumos.ttf') format('truetype'),
+		 url('/luci-static/lumos/fonts/lumos.svg#LumOS') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'LumOS-Display';
+	src: url('/luci-static/lumos/fonts/LumOS-Display.eot');
+	src: url('/luci-static/lumos/fonts/LumOS-Display.eot#iefix') format('embedded-opentype'),
+		 url('/luci-static/lumos/fonts/LumOS-Display.woff') format('woff'),
+		 url('/luci-static/lumos/fonts/LumOS-Display.ttf') format('truetype'),
+		 url('/luci-static/lumos/fonts/LumOS-Display.svg#LumOS-Display') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.lumos-font {
+	font-family: 'LumOS', sans-serif;
+}
+
+.lumos-font-display {
+	font-family: 'LumOS-Display', cursive;
+}

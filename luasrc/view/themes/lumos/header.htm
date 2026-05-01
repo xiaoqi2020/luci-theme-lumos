@@ -1,79 +1,75 @@
-<%
-    require("luci.http").prepare_content("text/html")
-    local ver = require("luci.version")
--%>
 <!DOCTYPE html>
-<html lang="<%=luci.i18n.context.lang%>">
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#1a1a2e">
-    <title><%=striptags( (boardinfo.hostname or "?") .. ( (node and node.title) and ' - ' .. translate(node.title) or '') )%> - OpenWrt</title>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuCI - LumOS</title>
+    <link rel="stylesheet" href="<%=media%>/css/fonts.css">
     <link rel="stylesheet" href="<%=media%>/css/style.css">
-    <link rel="stylesheet" href="<%=media%>/css/dark.css">
-    <link rel="stylesheet" href="<%=media%>/css/light.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<%=media%>/css/dark.css" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="<%=media%>/css/light.css" media="(prefers-color-scheme: light)">
+    <script src="<%=media%>/js/main.js"></script>
 </head>
-<body class="dark">
-    <div class="bg-container">
-        <div class="bg-gradient"></div>
-        <div class="bg-glow glow-1"></div>
-        <div class="bg-glow glow-2"></div>
-        <div class="bg-glow glow-3"></div>
-        <div class="bg-particles"></div>
+<body class="luci">
+
+<div class="lumos-bg">
+    <div class="lumos-orb lumos-orb-1"></div>
+    <div class="lumos-orb lumos-orb-2"></div>
+    <div class="lumos-orb lumos-orb-3"></div>
+    <div class="lumos-particles"></div>
+</div>
+
+<header class="lumos-header">
+    <div class="container">
+        <div class="lumos-logo">
+            <span class="lumos-icon lumos-font-argon">L</span>
+            <span class="lumos-title lumos-font-typo">LumOS</span>
+        </div>
+        <div class="lumos-nav">
+            <div class="lumos-nav-item" data-toggle="collapse" data-target="#mainmenu">
+                <span>☰</span>
+            </div>
+        </div>
     </div>
-    
-    <div class="page-container">
-        <header id="header" class="header glass-panel">
-            <div class="header-left">
-                <div class="logo-wrapper">
-                    <div class="logo-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <span class="logo-text"><%=luci.sys.hostname()%></span>
-                </div>
-            </div>
-            
-            <nav id="mainmenu" class="mainmenu">
-                <% if luci.sys.call("ls /usr/lib/lua/luci/controller/admin/*.lua | head -1 >/dev/null 2>&1") == 0 then %>
-                    <ul class="menu-items">
-                        <% for _, entry in ipairs(luci.sys.menu("admin")) do %>
-                            <li class="menu-item">
-                                <a href="<%=controller%>/admin/<%=entry[1]%>" class="menu-link">
-                                    <span class="menu-icon"><%=entry[2].icon or "📦"%></span>
-                                    <span class="menu-label"><%=translate(entry[2].title)%></span>
-                                </a>
-                            </li>
-                        <% end %>
-                    </ul>
-                <% end %>
-            </nav>
-            
-            <div class="header-right">
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <span class="toggle-icon">🌙</span>
-                </button>
-                <div class="sys-info">
-                    <span class="sys-time" id="sys-time"></span>
-                </div>
-            </div>
-        </header>
-        
-        <main id="maincontent" class="main-content glass-panel">
-            <div class="content-header">
-                <h1 class="page-title"><% if node then %><%=translate(node.title)%><% end %></h1>
-                <div class="breadcrumb">
-                    <% if node and node.path then %>
-                        <% for i, p in ipairs(node.path) do %>
-                            <a href="<%=p.url%>"><%=translate(p.title)%></a>
-                            <% if i < #node.path then %><span class="breadcrumb-separator">/</span><% end %>
-                        <% end %>
-                    <% end %>
-                </div>
-            </div>
+</header>
+
+<div id="mainmenu" class="lumos-menu collapse">
+    <div class="container">
+        <ul class="lumos-nav-list">
+            <% for _, node in ipairs(ipairs(model.menu)) do %>
+            <li class="lumos-nav-item">
+                <a href="<%=node.target%>"><%=node.title%></a>
+            </li>
+            <% end %>
+        </ul>
+    </div>
+</div>
+
+<div class="lumos-main">
+    <div class="container">
+        <div class="lumos-content glass-panel">
+            <%:LumOS Theme%>
+        </div>
+    </div>
+</div>
+
+<footer class="lumos-footer">
+    <div class="container">
+        <div class="lumos-status">
+            <span class="lumos-cpu">
+                CPU: <span class="lumos-value" id="lumos-cpu">0</span>%
+            </span>
+            <span class="lumos-mem">
+                <%:Memory%>: <span class="lumos-value" id="lumos-mem">0</span>%
+            </span>
+        </div>
+        <div class="lumos-time" id="lumos-time"></div>
+    </div>
+</footer>
+
+<script>
+Lumos.start();
+</script>
+
+</body>
+</html>

@@ -1,48 +1,83 @@
-body.dark {
-    --bg-dark: #0f0f1a;
-    --bg-darker: #0a0a12;
-    --bg-card: rgba(30, 30, 50, 0.6);
-    --bg-card-hover: rgba(40, 40, 70, 0.7);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --border-light: rgba(255, 255, 255, 0.2);
+:root {
+    --lumos-primary: #667eea;
+    --lumos-secondary: #764ba2;
+    --lumos-accent: #f093fb;
+    --lumos-glass-bg: rgba(30, 30, 50, 0.7);
+    --lumos-glass-border: rgba(255, 255, 255, 0.1);
+    --lumos-text: #ffffff;
+    --lumos-text-secondary: rgba(255, 255, 255, 0.6);
+    --lumos-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --lumos-blur: 20px;
+    --lumos-radius: 16px;
+    --lumos-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body.dark .bg-gradient {
-    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+body {
+    background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
 }
 
-body.dark .glow-1 {
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+.lumos-bg {
+    background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
 }
 
-body.dark .glow-2 {
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+.lumos-orb-1 {
+    background: radial-gradient(circle, var(--lumos-primary) 0%, transparent 70%);
+    opacity: 0.4;
 }
 
-body.dark .glow-3 {
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, transparent 70%);
+.lumos-orb-2 {
+    background: radial-gradient(circle, var(--lumos-secondary) 0%, transparent 70%);
+    opacity: 0.3;
 }
 
-body.dark input[type="text"],
-body.dark input[type="password"],
-body.dark input[type="number"],
-body.dark input[type="email"],
-body.dark select,
-body.dark textarea {
-    background: rgba(15, 15, 30, 0.6);
-    border-color: rgba(255, 255, 255, 0.1);
+.lumos-orb-3 {
+    background: radial-gradient(circle, var(--lumos-accent) 0%, transparent 70%);
+    opacity: 0.3;
 }
 
-body.dark input:focus,
-body.dark select:focus,
-body.dark textarea:focus {
-    border-color: #6366f1;
-    background: rgba(15, 15, 30, 0.8);
+.glass-panel {
+    background: var(--lumos-glass-bg);
+    border: 1px solid var(--lumos-glass-border);
 }
 
-body.dark .footer-link:hover {
-    background: rgba(99, 102, 241, 0.15);
+.lumos-nav-item:hover {
+    background: rgba(102, 126, 234, 0.2);
+}
+
+.lumos-nav-list a:hover {
+    background: rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+}
+
+.lumos-input {
+    background: rgba(20, 20, 40, 0.8);
+    border: 1px solid var(--lumos-glass-border);
+    color: var(--lumos-text);
+}
+
+.lumos-input:focus {
+    border-color: var(--lumos-primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.lumos-footer {
+    border-top: 1px solid var(--lumos-glass-border);
+}
+
+.lumos-status {
+    color: var(--lumos-text-secondary);
+}
+
+.lumos-value {
+    color: var(--lumos-accent);
+}
+
+.lumos-time {
+    color: var(--lumos-text-secondary);
+}
+
+.lumos-login-box {
+    background: rgba(20, 20, 40, 0.8);
+    border: 1px solid var(--lumos-glass-border);
 }

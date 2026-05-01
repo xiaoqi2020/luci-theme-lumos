@@ -1,9 +1,7 @@
 #!/bin/sh
 
-[ "$(uci get luci.main.mediaurlbase)" = "/luci-static/lumos" ] && exit 0
-
-if [ -z "$(uci -q show luci.themes.LumOS)" ]; then
-	uci set luci.themes.LumOS='themes'
+if [ -z "$(uci -q get luci.themes.LumOS)" ]; then
+	uci set luci.themes.LumOS=themes
 	uci set luci.themes.LumOS.mediaurlbase='/luci-static/lumos'
 	uci commit luci
 fi
