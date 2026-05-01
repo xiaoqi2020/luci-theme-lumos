@@ -143,11 +143,10 @@ jobs:
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v1.0.0-${{ github.event.inputs.target || 'x86_64' }}
-        name: LumOS Theme v1.0.0 (${{ github.event.inputs.target || 'x86_64' }})
+        tag_name: v1.0.0
+        name: LumOS Theme v1.0.0
         body: |
           **LumOS Theme** - Modern OpenWrt theme with glassmorphism effects
-          **Platform**: ${{ github.event.inputs.target || 'x86_64' }}
           **Version**: 1.0.0
 
           **Features**:
