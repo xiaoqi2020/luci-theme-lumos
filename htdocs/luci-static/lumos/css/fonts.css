@@ -1,29 +1,90 @@
+/**
+ *  LumOS is a beautiful theme for LuCI with glassmorphism effects.
+ *
+ *  luci-theme-lumos
+ *      Copyright 2024 xiaoqi <xiaoqi2020@github.com>
+ *
+ *  Based on luci-theme-lumos by jerrykuku
+ *
+ *  Licensed to the public under the Apache License 2.0
+ */
+
 @font-face {
-	font-family: 'LumOS';
-	src: url('/luci-static/lumos/fonts/lumos.eot');
-	src: url('/luci-static/lumos/fonts/lumos.eot#iefix') format('embedded-opentype'),
-		 url('/luci-static/lumos/fonts/lumos.woff') format('woff'),
-		 url('/luci-static/lumos/fonts/lumos.ttf') format('truetype'),
-		 url('/luci-static/lumos/fonts/lumos.svg#LumOS') format('svg');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'LumOS';
+    src: url('/luci-static/lumos/fonts/lumos.eot');
+    src: url('/luci-static/lumos/fonts/lumos.eot#iefix') format('embedded-opentype'),
+        url('/luci-static/lumos/fonts/lumos.woff') format('woff'),
+        url('/luci-static/lumos/fonts/lumos.ttf') format('truetype'),
+        url('/luci-static/lumos/fonts/lumos.svg#LumOS') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-	font-family: 'LumOS-Display';
-	src: url('/luci-static/lumos/fonts/LumOS-Display.eot');
-	src: url('/luci-static/lumos/fonts/LumOS-Display.eot#iefix') format('embedded-opentype'),
-		 url('/luci-static/lumos/fonts/LumOS-Display.woff') format('woff'),
-		 url('/luci-static/lumos/fonts/LumOS-Display.ttf') format('truetype'),
-		 url('/luci-static/lumos/fonts/LumOS-Display.svg#LumOS-Display') format('svg');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'LumOS-Display';
+    src: url('/luci-static/lumos/fonts/LumOS-Display.woff') format('woff'),
+         url('/luci-static/lumos/fonts/LumOS-Display.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'lumos';
+    src: url('/luci-static/lumos/fonts/lumos.eot');
+    src: url('/luci-static/lumos/fonts/lumos.eot#iefix') format('embedded-opentype'),
+        url('/luci-static/lumos/fonts/lumos.ttf') format('truetype'),
+        url('/luci-static/lumos/fonts/lumos.woff') format('woff'),
+        url('/luci-static/lumos/fonts/lumos.svg#lumos') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
 }
 
 .lumos-font {
-	font-family: 'LumOS', sans-serif;
+    font-family: 'LumOS', sans-serif;
 }
 
 .lumos-font-display {
-	font-family: 'LumOS-Display', cursive;
+    font-family: 'LumOS-Display', cursive;
 }
+
+[class^="icon-"],
+[class*=" icon-"] {
+    font-family: 'lumos' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-expand_more:before { content: "\e20b"; }
+.icon-menu:before { content: "\e20e"; }
+.icon-favorite:before { content: "\e291"; }
+.icon-spinner:before { content: "\e603"; }
+.icon-delete:before { content: "\e900"; }
+.icon-edit:before { content: "\e901"; }
+.icon-use:before { content: "\e902"; }
+.icon-loading:before { content: "\e903"; }
+.icon-switch:before { content: "\e904"; }
+.icon-error:before { content: "\e905"; }
+.icon-dashboard:before { content: "\e906"; }
+.icon-logout:before { content: "\e907"; }
+.icon-Network:before { content: "\e908"; }
+.icon-services:before { content: "\e909"; }
+.icon-system:before { content: "\e90a"; }
+.icon-vpn:before { content: "\e90b"; }
+.icon-storage:before { content: "\e90c"; }
+.icon-statistics:before { content: "\e90d"; }
+.icon-hello-world:before { content: "\e90e"; }
+.icon-angle-right:before { content: "\e90f"; }
+.icon-password:before { content: "\e910"; }
+.icon-user:before { content: "\e971"; }
+.icon-question:before { content: "\f059"; }
+.icon-docker:before { content: "\e911"; }
+.icon-control:before { content: "\e912"; }
+.icon-statistics1:before { content: "\e913"; }
+.icon-asterisk:before { content: "\e914"; }
+.icon-app:before { content: "\e915"; }

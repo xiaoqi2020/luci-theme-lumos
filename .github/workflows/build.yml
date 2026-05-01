@@ -1,4 +1,4 @@
-name: Build and Release OpenWrt Package
+name: Build OpenWrt Package
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
     timeout-minutes: 240
     permissions:
       contents: write
-    
+
     steps:
     - name: Checkout source code
       uses: actions/checkout@v4
@@ -41,7 +41,6 @@ jobs:
           python3-distutils python3-setuptools rsync flex bison patch curl \
           python2 bc
         sudo ln -sf /usr/bin/python2 /usr/bin/python
-        python --version
 
     - name: Clone OpenWrt 19.07
       uses: actions/checkout@v4
@@ -56,8 +55,6 @@ jobs:
         cd openwrt
         rm -rf package/luci-theme-lumos
         cp -r ../luci-theme-lumos package/luci-theme-lumos
-        echo "=== Package contents ==="
-        ls -la package/luci-theme-lumos/
 
     - name: Update feeds
       run: |
@@ -81,7 +78,6 @@ jobs:
         echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
         echo "CONFIG_ALL=y" >> .config
-        echo "CONFIG_DEVEL=y" >> .config
 
     - name: Configure build for arm_cortex-a9
       if: ${{ github.event.inputs.target == 'arm_cortex-a9' }}
@@ -91,7 +87,6 @@ jobs:
         echo "CONFIG_TARGET_ath79=y" > .config
         echo "CONFIG_TARGET_ath79_generic=y" >> .config
         echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
-        echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
 
     - name: Configure build for aarch64_generic
       if: ${{ github.event.inputs.target == 'aarch64_generic' }}
@@ -101,19 +96,14 @@ jobs:
         echo "CONFIG_TARGET_armvirt=y" > .config
         echo "CONFIG_TARGET_armvirt_64=y" >> .config
         echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
-        echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
 
-    - name: Run make defconfig
+    - name: Build toolchain
       run: |
         cd openwrt
         make defconfig
+        make toolchain/install -j$(nproc) V=s 2>&1 | tail -50
 
-    - name: Build toolchain first
-      run: |
-        cd openwrt
-        make toolchain/install -j$(nproc) V=s 2>&1 | tail -100
-
-    - name: Build luci-theme-lumos package
+    - name: Build luci-theme-lumos
       run: |
         cd openwrt
         make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1
@@ -125,18 +115,15 @@ jobs:
         PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
         if [ -z "$PACKAGE_PATH" ]; then
           echo "Package not found!"
-          find bin -name "*.ipk" | head -30
           exit 1
         fi
         echo "package_path=$PACKAGE_PATH" >> $GITHUB_OUTPUT
-        echo "package_filename=$(basename "$PACKAGE_PATH")" >> $GITHUB_OUTPUT
         echo "Found package: $PACKAGE_PATH"
-        ls -lh "$PACKAGE_PATH"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: luci-theme-lumos-${{ github.event.inputs.target || 'x86_64' }}
+        name: luci-theme-lumos
         path: openwrt/${{ steps.find_package.outputs.package_path }}
 
     - name: Create Release
@@ -146,11 +133,10 @@ jobs:
         tag_name: v1.0.0
         name: LumOS Theme v1.0.0
         body: |
-          **LumOS Theme** - Modern OpenWrt theme with glassmorphism effects
+          **LumOS Theme** - Modern OpenWrt LuCI theme
           **Version**: 1.0.0
 
           **Features**:
-          - Immersive lighting effects
           - Glassmorphism design
           - Smooth animations
           - Light/dark theme switching

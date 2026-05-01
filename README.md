@@ -1,46 +1,33 @@
 # LumOS Theme
 
-A beautiful, modern OpenWrt LuCI theme with glassmorphism effects and smooth animations.
+A beautiful, modern OpenWrt LuCI theme with glassmorphism effects.
 
 ## Features
 
-- **Immersive Lighting Effects** - Multiple gradient layers with dynamic glow animations
-- **Glassmorphism Design** - Beautiful frosted glass effect using backdrop-filter
-- **Smooth Animations** - Ripple effects, particle animations, and smooth transitions
-- **Theme Switching** - Support for light/dark themes with auto-detection
-- **Responsive Design** - Optimized for both desktop and mobile devices
-- **Real-time Monitoring** - CPU and memory usage display
+- **Glassmorphism Design** - Beautiful frosted glass effect
+- **Smooth Animations** - Modern UI interactions
+- **Theme Switching** - Light/dark mode support
+- **Responsive** - Mobile-friendly layout
 
 ## Compatibility
 
-- OpenWrt 19.07 (tested)
-- OpenWrt 21.02+ (should work)
-- ImmortalWrt (should work)
+- OpenWrt 19.07
+- OpenWrt 21.02+
+- ImmortalWrt
 
 ## Installation
 
-### Manual Installation
+### Build from Source
 
 ```bash
-# Clone the repository
 git clone https://github.com/xiaoqi2020/luci-theme-lumos.git
-
-# Copy files to OpenWrt build directory
-cp -r luci-theme-lumos openwrt/package/
-
-# Build
-cd openwrt
-make menuconfig  # Select LUCI -> Themes -> luci-theme-lumos
-make -j$(nproc) V=s
+cd luci-theme-lumos
+make
 ```
 
-### GitHub Actions (Cloud Build)
+### GitHub Actions
 
-This theme supports GitHub Actions for cloud compilation. Simply push to your repository and the workflow will build automatically.
-
-## Screenshots
-
-*(Add screenshots here)*
+Push to GitHub and the workflow will build automatically.
 
 ## License
 
@@ -48,4 +35,4 @@ MIT License
 
 ## Credits
 
-Created by xiaoqi
+Based on [luci-theme-argon](https://github.com/jerrykuku/luci-theme-argon) by jerrykuku
