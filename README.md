@@ -35,4 +35,4 @@ MIT License
 
 ## Credits
 
-Based on [luci-theme-argon](https://github.com/jerrykuku/luci-theme-argon) by jerrykuku
+Based on [luci-theme-argon](https://github.com/xiaoqi2020/luci-theme-argon) by xiaoqi2020
