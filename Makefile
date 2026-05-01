@@ -30,6 +30,8 @@ define Package/luci-theme-lumos/install
 	$(CP) ./htdocs/luci-static/lumos/* $(1)/www/luci-static/lumos/
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/themes/lumos
 	$(CP) ./luasrc/view/themes/lumos/* $(1)/usr/lib/lua/luci/view/themes/lumos/
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/themes
+	$(CP) ./luasrc/themes/*.lua $(1)/usr/lib/lua/luci/themes/
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
 	$(CP) ./root/etc/uci-defaults/* $(1)/etc/uci-defaults/
 endef
