@@ -7,58 +7,66 @@
  *  Have a bug? Please create an issue here on GitHub!
  *      https://github.com/xiaoqi2020/luci-theme-lumos/issues
  *
- *  luci-theme-bootstrap:
- *      Copyright 2008 Steven Barth <steven@midlink.org>
- *      Copyright 2008 Jo-Philipp Wich <jow@openwrt.org>
- *      Copyright 2012 David Menting <david@nut-bolt.nl>
- *
- *  MUI:
- *      https://github.com/muicss/mui
- *
- *  luci-theme-material:
- *      https://github.com/LuttyYang/luci-theme-material/
- *
- *  Lumos Theme
- *	    https://demos.creative-tim.com/Lumos-dashboard/index.html
- *
- *  Login background
- *      https://unsplash.com/
- *
  *  Licensed to the public under the Apache License 2.0
  */
 
-    /**
-     * Sidebar expand
-     */
+document.addEventListener('DOMContentLoaded', function() {
     var showSide = false;
-    $(".showSide").click(function () {
+    var showSideBtn = document.querySelector('.showSide');
+    var darkMask = document.querySelector('.darkMask');
+    var mainLeft = document.querySelector('.main-left');
+    var mainRight = document.querySelector('.main-right');
+
+    function toggleSidebar() {
         if (showSide) {
-            $(".darkMask").stop(true).fadeOut("fast");
-            $(".main-left").width(0);
-            $(".main-right").css("overflow-y", "auto");
+            if (darkMask) {
+                darkMask.style.display = 'none';
+            }
+            if (mainLeft) {
+                mainLeft.style.width = '0';
+            }
+            if (mainRight) {
+                mainRight.style.overflowY = 'auto';
+            }
             showSide = false;
         } else {
-            $(".darkMask").stop(true).fadeIn("fast");
-            $(".main-left").width("15rem");
-            $(".main-right").css("overflow-y", "hidden");
+            if (darkMask) {
+                darkMask.style.display = 'block';
+            }
+            if (mainLeft) {
+                mainLeft.style.width = '15rem';
+            }
+            if (mainRight) {
+                mainRight.style.overflowY = 'hidden';
+            }
             showSide = true;
         }
-    });
+    }
 
-    $(".darkMask").click(function () {
-        if (showSide) {
+    if (showSideBtn) {
+        showSideBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleSidebar();
+        });
+    }
+
+    if (darkMask) {
+        darkMask.addEventListener('click', function() {
+            if (showSide) {
+                toggleSidebar();
+            }
+        });
+    }
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 992) {
+            if (mainLeft) {
+                mainLeft.style.width = '';
+            }
+            if (darkMask) {
+                darkMask.style.display = 'none';
+            }
             showSide = false;
-            $(".darkMask").stop(true).fadeOut("fast");
-            $(".main-left").width(0);
-            $(".main-right").css("overflow-y", "auto");
         }
     });
-
-    $(window).resize(function () {
-        if ($(window).width() > 992) {
-            $(".main-left").css("width", "");
-            $(".darkMask").stop(true);
-            $(".darkMask").css("display", "none");
-            showSide = false;
-        }
-    });
+});

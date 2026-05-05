@@ -128,9 +128,11 @@ body {
   margin: 0px;
   padding: 0px;
   height: 100%;
+  min-height: 100%;
   font-size: 16px;
   font-family: "Google Sans", "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
   font-family: var(--font-family-sans-serif);
+  overflow-x: hidden;
 }
 html {
   -webkit-text-size-adjust: 100%;
@@ -252,6 +254,15 @@ li {
   }
 }
 
+@keyframes progress-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 @keyframes gradient-shift {
   0% {
     background-position: 0% 50%;
@@ -278,7 +289,8 @@ li {
 *
 ***************************/
 .login-page {
-  height: 100%;
+  height: 100vh;
+  min-height: 100%;
 }
 .login-page .video {
   position: absolute;
@@ -324,7 +336,7 @@ li {
 }
 .login-page .login-container {
   height: 100%;
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
@@ -334,7 +346,8 @@ li {
   align-items: center;
   min-height: 100%;
   z-index: 2;
-  width: 420px;
+  width: 90%;
+  max-width: 420px;
   margin: 0 auto;
   background: transparent;
 }
@@ -591,11 +604,6 @@ li {
   z-index: 1;
 }
 
-.main .main-left {
-  position: relative;
-  overflow: hidden;
-}
-
 .main .main-left::before {
   content: '';
   position: absolute;
@@ -731,26 +739,25 @@ footer a {
   }
 }
 .main {
-  top: 0rem;
-  bottom: 0rem;
   position: relative;
-  height: 100%;
   width: 100%;
-  height: calc(100% - 4rem);
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
 }
-.main .main-left {
-  float: left;
-  width: 15%;
-  width: calc(0% + 15rem);
-  height: 100vh;
-  min-height: 100%;
-  background-color: #fff !important;
-  background-color: var(--menubar-background) !important;
-  box-shadow: rgba(0, 0, 0, 0.75) 0px 0px 15px -5px;
-  overflow-x: hidden;
-  position: fixed;
+.main .main-left,
+.main > .main-left {
+  width: 15rem;
+  height: 100%;
+  flex-shrink: 0;
   z-index: 100;
-  transition: width 0.2s ease-in-out;
+  overflow-x: auto;
+  word-break: break-word;
+  background-color: #fff;
+  background-color: var(--menubar-background);
+  box-shadow: rgba(0, 0, 0, 0.75) 0px 0px 15px -5px;
+  transition: all 0.2s;
   overflow-y: auto;
 }
 .main .main-left::-webkit-scrollbar {
@@ -991,11 +998,13 @@ footer a {
   content: "";
 }
 .main .main-right {
-  width: 85%;
-  width: calc(100% - 15rem);
-  float: right;
-  height: auto;
-  transition: width 0.3s ease-in-out;
+  height: 100%;
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s;
 }
 .main .main-right #maincontent {
   position: relative;
@@ -1571,58 +1580,81 @@ input[name="nslookup"] {
   width: 80%;
 }
 /* fix progress bar */
+#swaptotal,
+#swapfree,
+#memfree,
+#membuff,
+#conns,
+#memtotal {
+    width: 100% !important;
+    height: 24px !important;
+    line-height: 24px !important;
+    border-radius: 12px !important;
+    background: rgba(124, 92, 191, 0.1) !important;
+    box-shadow: none !important;
+    position: relative !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    outline: none !important;
+}
+
 #swaptotal > div,
 #swapfree > div,
 #memfree > div,
 #membuff > div,
 #conns > div,
 #memtotal > div {
-  width: 100% !important;
-  height: 1.6rem !important;
-  line-height: 1.6rem;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  background: rgba(124, 92, 191, 0.1);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-  position: relative;
+    width: 100% !important;
+    height: 24px !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
+
 #swaptotal > div > div,
 #swapfree > div > div,
 #memfree > div > div,
 #membuff > div > div,
 #conns > div > div,
 #memtotal > div > div {
-  height: 100% !important;
-  position: relative;
-  overflow: visible;
-  background-image: url(../img/trafficbar.png);
-  background-position: left top;
-  animation: sparkle 1000ms linear infinite;
+    height: 24px !important;
+    line-height: 24px !important;
+    border-radius: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: rgba(124, 92, 191, 0.85) !important;
+    background-image: url(../img/trafficbar.png) !important;
+    background-position: left top !important;
+    animation: sparkle 1000ms linear infinite !important;
 }
-#swaptotal > div > div > div,
-#swapfree > div > div > div,
-#memfree > div > div > div,
-#membuff > div > div > div,
-#conns > div > div > div,
-#memtotal > div > div > div {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
+
+@keyframes sparkle {
+    0% {
+        background-position: 0 0 !important;
+    }
+    100% {
+        background-position: 30px 0 !important;
+    }
 }
-#swaptotal > div > div > div > small,
-#swapfree > div > div > div > small,
-#memfree > div > div > div > small,
-#membuff > div > div > div > small,
-#conns > div > div > div > small,
-#memtotal > div > div > div > small {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  font-weight: 500;
+
+.cbi-section-table-row > .cbi-value-field {
+    border: none !important;
+    background: transparent !important;
+}
+
+.cbi-section-table-row > .cbi-value-field * {
+    border: none !important;
+    background: transparent !important;
+}
+
+#swaptotal small,
+#swapfree small,
+#memfree small,
+#membuff small,
+#conns small,
+#memtotal small {
+    color: #333 !important;
+    font-weight: 600 !important;
 }
 /* fix multiple table */
 table table,
@@ -3250,13 +3282,9 @@ div.commandbox {
 
 @media screen and (max-width: 1600px) {
   .main .main-left {
-    width: calc(0% + 13rem);
-  }
-  .main .main-right {
-    width: calc(100% - 13rem);
+    width: 13rem;
   }
   .cbi-button:not(.cbi-button-up, .cbi-button-down) {
-    /*padding: 0.3rem 1.5rem;*/
     font-size: 0.8rem;
   }
   header > .container > .pull-right > * {
@@ -3281,10 +3309,7 @@ div.commandbox {
     margin-top: 0.25rem;
   }
   .main .main-left {
-    width: calc(0% + 13rem);
-  }
-  .main .main-right {
-    width: calc(100% - 13rem);
+    width: 13rem;
   }
   .cbi-tabmenu > li > a,
   .tabs > li > a {
@@ -3311,10 +3336,15 @@ div.commandbox {
   .main .main-left {
     width: 0;
     position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
     z-index: 100;
+    overflow-y: auto;
   }
   .main .main-right {
     width: 100%;
+    flex-grow: 1;
   }
   .showSide {
     padding: 0.1rem;

@@ -5,8 +5,6 @@
 ## 兼容性
 - OpenWrt 18.06
 - OpenWrt 19.07
-- OpenWrt 21.02+
-- Openwrt
 
 ## 安装
 
@@ -25,7 +23,3 @@ make
 ## 许可证
 
 MIT License
-
-## 致谢
-
-基于 [luci-theme-lumos](https://github.com/xiaoqi2020/luci-theme-lumos) by xiaoqi2020

@@ -1,6 +1,8 @@
 body {
   background: #1e1e1e;
   color: #cccccc;
+  display: flex;
+  flex-direction: column;
 }
 
 .login-page .login-container .login-form {
@@ -63,10 +65,11 @@ header::after {
 }
 
 .main .main-left {
-  height: 100vh !important;
-  min-height: 100% !important;
-  overflow-y: auto !important;
-  background-color: #333333 !important;
+  width: 15rem;
+  height: 100%;
+  flex-shrink: 0;
+  overflow-x: auto;
+  background-color: #333333;
   box-shadow: 0 0 .5rem 0 rgba(0,0,0,0.15);
 }
 
@@ -122,7 +125,13 @@ header::after {
 }
 
 .main .main-right {
-  background-color: #1e1e1e;
+  height: 100%;
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #333333;
 }
 
 h2 {
@@ -179,6 +188,12 @@ input[type="checkbox"]:checked {
 header.bg-primary {
   background: linear-gradient(135deg, rgba(124, 92, 191, 0.15) 0%, rgba(168, 127, 232, 0.08) 50%, rgba(106, 140, 255, 0.12) 100%) !important;
 }
+.showSide {
+  color: #ccc !important;
+}
+.showSide:hover {
+  color: #fff !important;
+}
 
 .cbi-map-descr {
   color: #ccc;
@@ -211,64 +226,81 @@ table>thead>tr>td {
   border-top: 1px solid #252526;
 }
 
-#swaptotal>div,
-#swapfree>div,
-#memfree>div,
-#membuff>div,
-#conns>div,
-#memtotal>div {
-  background: rgba(72, 61, 139, 0.1) !important;
-}
-#swaptotal>div>div,
-#swapfree>div>div,
-#memfree>div>div,
-#membuff>div>div,
-#conns>div>div,
-#memtotal>div>div {
-  background: linear-gradient(135deg, rgba(72, 61, 139, 0.9) 0%, rgba(100, 80, 160, 0.8) 50%, rgba(72, 61, 139, 0.9) 100%) !important;
-  background-size: 200% 100% !important;
-  animation: gradient-shift 3s ease infinite, pulse-glow 2s ease-in-out infinite !important;
-  box-shadow: 0 0 15px rgba(72, 61, 139, 0.4), 0 0 30px rgba(72, 61, 139, 0.2) !important;
-}
-#swaptotal>div>div::after,
-#swapfree>div>div::after,
-#memfree>div>div::after,
-#membuff>div>div::after,
-#conns>div>div::after,
-#memtotal>div>div::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  animation: shimmer 2s infinite;
-}
-#swaptotal>div>div::before,
-#swapfree>div>div::before,
-#memfree>div>div::before,
-#membuff>div>div::before,
-#conns>div>div::before,
-#memtotal>div>div::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
-  pointer-events: none;
+#swaptotal,
+#swapfree,
+#memfree,
+#membuff,
+#conns,
+#memtotal {
+    width: 100% !important;
+    height: 24px !important;
+    line-height: 24px !important;
+    border-radius: 12px !important;
+    background: rgba(72, 61, 139, 0.15) !important;
+    box-shadow: none !important;
+    position: relative !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    outline: none !important;
 }
 
-#swaptotal>div>div>div>small,
-#swapfree>div>div>div>small,
-#memfree>div>div>div>small,
-#membuff>div>div>div>small,
-#conns>div>div>div>small,
-#memtotal>div>div>div>small {
-  color: #ccc !important;
-  text-shadow: 1px 1px 2px #000 !important;
+#swaptotal > div,
+#swapfree > div,
+#memfree > div,
+#membuff > div,
+#conns > div,
+#memtotal > div {
+    width: 100% !important;
+    height: 24px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#swaptotal > div > div,
+#swapfree > div > div,
+#memfree > div > div,
+#membuff > div > div,
+#conns > div > div,
+#memtotal > div > div {
+    height: 24px !important;
+    line-height: 24px !important;
+    border-radius: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: rgba(72, 61, 139, 0.85) !important;
+    background-image: url(../img/trafficbar.png) !important;
+    background-position: left top !important;
+    animation: sparkle 1000ms linear infinite !important;
+}
+
+@keyframes sparkle {
+    0% {
+        background-position: 0 0 !important;
+    }
+    100% {
+        background-position: 30px 0 !important;
+    }
+}
+
+.cbi-section-table-row > .cbi-value-field {
+    border: none !important;
+    background: transparent !important;
+}
+
+.cbi-section-table-row > .cbi-value-field * {
+    border: none !important;
+    background: transparent !important;
+}
+
+#swaptotal small,
+#swapfree small,
+#memfree small,
+#membuff small,
+#conns small,
+#memtotal small {
+    color: #fff !important;
+    font-weight: 600 !important;
 }
 
 .node-system-packages>.main .cbi-section-node:first-child .cbi-value-last {
