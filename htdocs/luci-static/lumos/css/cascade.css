@@ -1594,10 +1594,26 @@ input[name="nslookup"] {
 #memtotal > div > div {
   height: 100% !important;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background-image: url(../img/trafficbar.png);
   background-position: left top;
   animation: sparkle 1000ms linear infinite;
+}
+#swaptotal > div > div > div,
+#swapfree > div > div > div,
+#memfree > div > div > div,
+#membuff > div > div > div,
+#conns > div > div > div,
+#memtotal > div > div > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 #swaptotal > div > div > div > small,
 #swapfree > div > div > div > small,
@@ -1605,7 +1621,8 @@ input[name="nslookup"] {
 #membuff > div > div > div > small,
 #conns > div > div > div > small,
 #memtotal > div > div > div > small {
-  text-shadow: 1px 1px 2px #ccc;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
 }
 /* fix multiple table */
 table table,
