@@ -8,10 +8,10 @@ body {
   border-radius: 16px;
 }
 .login-page .login-container .login-form::before {
-  background: linear-gradient(135deg, rgba(72, 61, 139, 0.15) 0%, rgba(72, 61, 139, 0.1) 50%, rgba(72, 61, 139, 0.08) 100%);
+  background: linear-gradient(135deg, rgba(124, 92, 191, 0.15) 0%, rgba(168, 127, 232, 0.1) 50%, rgba(106, 140, 255, 0.08) 100%);
 }
 .login-page .login-container .login-form::after {
-  background: radial-gradient(ellipse at 50% 30%, rgba(72, 61, 139, 0.12) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 50% 30%, rgba(124, 92, 191, 0.12) 0%, transparent 50%);
 }
 
 .login-page .login-container .login-form .brand {
@@ -44,7 +44,7 @@ body {
 }
 
 .login-page .login-container .login-form .form-login .cbi-button-apply {
-  background-color: #483d8b !important;
+  background-color: #5d4a9a !important;
   background-color: var(--dark-primary) !important;
 }
 
@@ -59,7 +59,7 @@ body {
 }
 
 header::after {
-  background: linear-gradient(135deg, rgba(72, 61, 139, 0.15) 0%, rgba(100, 80, 160, 0.08) 50%, rgba(72, 61, 139, 0.12) 100%) !important;
+  background: linear-gradient(135deg, rgba(124, 92, 191, 0.15) 0%, rgba(168, 127, 232, 0.08) 50%, rgba(106, 140, 255, 0.12) 100%) !important;
 }
 
 .main .main-left {
@@ -174,7 +174,7 @@ input[type="checkbox"]:checked {
 }
 
 header.bg-primary {
-  background: linear-gradient(135deg, rgba(72, 61, 139, 0.15) 0%, rgba(100, 80, 160, 0.08) 50%, rgba(72, 61, 139, 0.12) 100%) !important;
+  background: linear-gradient(135deg, rgba(124, 92, 191, 0.15) 0%, rgba(168, 127, 232, 0.08) 50%, rgba(106, 140, 255, 0.12) 100%) !important;
 }
 
 .cbi-map-descr {
@@ -905,33 +905,33 @@ fieldset[id^="cbi-apply-"] {
 }
 
 .main .main-left::before {
-  background: linear-gradient(135deg, rgba(72, 61, 139, 0.08) 0%, rgba(100, 80, 160, 0.04) 50%, rgba(72, 61, 139, 0.06) 100%);
+  background: linear-gradient(135deg, rgba(124, 92, 191, 0.1) 0%, rgba(168, 127, 232, 0.06) 50%, rgba(106, 140, 255, 0.08) 100%);
 }
 
 header .fill::before {
-  background: linear-gradient(90deg, rgba(72, 61, 139, 0.12) 0%, rgba(72, 61, 139, 0.06) 50%, rgba(72, 61, 139, 0.1) 100%);
+  background: linear-gradient(90deg, rgba(124, 92, 191, 0.12) 0%, rgba(168, 127, 232, 0.06) 50%, rgba(106, 140, 255, 0.1) 100%);
 }
 
 .glow-effect {
-  box-shadow: 0 4px 15px rgba(72, 61, 139, 0.2), 0 2px 8px rgba(72, 61, 139, 0.15);
+  box-shadow: 0 4px 15px rgba(124, 92, 191, 0.2), 0 2px 8px rgba(124, 92, 191, 0.15);
 }
 
 .glow-effect:hover {
-  box-shadow: 0 6px 20px rgba(72, 61, 139, 0.3), 0 4px 12px rgba(72, 61, 139, 0.2);
+  box-shadow: 0 6px 20px rgba(124, 92, 191, 0.3), 0 4px 12px rgba(124, 92, 191, 0.2);
 }
 
 .cbi-section:hover,
 fieldset:hover {
-  box-shadow: 0 8px 25px rgba(72, 61, 139, 0.15), 0 4px 10px rgba(72, 61, 139, 0.1);
+  box-shadow: 0 8px 25px rgba(124, 92, 191, 0.15), 0 4px 10px rgba(124, 92, 191, 0.1);
 }
 
 .cbi-button:hover,
 .cbi-button:focus {
-  box-shadow: 0 4px 15px rgba(72, 61, 139, 0.35), 0 2px 6px rgba(72, 61, 139, 0.25);
+  box-shadow: 0 4px 15px rgba(124, 92, 191, 0.35), 0 2px 6px rgba(124, 92, 191, 0.25);
 }
 
 .cbi-button:active {
-  box-shadow: 0 2px 8px rgba(72, 61, 139, 0.25), 0 1px 3px rgba(72, 61, 139, 0.2);
+  box-shadow: 0 2px 8px rgba(124, 92, 191, 0.25), 0 1px 3px rgba(124, 92, 191, 0.2);
 }
 
 @media screen and (max-width:480px) {

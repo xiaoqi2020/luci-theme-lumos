@@ -36,8 +36,8 @@
 @import url("pure-min.css?v=1");
 :root {
   /** general **/
-  --primary: #5e72e4;
-  --dark-primary: #483d8b;
+  --primary: #7c5cbf;
+  --dark-primary: #5d4a9a;
   --background-color: #f4f5f7;
   --font-color: #525f7f;
   /** login form **/
@@ -49,9 +49,9 @@
   --menubar-background: #fff;
   --menubar-scrollbar-thumb: #eee;
   --menubar-text-color: #4c4c4c;
-  --blue: #5e72e4;
-  --indigo: #5603ad;
-  --purple: #8965e0;
+  --blue: #6a8cff;
+  --indigo: #5d4a9a;
+  --purple: #7c5cbf;
   --pink: #f3a4b5;
   --red: #f5365c;
   --orange: #fb6340;
@@ -92,9 +92,9 @@
   --menubar-background: #fff;
   --menubar-scrollbar-thumb: #f6f9fc;
   --menubar-text-color: #4c4c4c;
-  --blue: #5e72e4;
-  --indigo: #5603ad;
-  --purple: #8965e0;
+  --blue: #6a8cff;
+  --indigo: #5d4a9a;
+  --purple: #7c5cbf;
   --pink: #f3a4b5;
   --red: #f5365c;
   --orange: #fb6340;
@@ -603,7 +603,7 @@ li {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(94, 114, 228, 0.08) 0%, rgba(137, 101, 224, 0.04) 50%, rgba(94, 114, 228, 0.06) 100%);
+  background: linear-gradient(135deg, rgba(124, 92, 191, 0.1) 0%, rgba(168, 127, 232, 0.06) 50%, rgba(106, 140, 255, 0.08) 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -676,7 +676,7 @@ header::after {
   position: absolute;
   height: 2rem;
   width: 100%;
-  background: linear-gradient(135deg, rgba(94, 114, 228, 0.1) 0%, rgba(137, 101, 224, 0.05) 50%, rgba(94, 114, 228, 0.08) 100%);
+  background: linear-gradient(135deg, rgba(124, 92, 191, 0.1) 0%, rgba(168, 127, 232, 0.05) 50%, rgba(106, 140, 255, 0.08) 100%);
 }
 header.bg-primary {
   background: linear-gradient(135deg, rgba(94, 114, 228, 0.1) 0%, rgba(137, 101, 224, 0.05) 50%, rgba(94, 114, 228, 0.08) 100%) !important;
@@ -1580,9 +1580,13 @@ input[name="nslookup"] {
   height: 1.6rem !important;
   line-height: 1.6rem;
   border-radius: 0.5rem;
-  overflow: hidden;
-  background: rgba(94, 114, 228, 0.1);
+  overflow: visible;
+  background: rgba(124, 92, 191, 0.1);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #swaptotal > div > div,
 #swapfree > div > div,
@@ -1593,10 +1597,10 @@ input[name="nslookup"] {
   height: 100% !important;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(94, 114, 228, 0.9) 0%, rgba(137, 101, 224, 0.8) 50%, rgba(94, 114, 228, 0.9) 100%);
+  background: linear-gradient(135deg, rgba(124, 92, 191, 0.9) 0%, rgba(168, 127, 232, 0.8) 50%, rgba(106, 140, 255, 0.9) 100%);
   background-size: 200% 100%;
   animation: gradient-shift 3s ease infinite, pulse-glow 2s ease-in-out infinite;
-  box-shadow: 0 0 15px rgba(94, 114, 228, 0.4), 0 0 30px rgba(94, 114, 228, 0.2);
+  box-shadow: 0 0 15px rgba(124, 92, 191, 0.4), 0 0 30px rgba(124, 92, 191, 0.2);
 }
 #swaptotal > div > div::after,
 #swapfree > div > div::after,
