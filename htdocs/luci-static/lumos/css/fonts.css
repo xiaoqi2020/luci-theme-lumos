@@ -1,11 +1,11 @@
 /**
- *  Argon is a clean HTML5 theme for LuCI. It is based on luci-theme-material and Argon Template
+ *  Lumos is a clean HTML5 theme for LuCI. It is based on luci-theme-material and Lumos Template
  *
  *  luci-theme-lumos
- *      Copyright 2020 Jerryk <jerrykuku@gmail.com>
+ *      Copyright 2026 xiaoqi <xiaoqi2020@gmail.com>
  *
  *  Have a bug? Please create an issue here on GitHub!
- *      https://github.com/jerrykuku/luci-theme-lumos/issues
+ *      https://github.com/xiaoqi2020/luci-theme-lumos/issues
  *
  *  luci-theme-bootstrap:
  *      Copyright 2008 Steven Barth <steven@midlink.org>
@@ -18,8 +18,8 @@
  *  luci-theme-material:
  *      https://github.com/LuttyYang/luci-theme-material/
  *
- *  Argon Theme
- *	    https://demos.creative-tim.com/argon-dashboard/index.html
+ *  Lumos Theme
+ *	    https://demos.creative-tim.com/Lumos-dashboard/index.html
  *
  *  Login background
  *      https://unsplash.com/
@@ -47,12 +47,12 @@
 /* ICON Font */
 
 @font-face {
-    font-family: 'argon';
-    src: url('../fonts/argon.eot?u6kthm');
-    src: url('../fonts/argon.eot?u6kthm#iefix') format('embedded-opentype'),
-        url('../fonts/argon.ttf?u6kthm') format('truetype'),
-        url('../fonts/argon.woff?u6kthm') format('woff'),
-        url('../fonts/argon.svg?u6kthm#argon') format('svg');
+    font-family: 'Lumos';
+    src: url('../fonts/Lumos.eot?u6kthm');
+    src: url('../fonts/Lumos.eot?u6kthm#iefix') format('embedded-opentype'),
+        url('../fonts/Lumos.ttf?u6kthm') format('truetype'),
+        url('../fonts/Lumos.woff?u6kthm') format('woff'),
+        url('../fonts/Lumos.svg?u6kthm#Lumos') format('svg');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -61,7 +61,7 @@
 [class^="icon-"],
 [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'argon' !important;
+    font-family: 'Lumos' !important;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;

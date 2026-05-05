@@ -1,11 +1,11 @@
 /**
- *  Argon is a clean HTML5 theme for LuCI. It is based on luci-theme-material and Argon Template
+ *  Lumos is a clean HTML5 theme for LuCI. It is based on luci-theme-material and Lumos Template
  *
  *  luci-theme-lumos
- *      Copyright 2020 Jerryk <jerrykuku@gmail.com>
+ *      Copyright 2026 xiaoqi <xiaoqi2020@gmail.com>
  *
  *  Have a bug? Please create an issue here on GitHub!
- *      https://github.com/jerrykuku/luci-theme-lumos/issues
+ *      https://github.com/xiaoqi2020/luci-theme-lumos/issues
  *
  *  luci-theme-bootstrap:
  *      Copyright 2008 Steven Barth <steven@midlink.org>
@@ -18,8 +18,8 @@
  *  luci-theme-material:
  *      https://github.com/LuttyYang/luci-theme-material/
  *
- *  Argon Theme
- *	    https://demos.creative-tim.com/argon-dashboard/index.html
+ *  Lumos Theme
+ *	    https://demos.creative-tim.com/Lumos-dashboard/index.html
  *
  *  Login background
  *      https://unsplash.com/
@@ -222,6 +222,56 @@ li {
     background-position: 0 -64px;
   }
 }
+
+@keyframes glow-flow {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.02);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes aurora {
+  0%, 100% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(30deg);
+  }
+}
 /***********************
 *
 *  Login Page
@@ -274,34 +324,53 @@ li {
 }
 .login-page .login-container {
   height: 100%;
-  margin-left: 4.5rem;
   position: absolute;
-  top: 0px;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
-  -webkit-box-pack: center;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   min-height: 100%;
   z-index: 2;
   width: 420px;
-  box-shadow: rgba(0, 0, 0, 0.75) 0px 0px 35px -5px;
-  margin-left: 5%;
+  margin: 0 auto;
   background: transparent;
 }
 .login-page .login-container .login-form {
   display: flex;
   flex-direction: column;
-  -webkit-box-align: center;
   align-items: center;
-  position: absolute;
-  top: 0px;
   width: 100%;
-  min-height: 100%;
+  min-height: 320px;
   max-width: 420px;
-  background-color: #fff;
-  background-color: var(--white);
-  overflow:hidden;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+.login-page .login-container .login-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(94, 114, 228, 0.15) 0%, rgba(137, 101, 224, 0.1) 50%, rgba(94, 114, 228, 0.08) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+.login-page .login-container .login-form::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 50% 30%, rgba(94, 114, 228, 0.12) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 .login-page .login-container .login-form .brand {
   display: flex;
@@ -349,7 +418,7 @@ li {
   position: relative;
 }
 .login-page .login-container .login-form .form-login .input-group::before {
-  font-family: 'argon' !important;
+  font-family: 'Lumos' !important;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -471,30 +540,38 @@ li {
 }
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
   .login-page .login-container .login-form {
-    -webkit-backdrop-filter: blur(var(--blur-radius));
-    backdrop-filter: blur(var(--blur-radius));
-    background-color: rgba(244, 245, 247, var(--blur-opacity));
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(94, 114, 228, 0.2), 0 4px 16px rgba(94, 114, 228, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
   .main .main-left {
-    -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(180%);
-    backdrop-filter: blur(var(--blur-radius)) saturate(180%);
-    background-color: rgba(255, 255, 255, var(--blur-opacity));
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    backdrop-filter: blur(24px) saturate(200%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
   }
   header .fill {
-    -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(180%);
-    backdrop-filter: blur(var(--blur-radius)) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
     background: linear-gradient(135deg, rgba(94, 114, 228, 0.15) 0%, rgba(94, 114, 228, 0.05) 100%);
   }
   .cbi-section,
   fieldset {
-    -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(150%);
-    backdrop-filter: blur(var(--blur-radius)) saturate(150%);
-    background-color: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
   .panel-title {
-    -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(180%);
-    backdrop-filter: blur(var(--blur-radius)) saturate(180%);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(180%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.75) 100%);
+  }
+  body {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
   }
 }
 
@@ -514,6 +591,11 @@ li {
   z-index: 1;
 }
 
+.main .main-left {
+  position: relative;
+  overflow: hidden;
+}
+
 .main .main-left::before {
   content: '';
   position: absolute;
@@ -521,26 +603,60 @@ li {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(94, 114, 228, 0.12) 0%, rgba(137, 101, 224, 0.08) 50%, rgba(94, 114, 228, 0.05) 100%);
+  background: linear-gradient(180deg, rgba(94, 114, 228, 0.15) 0%, rgba(137, 101, 224, 0.1) 50%, rgba(94, 114, 228, 0.05) 100%);
   pointer-events: none;
   z-index: 0;
-}
-
-.main .main-left {
-  position: relative;
-  overflow: hidden;
+  animation: aurora 8s ease-in-out infinite;
 }
 
 .main .main-left::after {
   content: '';
   position: absolute;
-  bottom: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(ellipse at 30% 20%, rgba(94, 114, 228, 0.08) 0%, transparent 50%);
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(ellipse at 20% 10%, rgba(94, 114, 228, 0.15) 0%, transparent 40%),
+              radial-gradient(ellipse at 80% 80%, rgba(137, 101, 224, 0.1) 0%, transparent 40%);
   pointer-events: none;
   z-index: 0;
+  animation: float-glow 15s ease-in-out infinite;
+}
+
+.main .main-left .nav li.slide .menu {
+  position: relative;
+  overflow: hidden;
+}
+
+.main .main-left .nav li.slide .menu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 3s infinite;
+}
+
+.main .main-left .nav li.slide .menu:hover::before,
+.main .main-left .nav li.slide .menu.active::before {
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes float-glow {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.6;
+  }
+  33% {
+    transform: translate(5%, 5%) rotate(2deg);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(-5%, 10%) rotate(-2deg);
+    opacity: 0.7;
+  }
 }
 
 header .fill::before {
@@ -776,7 +892,7 @@ footer a {
   position: relative;
 }
 .main .main-left .nav li.slide .menu::before {
-  font-family: 'argon' !important;
+  font-family: 'Lumos' !important;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -795,7 +911,7 @@ footer a {
   position: absolute;
   right: 0.5rem;
   top: 0.8rem;
-  font-family: 'argon' !important;
+  font-family: 'Lumos' !important;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -1514,8 +1630,10 @@ input[name="nslookup"] {
   width: 100% !important;
   height: 1.6rem !important;
   line-height: 1.6rem;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   overflow: hidden;
+  background: rgba(94, 114, 228, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 #swaptotal > div > div,
 #swapfree > div > div,
@@ -1524,11 +1642,42 @@ input[name="nslookup"] {
 #conns > div > div,
 #memtotal > div > div {
   height: 100% !important;
-  background-color: #5e72e4 !important;
-  background-color: var(--primary) !important;
-  background-image: url(../img/trafficbar.png);
-  background-position: left top;
-  animation: sparkle 1000ms linear infinite;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(94, 114, 228, 0.9) 0%, rgba(137, 101, 224, 0.8) 50%, rgba(94, 114, 228, 0.9) 100%);
+  background-size: 200% 100%;
+  animation: gradient-shift 3s ease infinite, pulse-glow 2s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(94, 114, 228, 0.4), 0 0 30px rgba(94, 114, 228, 0.2);
+}
+#swaptotal > div > div::after,
+#swapfree > div > div::after,
+#memfree > div > div::after,
+#membuff > div > div::after,
+#conns > div > div::after,
+#memtotal > div > div::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+#swaptotal > div > div::before,
+#swapfree > div > div::before,
+#memfree > div > div::before,
+#membuff > div > div::before,
+#conns > div > div::before,
+#memtotal > div > div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  pointer-events: none;
 }
 #swaptotal > div > div > div > small,
 #swapfree > div > div > div > small,
@@ -1908,7 +2057,7 @@ body.lang_pl.node-main-login .cbi-value-title {
 .cbi-value-helpicon,
 .showSide,
 .main > .loading > span {
-  font-family: 'argon' !important;
+  font-family: 'Lumos' !important;
   font-style: normal !important;
   font-weight: normal !important;
   font-variant: normal !important;
