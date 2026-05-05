@@ -1569,24 +1569,50 @@ input[name="traceroute"],
 input[name="nslookup"] {
   width: 80%;
 }
-/* fix progress bar */
+/* fix progress bar - circular */
+#swaptotal,
+#swapfree,
+#memfree,
+#membuff,
+#conns,
+#memtotal {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem;
+}
 #swaptotal > div,
 #swapfree > div,
 #memfree > div,
 #membuff > div,
 #conns > div,
 #memtotal > div {
-  width: 100% !important;
-  height: 1.6rem !important;
-  line-height: 1.6rem;
-  border-radius: 0.5rem;
-  overflow: visible;
-  background: rgba(124, 92, 191, 0.1);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-  position: relative;
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50%;
+  background: conic-gradient(
+    rgba(124, 92, 191, 0.9) 0%,
+    rgba(168, 127, 232, 0.8) 50%,
+    rgba(106, 140, 255, 0.9) 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  box-shadow: 0 0 20px rgba(124, 92, 191, 0.3), inset 0 0 20px rgba(124, 92, 191, 0.1);
+}
+#swaptotal > div::before,
+#swapfree > div::before,
+#memfree > div::before,
+#membuff > div::before,
+#conns > div::before,
+#memtotal > div::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: rgba(244, 245, 247, 0.95);
+  z-index: 1;
 }
 #swaptotal > div > div,
 #swapfree > div > div,
@@ -1594,43 +1620,26 @@ input[name="nslookup"] {
 #membuff > div > div,
 #conns > div > div,
 #memtotal > div > div {
+  width: 100% !important;
   height: 100% !important;
+  border-radius: 50%;
   position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgba(124, 92, 191, 0.9) 0%, rgba(168, 127, 232, 0.8) 50%, rgba(106, 140, 255, 0.9) 100%);
-  background-size: 200% 100%;
-  animation: gradient-shift 3s ease infinite, pulse-glow 2s ease-in-out infinite;
-  box-shadow: 0 0 15px rgba(124, 92, 191, 0.4), 0 0 30px rgba(124, 92, 191, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
 }
-#swaptotal > div > div::after,
-#swapfree > div > div::after,
-#memfree > div > div::after,
-#membuff > div > div::after,
-#conns > div > div::after,
-#memtotal > div > div::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 2s infinite;
-}
-#swaptotal > div > div::before,
-#swapfree > div > div::before,
-#memfree > div > div::before,
-#membuff > div > div::before,
-#conns > div > div::before,
-#memtotal > div > div::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
-  pointer-events: none;
+#swaptotal > div > div > div,
+#swapfree > div > div > div,
+#memfree > div > div > div,
+#membuff > div > div > div,
+#conns > div > div > div,
+#memtotal > div > div > div {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  font-size: 12px;
+  color: #525f7f;
 }
 #swaptotal > div > div > div > small,
 #swapfree > div > div > div > small,

@@ -54,8 +54,8 @@
         });
     }
 
-    $(".cbi-button-up").val("îˆ?);
-    $(".cbi-button-down").val("îˆ?);
+    $(".cbi-button-up").val("ï¿½?);
+    $(".cbi-button-down").val("ï¿½?);
 
     /**
      * hook other "A Label" and add hash to it.
@@ -99,5 +99,30 @@
     $(".main-right").focus();
     $(".main-right").blur();
     $("input").attr("size", "0");
+
+    /**
+     * Convert progress bars to circular rings
+     */
+    function initCircularProgress() {
+        var bars = ["#swaptotal", "#swapfree", "#memfree", "#membuff", "#conns", "#memtotal"];
+        bars.forEach(function(id) {
+            var $bar = $(id);
+            if ($bar.length > 0) {
+                var $inner = $bar.find("> div > div");
+                if ($inner.length > 0) {
+                    var width = $inner.width();
+                    var percent = (width / $bar.find("> div").width()) * 100;
+                    var deg = (percent / 100) * 360;
+                    $bar.find("> div").css({
+                        background: "conic-gradient(rgba(124, 92, 191, 0.9) 0deg, rgba(168, 127, 232, 0.8) " + (deg * 0.5) + "deg, rgba(106, 140, 255, 0.9) " + deg + "deg, transparent " + deg + "deg)"
+                    });
+                }
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        setTimeout(initCircularProgress, 100);
+    });
 
 })(jQuery);
