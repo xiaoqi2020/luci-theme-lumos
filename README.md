@@ -1,16 +1,16 @@
-# LumOS Theme
+# LumOS 主题
 
-A beautiful OpenWrt LuCI theme.
+一个漂亮的 OpenWrt LuCI 主题。
 
-## Compatibility
+## 兼容性
 
 - OpenWrt 19.07
 - OpenWrt 21.02+
-- ImmortalWrt
+- Openwrt
 
-## Installation
+## 安装
 
-### Build from Source
+### 从源码构建
 
 ```bash
 git clone https://github.com/xiaoqi2020/luci-theme-lumos.git
@@ -20,12 +20,12 @@ make
 
 ### GitHub Actions
 
-Push to GitHub and the workflow will build automatically.
+推送到 GitHub，工作流将自动构建。
 
-## License
+## 许可证
 
 MIT License
 
-## Credits
+## 致谢
 
-Based on [luci-theme-argon](https://github.com/xiaoqi2020/luci-theme-lumos) by xiaoqi2020
+基于 [luci-theme-lumos](https://github.com/xiaoqi2020/luci-theme-lumos) by xiaoqi2020

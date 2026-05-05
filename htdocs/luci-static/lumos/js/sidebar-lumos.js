@@ -55,7 +55,7 @@
     });
 
     $(window).resize(function () {
-        if ($(window).width() > 921) {
+        if ($(window).width() > 992) {
             $(".main-left").css("width", "");
             $(".darkMask").stop(true);
             $(".darkMask").css("display", "none");

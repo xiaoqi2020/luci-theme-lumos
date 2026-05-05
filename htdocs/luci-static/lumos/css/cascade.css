@@ -3308,8 +3308,9 @@ div.commandbox {
     text-decoration: none;
   }
   .showSide:before {
-    content: "\e20e";
+    content: "\2630";
     font-size: 1.7rem;
+    font-family: sans-serif;
   }
   header > .fill > .container > .brand {
     display: inline-block;
