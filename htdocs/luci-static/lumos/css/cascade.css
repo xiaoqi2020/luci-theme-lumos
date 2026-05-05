@@ -742,7 +742,8 @@ footer a {
   float: left;
   width: 15%;
   width: calc(0% + 15rem);
-  height: 100%;
+  height: 100vh;
+  min-height: 100%;
   background-color: #fff !important;
   background-color: var(--menubar-background) !important;
   box-shadow: rgba(0, 0, 0, 0.75) 0px 0px 15px -5px;
@@ -750,7 +751,7 @@ footer a {
   position: fixed;
   z-index: 100;
   transition: width 0.2s ease-in-out;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 .main .main-left::-webkit-scrollbar {
   width: 5px;
@@ -1569,50 +1570,21 @@ input[name="traceroute"],
 input[name="nslookup"] {
   width: 80%;
 }
-/* fix progress bar - circular */
-#swaptotal,
-#swapfree,
-#memfree,
-#membuff,
-#conns,
-#memtotal {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0.5rem;
-}
+/* fix progress bar */
 #swaptotal > div,
 #swapfree > div,
 #memfree > div,
 #membuff > div,
 #conns > div,
 #memtotal > div {
-  width: 80px !important;
-  height: 80px !important;
-  border-radius: 50%;
-  background: conic-gradient(
-    rgba(124, 92, 191, 0.9) 0%,
-    rgba(168, 127, 232, 0.8) 50%,
-    rgba(106, 140, 255, 0.9) 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100% !important;
+  height: 1.6rem !important;
+  line-height: 1.6rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: rgba(124, 92, 191, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
   position: relative;
-  box-shadow: 0 0 20px rgba(124, 92, 191, 0.3), inset 0 0 20px rgba(124, 92, 191, 0.1);
-}
-#swaptotal > div::before,
-#swapfree > div::before,
-#memfree > div::before,
-#membuff > div::before,
-#conns > div::before,
-#memtotal > div::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border-radius: 50%;
-  background: rgba(244, 245, 247, 0.95);
-  z-index: 1;
 }
 #swaptotal > div > div,
 #swapfree > div > div,
@@ -1620,26 +1592,12 @@ input[name="nslookup"] {
 #membuff > div > div,
 #conns > div > div,
 #memtotal > div > div {
-  width: 100% !important;
   height: 100% !important;
-  border-radius: 50%;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-#swaptotal > div > div > div,
-#swapfree > div > div > div,
-#memfree > div > div > div,
-#membuff > div > div > div,
-#conns > div > div > div,
-#memtotal > div > div > div {
-  position: relative;
-  z-index: 3;
-  text-align: center;
-  font-size: 12px;
-  color: #525f7f;
+  overflow: hidden;
+  background-image: url(../img/trafficbar.png);
+  background-position: left top;
+  animation: sparkle 1000ms linear infinite;
 }
 #swaptotal > div > div > div > small,
 #swapfree > div > div > div > small,
