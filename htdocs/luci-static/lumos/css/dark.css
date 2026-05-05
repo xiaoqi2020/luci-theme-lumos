@@ -59,7 +59,7 @@ body {
 }
 
 header::after {
-  background-color: #1e1e1e !important;
+  background: linear-gradient(135deg, rgba(72, 61, 139, 0.15) 0%, rgba(100, 80, 160, 0.08) 50%, rgba(72, 61, 139, 0.12) 100%) !important;
 }
 
 .main .main-left {
@@ -174,7 +174,7 @@ input[type="checkbox"]:checked {
 }
 
 header.bg-primary {
-  background-color: #1e1e1e !important;
+  background: linear-gradient(135deg, rgba(72, 61, 139, 0.15) 0%, rgba(100, 80, 160, 0.08) 50%, rgba(72, 61, 139, 0.12) 100%) !important;
 }
 
 .cbi-map-descr {
@@ -905,11 +905,7 @@ fieldset[id^="cbi-apply-"] {
 }
 
 .main .main-left::before {
-  background: linear-gradient(135deg, rgba(72, 61, 139, 0.15) 0%, rgba(72, 61, 139, 0.08) 50%, rgba(72, 61, 139, 0.05) 100%);
-}
-
-.main .main-left::after {
-  background: radial-gradient(ellipse at 30% 20%, rgba(72, 61, 139, 0.1) 0%, transparent 50%);
+  background: linear-gradient(135deg, rgba(72, 61, 139, 0.08) 0%, rgba(100, 80, 160, 0.04) 50%, rgba(72, 61, 139, 0.06) 100%);
 }
 
 header .fill::before {

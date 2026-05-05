@@ -603,61 +603,12 @@ li {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(94, 114, 228, 0.15) 0%, rgba(137, 101, 224, 0.1) 50%, rgba(94, 114, 228, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(94, 114, 228, 0.08) 0%, rgba(137, 101, 224, 0.04) 50%, rgba(94, 114, 228, 0.06) 100%);
   pointer-events: none;
   z-index: 0;
-  animation: aurora 8s ease-in-out infinite;
 }
 
-.main .main-left::after {
-  content: '';
-  position: absolute;
-  top: -100%;
-  left: -100%;
-  width: 300%;
-  height: 300%;
-  background: radial-gradient(ellipse at 20% 10%, rgba(94, 114, 228, 0.15) 0%, transparent 40%),
-              radial-gradient(ellipse at 80% 80%, rgba(137, 101, 224, 0.1) 0%, transparent 40%);
-  pointer-events: none;
-  z-index: 0;
-  animation: float-glow 15s ease-in-out infinite;
-}
 
-.main .main-left .nav li.slide .menu {
-  position: relative;
-  overflow: hidden;
-}
-
-.main .main-left .nav li.slide .menu::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 3s infinite;
-}
-
-.main .main-left .nav li.slide .menu:hover::before,
-.main .main-left .nav li.slide .menu.active::before {
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes float-glow {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-    opacity: 0.6;
-  }
-  33% {
-    transform: translate(5%, 5%) rotate(2deg);
-    opacity: 0.8;
-  }
-  66% {
-    transform: translate(-5%, 10%) rotate(-2deg);
-    opacity: 0.7;
-  }
-}
 
 header .fill::before {
   content: '';
@@ -725,16 +676,14 @@ header::after {
   position: absolute;
   height: 2rem;
   width: 100%;
-  background-color: #5e72e4 !important;
-  background-color: var(--primary) !important;
+  background: linear-gradient(135deg, rgba(94, 114, 228, 0.1) 0%, rgba(137, 101, 224, 0.05) 50%, rgba(94, 114, 228, 0.08) 100%);
 }
 header.bg-primary {
-  background-color: #5e72e4 !important;
-  background-color: var(--primary) !important;
+  background: linear-gradient(135deg, rgba(94, 114, 228, 0.1) 0%, rgba(137, 101, 224, 0.05) 50%, rgba(94, 114, 228, 0.08) 100%) !important;
 }
 header .fill {
   padding: 0.8rem 0;
-  border-bottom: 0px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 header .fill .container {
   height: 2rem;
@@ -797,11 +746,11 @@ footer a {
   background-color: #fff !important;
   background-color: var(--menubar-background) !important;
   box-shadow: rgba(0, 0, 0, 0.75) 0px 0px 15px -5px;
-  overflow-x: auto;
+  overflow-x: hidden;
   position: fixed;
   z-index: 100;
   transition: width 0.2s ease-in-out;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 .main .main-left::-webkit-scrollbar {
   width: 5px;

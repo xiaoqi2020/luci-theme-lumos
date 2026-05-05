@@ -8,7 +8,7 @@ include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=Lumos Theme
 LUCI_DEPENDS:=+curl +jsonfilter
-PKG_VERSION:=1.8.4
+PKG_VERSION:=1.0
 PKG_RELEASE:=20260505
 
 include $(TOPDIR)/feeds/luci/luci.mk
