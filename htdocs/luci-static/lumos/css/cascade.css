@@ -475,6 +475,115 @@ li {
     backdrop-filter: blur(var(--blur-radius));
     background-color: rgba(244, 245, 247, var(--blur-opacity));
   }
+  .main .main-left {
+    -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(180%);
+    backdrop-filter: blur(var(--blur-radius)) saturate(180%);
+    background-color: rgba(255, 255, 255, var(--blur-opacity));
+  }
+  header .fill {
+    -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(180%);
+    backdrop-filter: blur(var(--blur-radius)) saturate(180%);
+    background: linear-gradient(135deg, rgba(94, 114, 228, 0.15) 0%, rgba(94, 114, 228, 0.05) 100%);
+  }
+  .cbi-section,
+  fieldset {
+    -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(150%);
+    backdrop-filter: blur(var(--blur-radius)) saturate(150%);
+    background-color: rgba(255, 255, 255, 0.85);
+  }
+  .panel-title {
+    -webkit-backdrop-filter: blur(var(--blur-radius)) saturate(180%);
+    backdrop-filter: blur(var(--blur-radius)) saturate(180%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+  }
+}
+
+.immersive-light {
+  position: relative;
+}
+
+.immersive-light::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(94, 114, 228, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.main .main-left::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(94, 114, 228, 0.12) 0%, rgba(137, 101, 224, 0.08) 50%, rgba(94, 114, 228, 0.05) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.main .main-left {
+  position: relative;
+  overflow: hidden;
+}
+
+.main .main-left::after {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(94, 114, 228, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+header .fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, rgba(94, 114, 228, 0.1) 0%, rgba(137, 101, 224, 0.05) 50%, rgba(94, 114, 228, 0.08) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+header {
+  position: relative;
+  overflow: hidden;
+}
+
+header .fill {
+  position: relative;
+}
+
+.glow-effect {
+  box-shadow: 0 4px 15px rgba(94, 114, 228, 0.15), 0 2px 8px rgba(94, 114, 228, 0.1);
+}
+
+.glow-effect:hover {
+  box-shadow: 0 6px 20px rgba(94, 114, 228, 0.25), 0 4px 12px rgba(94, 114, 228, 0.15);
+}
+
+.cbi-section:hover,
+fieldset:hover {
+  box-shadow: 0 8px 25px rgba(94, 114, 228, 0.12), 0 4px 10px rgba(94, 114, 228, 0.08);
+}
+
+.cbi-button:hover,
+.cbi-button:focus {
+  box-shadow: 0 4px 15px rgba(94, 114, 228, 0.3), 0 2px 6px rgba(94, 114, 228, 0.2);
+}
+
+.cbi-button:active {
+  box-shadow: 0 2px 8px rgba(94, 114, 228, 0.2), 0 1px 3px rgba(94, 114, 228, 0.15);
 }
 /***********************
 *
