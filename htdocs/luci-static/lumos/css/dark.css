@@ -289,17 +289,19 @@ table>thead>tr>td {
 #membuff,
 #conns,
 #memtotal {
-    width: 100% !important;
-    height: 24px !important;
-    line-height: 24px !important;
-    border-radius: 12px !important;
+    width: 200px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    border-radius: 100px !important;
     background: rgba(72, 61, 139, 0.15) !important;
     box-shadow: none !important;
-    position: relative !important;
-    margin: 0 !important;
+    margin: 12px auto 6px auto !important;
     padding: 0 !important;
     border: none !important;
-    outline: none !important;
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: center !important;
 }
 
 #swaptotal > div,
@@ -308,10 +310,17 @@ table>thead>tr>td {
 #membuff > div,
 #conns > div,
 #memtotal > div {
-    height: 24px !important;
+    width: 200px !important;
+    height: 20px !important;
     margin: 0 !important;
     padding: 0 !important;
+    border-radius: 100px !important;
     background: transparent !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 3 !important;
 }
 
 #swaptotal > div > div,
@@ -320,47 +329,105 @@ table>thead>tr>td {
 #membuff > div > div,
 #conns > div > div,
 #memtotal > div > div {
-    height: 24px !important;
-    line-height: 24px !important;
-    border-radius: 12px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: linear-gradient(90deg, rgba(72, 61, 139, 0.9) 0%, rgba(92, 70, 150, 0.95) 50%, rgba(124, 92, 191, 0.9) 100%) !important;
-    background-size: 200% 100% !important;
-    animation: progress-shimmer 2000ms linear infinite !important;
+    height: 22px !important;
+    line-height: 22px !important;
+    border-radius: 100px !important;
+    margin: -1px 0 -1px 0 !important;
+    padding: 0 10px !important;
+    background: linear-gradient(90deg, #483d8b 0%, #5c4696 100%) !important;
     border: none !important;
-    box-shadow: 0 2px 8px rgba(72, 61, 139, 0.3) !important;
+    box-sizing: border-box !important;
 }
 
-#swaptotal > div > div::after,
-#swapfree > div > div::after,
-#memfree > div > div::after,
-#membuff > div > div::after,
-#conns > div > div::after,
-#memtotal > div > div::after {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: -100% !important;
-    width: 100% !important;
-    height: 100% !important;
-    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%) !important;
-    animation: shine 2000ms infinite !important;
+/* 移除进度条周围所有背景 */
+#swaptotal ~ *,
+#swapfree ~ *,
+#memfree ~ *,
+#membuff ~ *,
+#conns ~ *,
+#memtotal ~ * {
+    background: transparent !important;
 }
 
-@keyframes shine {
-    100% {
-        left: 100% !important;
-    }
+.cbi-value-field:has(#memfree),
+.cbi-value-field:has(#swaptotal),
+.cbi-value-field:has(#swapfree),
+.cbi-value-field:has(#membuff),
+.cbi-value-field:has(#conns),
+.cbi-value-field:has(#memtotal) {
+    background: transparent !important;
+    padding: 0 !important;
 }
 
-@keyframes progress-shimmer {
-    0% {
-        background-position: -200% 0 !important;
-    }
-    100% {
-        background-position: 200% 0 !important;
-    }
+/* 移除包含进度条的表格单元格背景 */
+td:has(#memfree),
+td:has(#swaptotal),
+td:has(#swapfree),
+td:has(#membuff),
+td:has(#conns),
+td:has(#memtotal) {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+/* 移除进度条中间容器背景，保留外层底板和内层进度条 */
+#swaptotal > div,
+#swapfree > div,
+#memfree > div,
+#membuff > div,
+#conns > div,
+#memtotal > div {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* 彻底移除所有可能的背景框 */
+.cbi-section-node > .cbi-section-table > tbody > tr > td,
+.cbi-section-node > .cbi-section-table > tbody > tr > th,
+.cbi-section-table-row > td,
+.cbi-section-table-row > th,
+.cbi-value-field > *,
+.cbi-value > * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* 确保进度条外层容器只有我们想要的样式 */
+#memfree, #swaptotal, #swapfree, #membuff, #conns, #memtotal {
+    background: rgba(72, 61, 139, 0.15) !important;
+    border-radius: 100px !important;
+    overflow: visible !important;
+}
+
+/* 移除所有可能的背景框 - 使用更广泛的选择器 */
+.cbi-section-node > .cbi-section-table,
+.cbi-section-node > .cbi-section-table > tbody,
+.cbi-section-node > .cbi-section-table > tbody > tr,
+.cbi-section-node > .cbi-section-table > tbody > tr > * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* 移除进度条周围所有元素的背景 */
+.cbi-section-node:has(#memfree),
+.cbi-section-node:has(#swaptotal),
+.cbi-section-node:has(#swapfree),
+.cbi-section-node:has(#membuff),
+.cbi-section-node:has(#conns),
+.cbi-section-node:has(#memtotal),
+.cbi-section-node:has(#memfree) > *,
+.cbi-section-node:has(#swaptotal) > *,
+.cbi-section-node:has(#swapfree) > *,
+.cbi-section-node:has(#membuff) > *,
+.cbi-section-node:has(#conns) > *,
+.cbi-section-node:has(#memtotal) > * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
 }
 
 @keyframes sparkle {
@@ -370,6 +437,47 @@ table>thead>tr>td {
     100% {
         background-position: 30px 0 !important;
     }
+}
+
+/* 移除表格行背景色 */
+.cbi-section-table-row {
+    background: transparent !important;
+}
+
+div>table>tbody>tr:nth-of-type(2n),
+div>.table>.tbody>.tr:nth-of-type(2n),
+.cbi-section-table-row:nth-of-type(2n) {
+    background-color: transparent !important;
+}
+
+.cbi-section-table-row td,
+.cbi-section-table-row .td {
+    background: transparent !important;
+}
+
+.cbi-section-table tr,
+.cbi-section-table td,
+.cbi-section-table .td {
+    background: transparent !important;
+}
+
+.cbi-section-node > .cbi-section-table > tbody > tr,
+.cbi-section-node > .cbi-section-table > tbody > td,
+.cbi-section-node > .cbi-section-table > tbody > th {
+    background: transparent !important;
+}
+
+.cbi-value-field,
+.cbi-value {
+    background: transparent !important;
+}
+
+table,
+table > tbody,
+table > tbody > tr,
+table > tbody > td,
+table > tbody > th {
+    background: transparent !important;
 }
 
 .cbi-section-table-row > .cbi-value-field {
@@ -415,11 +523,11 @@ table>thead>tr>th {
 }
 
 .cbi-rowstyle-2 {
-  background-color: #2c2c2c !important;
+  background-color: transparent !important;
 }
 
 .cbi-rowstyle-1 {
-  background-color: #252526;
+  background-color: transparent !important;
 }
 
 .cbi-section>h3:first-child,
@@ -477,14 +585,14 @@ div>.table>.tbody>.tr:nth-of-type(2n) {
 
 /* Fix background color not change when the H tag is in the table rowstyle-1 */
 .cbi-section-node>.cbi-section-table>tbody>.cbi-rowstyle-1 th {
-  background-color: #252526;
+  background-color: transparent !important;
   border-top: 1px solid #252526;
   border-bottom: none !important;
 }
 
 /* Fix background color not change when the H tag is in the table rowstyle-2 */
 .cbi-section-node>.cbi-section-table>tbody>.cbi-rowstyle-2 th {
-  background-color: #2c2c2c;
+  background-color: transparent !important;
   border-top: 1px solid #252526;
   border-bottom: none !important;
 }
