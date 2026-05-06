@@ -102,12 +102,68 @@ header::after {
   box-shadow: 0 0 1px #000 !important;
 }
 
-.main .main-left .nav .slide .menu[data-title=Status]:before {
-  color: var(--dark-primary) !important;
+.main .main-left .nav li.slide .menu::before {
+  position: absolute;
+  left: 0.8rem;
+  width: 16px;
+  height: 16px;
+  content: "";
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.main .main-left .nav .slide .menu[data-title=Control]:before {
-  color: var(--dark-primary) !important;
+.main .main-left .nav li.slide .menu[data-title=Status]:before {
+  background-image: url('/luci-static/lumos/img/dashboard.png?v=1.0');
+}
+
+.main .main-left .nav li.slide .menu[data-title=System]:before {
+  background-image: url('/luci-static/lumos/img/system.png?v=1.0');
+}
+
+.main .main-left .nav li.slide .menu[data-title=Services]:before {
+  background-image: url('/luci-static/lumos/img/services.png?v=1.0');
+}
+
+.main .main-left .nav li.slide .menu[data-title=NAS]:before {
+  background-image: url('/luci-static/lumos/img/storage.png?v=1.0');
+}
+
+.main .main-left .nav li.slide .menu[data-title=VPN]:before {
+  background-image: url('/luci-static/lumos/img/vpn.png?v=1.0');
+}
+
+.main .main-left .nav li.slide .menu[data-title=Network]:before {
+  background-image: url('/luci-static/lumos/img/Network.png?v=1.0');
+}
+
+.main .main-left .nav li.slide .menu[data-title=Docker]:before {
+  background-image: url('/luci-static/lumos/img/docker.png?v=1.0');
+}
+
+.main .main-left .nav li.slide .menu[data-title=Statistics]:before {
+  background-image: url('/luci-static/lumos/img/statistics.png?v=1.0');
+}
+
+.main .main-left .nav li.slide .menu[data-title=Logout]:before {
+  background-image: url('/luci-static/lumos/img/logout.png?v=1.0');
+}
+
+.main .main-left .nav li.slide .menu[data-title=Control]:before {
+  content: "\e912";
+  font-family: 'Lumos';
+}
+
+.main .main-left .nav li.slide .menu::after {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid #cccccc;
 }
 
 .main .main-left .nav li a {
@@ -128,9 +184,6 @@ header::after {
   height: 100%;
   flex-grow: 1;
   overflow-x: hidden;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
   background-color: #333333;
 }
 
@@ -189,10 +242,14 @@ header.bg-primary {
   background: linear-gradient(135deg, rgba(124, 92, 191, 0.15) 0%, rgba(168, 127, 232, 0.08) 50%, rgba(106, 140, 255, 0.12) 100%) !important;
 }
 .showSide {
-  color: #ccc !important;
+  display: none;
+  color: #fff !important;
+  font-size: 1.4rem;
+  padding: 0.5rem;
+  z-index: 1000;
 }
 .showSide:hover {
-  color: #fff !important;
+  color: #ccc !important;
 }
 
 .cbi-map-descr {
@@ -251,10 +308,10 @@ table>thead>tr>td {
 #membuff > div,
 #conns > div,
 #memtotal > div {
-    width: 100% !important;
     height: 24px !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: transparent !important;
 }
 
 #swaptotal > div > div,
@@ -268,10 +325,42 @@ table>thead>tr>td {
     border-radius: 12px !important;
     margin: 0 !important;
     padding: 0 !important;
-    background-color: rgba(72, 61, 139, 0.85) !important;
-    background-image: url(../img/trafficbar.png) !important;
-    background-position: left top !important;
-    animation: sparkle 1000ms linear infinite !important;
+    background: linear-gradient(90deg, rgba(72, 61, 139, 0.9) 0%, rgba(92, 70, 150, 0.95) 50%, rgba(124, 92, 191, 0.9) 100%) !important;
+    background-size: 200% 100% !important;
+    animation: progress-shimmer 2000ms linear infinite !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(72, 61, 139, 0.3) !important;
+}
+
+#swaptotal > div > div::after,
+#swapfree > div > div::after,
+#memfree > div > div::after,
+#membuff > div > div::after,
+#conns > div > div::after,
+#memtotal > div > div::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%) !important;
+    animation: shine 2000ms infinite !important;
+}
+
+@keyframes shine {
+    100% {
+        left: 100% !important;
+    }
+}
+
+@keyframes progress-shimmer {
+    0% {
+        background-position: -200% 0 !important;
+    }
+    100% {
+        background-position: 200% 0 !important;
+    }
 }
 
 @keyframes sparkle {
@@ -599,6 +688,17 @@ td>.ifacebadge,
 /* Improved loading process gif color (dark mode only) */
 img[src="/luci-static/resources/icons/loading.gif"] {
   filter: invert(1);
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 div.cbi-value var,
@@ -967,6 +1067,40 @@ fieldset:hover {
 
 .cbi-button:active {
   box-shadow: 0 2px 8px rgba(124, 92, 191, 0.25), 0 1px 3px rgba(124, 92, 191, 0.2);
+}
+
+@media screen and (max-width: 992px) {
+  .main .main-left {
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    overflow-y: auto;
+    background: #333;
+  }
+  .main .main-right {
+    width: 100%;
+    flex-grow: 1;
+  }
+  .showSide {
+    padding: 0.1rem;
+    position: relative;
+    display: inline-block;
+    color: #fff;
+  }
+  .showSide:hover {
+    text-decoration: none;
+  }
+  .showSide:before {
+    content: "\2630";
+    font-size: 1.7rem;
+    font-family: sans-serif;
+  }
+  header > .fill > .container > .brand {
+    display: inline-block;
+  }
 }
 
 @media screen and (max-width:480px) {

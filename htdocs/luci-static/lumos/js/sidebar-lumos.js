@@ -17,14 +17,18 @@ document.addEventListener('DOMContentLoaded', function() {
     var mainLeft = document.querySelector('.main-left');
     var mainRight = document.querySelector('.main-right');
 
+    function setWidthImportant(element, width) {
+        if (element) {
+            element.style.setProperty('width', width, 'important');
+        }
+    }
+
     function toggleSidebar() {
         if (showSide) {
             if (darkMask) {
                 darkMask.style.display = 'none';
             }
-            if (mainLeft) {
-                mainLeft.style.width = '0';
-            }
+            setWidthImportant(mainLeft, '0');
             if (mainRight) {
                 mainRight.style.overflowY = 'auto';
             }
@@ -33,13 +37,17 @@ document.addEventListener('DOMContentLoaded', function() {
             if (darkMask) {
                 darkMask.style.display = 'block';
             }
-            if (mainLeft) {
-                mainLeft.style.width = '15rem';
-            }
+            setWidthImportant(mainLeft, '15rem');
             if (mainRight) {
                 mainRight.style.overflowY = 'hidden';
             }
             showSide = true;
+        }
+    }
+
+    function closeSidebar() {
+        if (showSide) {
+            toggleSidebar();
         }
     }
 
@@ -52,17 +60,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (darkMask) {
         darkMask.addEventListener('click', function() {
-            if (showSide) {
-                toggleSidebar();
-            }
+            closeSidebar();
+        });
+    }
+
+    if (mainLeft) {
+        var sidebarLinks = mainLeft.querySelectorAll('a');
+        sidebarLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                closeSidebar();
+            });
         });
     }
 
     window.addEventListener('resize', function() {
         if (window.innerWidth > 992) {
-            if (mainLeft) {
-                mainLeft.style.width = '';
-            }
+            setWidthImportant(mainLeft, '');
             if (darkMask) {
                 darkMask.style.display = 'none';
             }

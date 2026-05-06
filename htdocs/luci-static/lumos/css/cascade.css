@@ -849,38 +849,25 @@ footer a {
   position: relative;
 }
 .main .main-left .nav li.slide .menu::before {
-  font-family: 'Lumos' !important;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   position: absolute;
   left: 0.8rem;
-  content: "\e915";
-  color: #5e72e4;
-  color: var(--primary);
+  width: 16px;
+  height: 16px;
+  content: "";
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .menu::after {
   position: absolute;
   right: 0.5rem;
-  top: 0.8rem;
-  font-family: 'Lumos' !important;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  /* Better Font Rendering =========== */
-  -moz-osx-font-smoothing: grayscale;
-  content: '\e90f';
-  transition: all 0.15s ease;
-  color: #ced4da;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid #ced4da;
   transition: all 0.3s;
 }
 .main .main-left .nav li.slide .menu:hover,
@@ -912,41 +899,80 @@ footer a {
   transform: rotate(90deg);
 }
 .main .main-left .nav li.slide .menu[data-title=Status]:before {
-  content: "\e906";
-  color: #5e72e4;
-  color: var(--primary);
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('/luci-static/lumos/img/dashboard.png?v=1.0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .menu[data-title=System]:before {
-  content: "\e90a";
-  color: #fb6340;
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('/luci-static/lumos/img/system.png?v=1.0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .menu[data-title=Services]:before {
-  content: "\e909";
-  color: #11cdef;
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('/luci-static/lumos/img/services.png?v=1.0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .menu[data-title=NAS]:before {
-  content: "\e90c";
-  color: #f3a4b5;
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('/luci-static/lumos/img/storage.png?v=1.0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .menu[data-title=VPN]:before {
-  content: "\e90b";
-  color: #aaad03;
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('/luci-static/lumos/img/vpn.png?v=1.0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .menu[data-title=Network]:before {
-  content: "\e908";
-  color: #8965e0;
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('/luci-static/lumos/img/Network.png?v=1.0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .menu[data-title=Bandwidth_Monitor]:before {
   content: "\e90d";
   color: #2dce89;
 }
 .main .main-left .nav li.slide .menu[data-title=Docker]:before {
-  content: "\e911";
-  color: #6699ff;
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('/luci-static/lumos/img/docker.png?v=1.0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .menu[data-title=Statistics]:before {
-  content: "\e913";
-  color: #5603ad;
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('/luci-static/lumos/img/statistics.png?v=1.0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .menu[data-title=Control]:before {
   content: "\e912";
@@ -958,8 +984,13 @@ footer a {
   color: #fb6340;
 }
 .main .main-left .nav li.slide .menu[data-title=Logout]:before {
-  content: "\e907";
-  color: #adb5bd;
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url('/luci-static/lumos/img/logout.png?v=1.0');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .main .main-left .nav li.slide .slide-menu li a {
   position: relative;
@@ -1001,9 +1032,6 @@ footer a {
   height: 100%;
   flex-grow: 1;
   overflow-x: hidden;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
   transition: all 0.2s;
 }
 .main .main-right #maincontent {
@@ -1590,13 +1618,14 @@ input[name="nslookup"] {
     height: 24px !important;
     line-height: 24px !important;
     border-radius: 12px !important;
-    background: rgba(124, 92, 191, 0.1) !important;
+    background: rgba(124, 92, 191, 0.15) !important;
     box-shadow: none !important;
     position: relative !important;
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
     outline: none !important;
+    border-collapse: collapse !important;
 }
 
 #swaptotal > div,
@@ -1605,10 +1634,10 @@ input[name="nslookup"] {
 #membuff > div,
 #conns > div,
 #memtotal > div {
-    width: 100% !important;
     height: 24px !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: transparent !important;
 }
 
 #swaptotal > div > div,
@@ -1622,10 +1651,42 @@ input[name="nslookup"] {
     border-radius: 12px !important;
     margin: 0 !important;
     padding: 0 !important;
-    background-color: rgba(124, 92, 191, 0.85) !important;
-    background-image: url(../img/trafficbar.png) !important;
-    background-position: left top !important;
-    animation: sparkle 1000ms linear infinite !important;
+    background: linear-gradient(90deg, rgba(106, 90, 205, 0.9) 0%, rgba(124, 92, 191, 0.95) 50%, rgba(168, 127, 232, 0.9) 100%) !important;
+    background-size: 200% 100% !important;
+    animation: progress-shimmer 2000ms linear infinite !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(124, 92, 191, 0.3) !important;
+}
+
+#swaptotal > div > div::after,
+#swapfree > div > div::after,
+#memfree > div > div::after,
+#membuff > div > div::after,
+#conns > div > div::after,
+#memtotal > div > div::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%) !important;
+    animation: shine 2000ms infinite !important;
+}
+
+@keyframes shine {
+    100% {
+        left: 100% !important;
+    }
+}
+
+@keyframes progress-shimmer {
+    0% {
+        background-position: -200% 0 !important;
+    }
+    100% {
+        background-position: 200% 0 !important;
+    }
 }
 
 @keyframes sparkle {
