@@ -535,7 +535,8 @@ li {
 }
 .login-page .login-container footer,
 .login-page .login-container footer a {
-  color: var(--default);
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 .login-page .login-container footer .ftc {
   position: absolute;
@@ -1706,13 +1707,19 @@ td:has(#memtotal) {
     background-image: none !important;
 }
 
-/* 彻底移除所有可能的背景框 */
-.cbi-section-node > .cbi-section-table > tbody > tr > td,
-.cbi-section-node > .cbi-section-table > tbody > tr > th,
-.cbi-section-table-row > td,
-.cbi-section-table-row > th,
-.cbi-value-field > *,
-.cbi-value > * {
+/* 移除进度条表格单元格背景，不影响其他元素 */
+.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#memfree),
+.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#swaptotal),
+.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#swapfree),
+.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#membuff),
+.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#conns),
+.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#memtotal),
+.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#memfree),
+.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#swaptotal),
+.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#swapfree),
+.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#membuff),
+.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#conns),
+.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#memtotal) {
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
