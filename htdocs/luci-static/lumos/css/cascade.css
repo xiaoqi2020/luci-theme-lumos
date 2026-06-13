@@ -1878,17 +1878,19 @@ td > table > tbody > tr > td,
 .cbi-button-apply,
 .cbi-button-reload,
 .cbi-button-action {
-  color: #2e6da4;
-  border: 1px solid #2e6da4;
-  background-color: transparent;
+  color: #fff !important;
+  border: 1px solid #5e72e4 !important;
+  border-color: var(--primary) !important;
+  background-color: #5e72e4 !important;
+  background-color: var(--primary) !important;
 }
 .cbi-page-actions .cbi-button-apply + .cbi-button-save,
 .cbi-button-add,
 .cbi-button-save,
 .cbi-button-positive {
-  color: #46b8da;
-  border: 1px solid #46b8da;
-  background-color: transparent;
+  color: #fff !important;
+  border: 1px solid #2dce89 !important;
+  background-color: #2dce89 !important;
 }
 .cbi-section-remove > .cbi-button,
 .cbi-button-remove,
@@ -2256,6 +2258,252 @@ hr {
   margin: 1rem 0;
   border-color: #EEE;
   opacity: 0.1;
+}
+
+/* Fix button visibility in light mode */
+.cbi-button,
+.cbi-button-apply,
+.cbi-button-save,
+.cbi-button-edit,
+.cbi-button-reset,
+.cbi-button-reload,
+.cbi-button-add,
+.cbi-button-find,
+.cbi-button-action,
+.cbi-button-neutral,
+.cbi-button-link,
+.cbi-button-positive,
+.cbi-button-negative,
+input[type="submit"].cbi-button,
+input[type="button"].cbi-button,
+form .cbi-button,
+.cbi-page-actions .cbi-button,
+.cbi-section-actions .cbi-button,
+.main-right .cbi-button,
+.container .cbi-button {
+  color: #fff !important;
+  background-color: #5e72e4 !important;
+  background-color: var(--primary) !important;
+  border-color: #5e72e4 !important;
+  border-color: var(--primary) !important;
+  border-radius: 4px;
+  padding: 6px 16px;
+  border: 1px solid;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+}
+
+.cbi-button:hover,
+.cbi-button-apply:hover,
+.cbi-button-save:hover,
+.cbi-button-edit:hover {
+  background-color: #6f7dd9 !important;
+  border-color: #6f7dd9 !important;
+}
+
+.cbi-button-reset,
+.cbi-button-remove {
+  background-color: #fb6340 !important;
+  border-color: #fb6340 !important;
+}
+
+.cbi-button-add,
+.cbi-button-save,
+.cbi-button-find {
+  background-color: #2dce89 !important;
+  border-color: #2dce89 !important;
+}
+
+/* Fix input visibility in light mode */
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+select,
+textarea,
+.cbi-input-text,
+.cbi-input-password,
+.cbi-input-number,
+.cbi-section-table input,
+.cbi-section-table select,
+table input,
+table select,
+.table input,
+.table select,
+.cbi-value-field input,
+.cbi-value-field select {
+  color: #333 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px;
+  padding: 6px 10px;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #5e72e4 !important;
+  border-color: var(--primary) !important;
+  outline: none;
+}
+
+/* Fix checkbox visibility in light mode */
+input[type="checkbox"],
+input[type="radio"],
+.cbi-input-radio,
+.cbi-input-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #5e72e4;
+  accent-color: var(--primary);
+  cursor: pointer;
+  opacity: 1 !important;
+  position: relative !important;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0;
+}
+
+/* Fix checkbox/radio container background */
+.cbi-value-field input[type="checkbox"],
+.cbi-value-field input[type="radio"],
+.cbi-value input[type="checkbox"],
+.cbi-value input[type="radio"],
+.cbi-section-table input[type="checkbox"],
+.cbi-section-table input[type="radio"] {
+  background: #fff !important;
+  border: 1px solid #ccc !important;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background: #5e72e4 !important;
+  background: var(--primary) !important;
+  border-color: #5e72e4 !important;
+  border-color: var(--primary) !important;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '\2714';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Fix sort buttons icons */
+.cbi-button-up,
+.cbi-button-down {
+  color: #fff !important;
+  font-size: 14px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px !important;
+  min-width: 30px !important;
+}
+
+.cbi-button-up::after,
+.cbi-button-down::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+}
+
+.cbi-button-up::after {
+  border-bottom: 6px solid #fff;
+}
+
+.cbi-button-down::after {
+  border-top: 6px solid #fff;
+}
+
+/* Fix checkbox/radio labels */
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+  color: #333 !important;
+  cursor: pointer;
+}
+
+/* Fix range input */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #5e72e4;
+  background: var(--primary);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #5e72e4;
+  background: var(--primary);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* Fix file input */
+input[type="file"] {
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+  background: #fff;
+}
+
+/* Fix button groups */
+.cbi-button-group .cbi-button {
+  margin-right: 4px;
+}
+
+.cbi-button-group .cbi-button:last-child {
+  margin-right: 0;
+}
+
+/* Fix select dropdown arrow visibility */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 30px;
 }
 .kpi {
   font-size: 0.875rem;

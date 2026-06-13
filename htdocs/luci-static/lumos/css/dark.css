@@ -1224,3 +1224,234 @@ fieldset:hover {
     box-shadow: 0 0 .5rem 0 rgba(0,0,0,0.35);
   }
 }
+
+/* Fix button visibility in dark mode */
+.cbi-button,
+.cbi-button-apply,
+.cbi-button-save,
+.cbi-button-edit,
+.cbi-button-reset,
+.cbi-button-reload,
+.cbi-button-add,
+.cbi-button-find {
+  color: #fff !important;
+  background-color: #483d8b !important;
+  background-color: var(--dark-primary) !important;
+  border-color: #483d8b !important;
+  border-color: var(--dark-primary) !important;
+  border-radius: 4px;
+  padding: 6px 16px;
+  border: 1px solid;
+}
+
+.cbi-button:hover,
+.cbi-button-apply:hover,
+.cbi-button-save:hover,
+.cbi-button-edit:hover {
+  background-color: #5c4696 !important;
+  border-color: #5c4696 !important;
+}
+
+.cbi-button-reset,
+.cbi-button-remove {
+  background-color: darkorange !important;
+  border-color: darkorange !important;
+}
+
+.cbi-button-add,
+.cbi-button-save,
+.cbi-button-find {
+  background-color: darkseagreen !important;
+  border-color: darkseagreen !important;
+}
+
+/* Fix input visibility in dark mode */
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+select,
+textarea,
+.cbi-input-text,
+.cbi-input-password,
+.cbi-input-number,
+.cbi-section-table input,
+.cbi-section-table select,
+table input,
+table select,
+.table input,
+.table select,
+.cbi-value-field input,
+.cbi-value-field select {
+  color: #ccc !important;
+  background-color: #252525 !important;
+  border: 1px solid #444 !important;
+  border-radius: 4px;
+  padding: 6px 10px;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #483d8b !important;
+  border-color: var(--dark-primary) !important;
+  outline: none;
+}
+
+/* Fix checkbox visibility in dark mode */
+input[type="checkbox"],
+input[type="radio"],
+.cbi-input-radio,
+.cbi-input-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #483d8b;
+  accent-color: var(--dark-primary);
+  cursor: pointer;
+  opacity: 1 !important;
+  position: relative !important;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0;
+}
+
+/* Fix checkbox/radio container background */
+.cbi-value-field input[type="checkbox"],
+.cbi-value-field input[type="radio"],
+.cbi-value input[type="checkbox"],
+.cbi-value input[type="radio"],
+.cbi-section-table input[type="checkbox"],
+.cbi-section-table input[type="radio"] {
+  background: #252525 !important;
+  border: 1px solid #444 !important;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background: #483d8b !important;
+  background: var(--dark-primary) !important;
+  border-color: #483d8b !important;
+  border-color: var(--dark-primary) !important;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '\2714';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Fix sort buttons icons */
+.cbi-button-up,
+.cbi-button-down {
+  color: #fff !important;
+  font-size: 14px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px !important;
+  min-width: 30px !important;
+}
+
+.cbi-button-up::after,
+.cbi-button-down::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+}
+
+.cbi-button-up::after {
+  border-bottom: 6px solid #fff;
+}
+
+.cbi-button-down::after {
+  border-top: 6px solid #fff;
+}
+
+/* Fix checkbox/radio labels */
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+  color: #ccc !important;
+  cursor: pointer;
+}
+
+/* Fix range input */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #483d8b;
+  background: var(--dark-primary);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #483d8b;
+  background: var(--dark-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* Fix file input */
+input[type="file"] {
+  color: #ccc;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 4px;
+  background: #252525;
+}
+
+/* Fix button groups */
+.cbi-button-group .cbi-button {
+  margin-right: 4px;
+}
+
+.cbi-button-group .cbi-button:last-child {
+  margin-right: 0;
+}
+
+/* Fix select dropdown arrow visibility */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 30px;
+}
