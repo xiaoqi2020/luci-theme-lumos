@@ -2,7 +2,7 @@
  *  Lumos is a clean HTML5 theme for LuCI. It is based on luci-theme-material and Lumos Template
  *
  *  luci-theme-lumos
- *      Copyright 2026 xiaoqi <xiaoqi2020@gmail.com>
+ *      Copyright 2026 xiaoqi <xiaoqi1989065@gmail.com>
  *
  *  Have a bug? Please create an issue here on GitHub!
  *      https://github.com/xiaoqi2020/luci-theme-lumos/issues
@@ -1647,8 +1647,8 @@ input[name="nslookup"] {
 #membuff > div > div,
 #conns > div > div,
 #memtotal > div > div {
-    height: 24px !important;
-    line-height: 24px !important;
+    height: 22px !important;
+    line-height: 22px !important;
     background-color: #7c5cbf !important;
     background-color: var(--primary) !important;
 }
