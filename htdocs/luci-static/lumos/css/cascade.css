@@ -35,90 +35,86 @@
 @import url("fonts.css?v=3");
 @import url("pure-min.css?v=1");
 :root {
-  /** general **/
-  --primary: #7c5cbf;
-  --dark-primary: #5d4a9a;
-  --background-color: #f4f5f7;
-  --font-color: #525f7f;
-  /** login form **/
-  --login-form-background-color: #ffffff;
-  --darker: black;
-  --default: #525461;
-  --warning: #fb6340;
-  --footer-color: #aaa;
-  --menubar-background: #fff;
-  --menubar-scrollbar-thumb: #eee;
-  --menubar-text-color: #4c4c4c;
-  --blue: #6a8cff;
-  --indigo: #5d4a9a;
-  --purple: #7c5cbf;
-  --pink: #f3a4b5;
-  --red: #f5365c;
-  --orange: #fb6340;
-  --yellow: #ffd600;
-  --green: #2dce89;
-  --teal: #11cdef;
-  --cyan: #2bffc6;
-  --white: #fff;
-  --gray: #8898aa;
-  --gray-dark: #32325d;
-  --light: #ced4da;
-  --lighter: #e9ecef;
-  --secondary: #f7fafc;
-  --success: #2dce89;
-  --info: #11cdef;
-  --danger: #f5365c;
-  --light: #adb5bd;
-  --dark: #212529;
-  --neutral: #fff;
-  --login-form-bg-color: rgba(244, 245, 247, 0.8);
-  --blur-radius: 10px;
-  --blur-opacity: 0.5;
-  --blur-radius-dark: 10px;
-  --blur-opacity-dark: 0.5;
+  --primary: #6366f1;
+  --dark-primary: #4f46e5;
+  --background-color: #0f172a;
+  --font-color: #e2e8f0;
+  --login-form-background-color: rgba(30, 41, 59, 0.8);
+  --darker: #020617;
+  --default: #94a3b8;
+  --warning: #f59e0b;
+  --footer-color: #94a3b8;
+  --menubar-background: #1e293b;
+  --menubar-scrollbar-thumb: #334155;
+  --menubar-text-color: #f1f5f9;
+  --blue: #3b82f6;
+  --indigo: #6366f1;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --red: #ef4444;
+  --orange: #f97316;
+  --yellow: #eab308;
+  --green: #22c55e;
+  --teal: #14b8a6;
+  --cyan: #06b6d4;
+  --white: #ffffff;
+  --gray: #94a3b8;
+  --gray-dark: #64748b;
+  --light: #e2e8f0;
+  --lighter: #f1f5f9;
+  --secondary: #1e293b;
+  --success: #22c55e;
+  --info: #06b6d4;
+  --danger: #ef4444;
+  --dark: #0f172a;
+  --neutral: #1e293b;
+  --login-form-bg-color: rgba(30, 41, 59, 0.9);
+  --blur-radius: 12px;
+  --blur-opacity: 0.6;
+  --blur-radius-dark: 12px;
+  --blur-opacity-dark: 0.6;
   --font-family-sans-serif: "Google Sans", "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --font-family-normal: Open Sans, PingFangSC-Regular, Microsoft Yahei, WenQuanYi Micro Hei, "Helvetica Neue", Helvetica, Hiragino Sans GB, sans-serif;
 }
 [data-theme="dark"] {
-  --primary: #483d8b;
-  --dark-primary: #483d8b;
-  --background-color: #1e1e1e;
-  --font-color: #cccccc;
-  --darker: black;
-  --default: #525461;
-  --warning: #fb6340;
-  --footer-color: #aaa;
-  --menubar-background: #fff;
-  --menubar-scrollbar-thumb: #f6f9fc;
-  --menubar-text-color: #4c4c4c;
-  --blue: #6a8cff;
-  --indigo: #5d4a9a;
-  --purple: #7c5cbf;
-  --pink: #f3a4b5;
-  --red: #f5365c;
-  --orange: #fb6340;
-  --yellow: #ffd600;
-  --green: #2dce89;
-  --teal: #11cdef;
-  --cyan: #2bffc6;
-  --white: #fff;
-  --gray: #8898aa;
-  --gray-dark: #32325d;
-  --light: #ced4da;
-  --lighter: #e9ecef;
-  --secondary: #f7fafc;
-  --success: #2dce89;
-  --info: #11cdef;
-  --danger: #f5365c;
-  --light: #adb5bd;
-  --dark: #212529;
-  --neutral: #fff;
-  --login-form-bg-color: rgba(244, 245, 247, 0.8);
-  --blur-radius: 10px;
-  --blur-opacity: 0.5;
-  --blur-radius-dark: 10px;
-  --blur-opacity-dark: 0.5;
+  --primary: #6366f1;
+  --dark-primary: #4f46e5;
+  --background-color: #0f172a;
+  --font-color: #cbd5e1;
+  --darker: #020617;
+  --default: #64748b;
+  --warning: #f59e0b;
+  --footer-color: #64748b;
+  --menubar-background: #1e293b;
+  --menubar-scrollbar-thumb: #334155;
+  --menubar-text-color: #e2e8f0;
+  --blue: #3b82f6;
+  --indigo: #6366f1;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --red: #ef4444;
+  --orange: #f97316;
+  --yellow: #eab308;
+  --green: #22c55e;
+  --teal: #14b8a6;
+  --cyan: #06b6d4;
+  --white: #ffffff;
+  --gray: #64748b;
+  --gray-dark: #334155;
+  --light: #cbd5e1;
+  --lighter: #e2e8f0;
+  --secondary: #1e293b;
+  --success: #22c55e;
+  --info: #06b6d4;
+  --danger: #ef4444;
+  --dark: #0f172a;
+  --neutral: #1e293b;
+  --login-form-bg-color: rgba(30, 41, 59, 0.9);
+  --blur-radius: 12px;
+  --blur-opacity: 0.6;
+  --blur-radius-dark: 12px;
+  --blur-opacity-dark: 0.6;
   --font-family-sans-serif: "Google Sans", "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --font-family-normal: Open Sans, PingFangSC-Regular, Microsoft Yahei, WenQuanYi Micro Hei, "Helvetica Neue", Helvetica, Hiragino Sans GB, sans-serif;
@@ -140,10 +136,14 @@ html {
 }
 body {
   font-size: 0.875rem;
-  background-color: #f4f5f7;
+  background-color: #0f172a;
   background-color: var(--background-color);
-  color: #525f7f;
+  color: #e2e8f0;
   color: var(--font-color);
+  background-image: 
+    linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 * {
   margin: 0;
@@ -755,9 +755,11 @@ footer a {
   z-index: 100;
   overflow-x: auto;
   word-break: break-word;
-  background-color: #fff;
-  background-color: var(--menubar-background);
-  box-shadow: rgba(0, 0, 0, 0.75) 0px 0px 15px -5px;
+  background: linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%);
+  box-shadow: 
+    2px 0 20px rgba(99, 102, 241, 0.15),
+    inset -1px 0 0 rgba(99, 102, 241, 0.2);
+  border-right: 1px solid rgba(99, 102, 241, 0.1);
   transition: all 0.2s;
   overflow-y: auto;
 }
@@ -766,8 +768,7 @@ footer a {
   height: 1px;
 }
 .main .main-left::-webkit-scrollbar-thumb {
-  background-color: #f6f9fc;
-  background-color: var(--menubar-scrollbar-thumb);
+  background-color: rgba(99, 102, 241, 0.3);
 }
 .main .main-left::-webkit-scrollbar-track {
   background-color: transparent;
@@ -795,8 +796,7 @@ footer a {
   cursor: pointer;
 }
 .main .main-left .nav li a {
-  color: #525f7f;
-  color: var(--default);
+  color: #e2e8f0;
   display: block;
 }
 .main .main-left .nav li:nth-last-child(1) {
@@ -817,8 +817,7 @@ footer a {
   padding: 0.5rem 0rem 0.5rem 0;
   text-decoration: none;
   white-space: nowrap;
-  color: #4c4c4c;
-  color: var(--menubar-text-color);
+  color: #cbd5e1;
   transition: all 0.2s;
   font-size: 0.875rem;
 }
@@ -848,6 +847,7 @@ footer a {
   font-size: 1rem;
   transition: all 0.2s;
   position: relative;
+  color: #e2e8f0;
 }
 .main .main-left .nav li.slide .menu::before {
   position: absolute;
@@ -868,33 +868,39 @@ footer a {
   height: 0;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
-  border-left: 4px solid #ced4da;
+  border-left: 4px solid #94a3b8;
   transition: all 0.3s;
 }
 .main .main-left .nav li.slide .menu:hover,
 .main .main-left .nav li.slide .menu.active {
   cursor: pointer;
   color: #fff;
-  background: #5e72e4;
-  background: var(--primary);
-  box-shadow: 0 0 1px #ccc;
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.25) 0%, rgba(99, 102, 241, 0.05) 100%);
+  box-shadow: 
+    inset 0 0 15px rgba(99, 102, 241, 0.2),
+    0 0 10px rgba(99, 102, 241, 0.1);
+  border-left: 3px solid #6366f1;
 }
+
 .main .main-left .nav li.slide .menu:hover a,
 .main .main-left .nav li.slide .menu.active a {
-  color: #000;
+  color: #fff;
 }
+
 .main .main-left .nav li.slide .menu:hover a::after,
 .main .main-left .nav li.slide .menu.active a::after {
-  color: #000;
+  color: #fff;
   width: 100%;
 }
+
 .main .main-left .nav li.slide .menu:hover::before,
 .main .main-left .nav li.slide .menu.active::before {
   color: #fff !important;
 }
+
 .main .main-left .nav li.slide .menu:hover::after,
 .main .main-left .nav li.slide .menu.active::after {
-  color: #fff;
+  border-left-color: #fff;
 }
 .main .main-left .nav li.slide .menu.active::after {
   transform: rotate(90deg);
@@ -999,10 +1005,11 @@ footer a {
   padding: 0.5rem 0rem 0.5rem 0;
   text-decoration: none;
   white-space: nowrap;
-  color: rgba(0, 0, 0, 0.6);
+  color: #94a3b8;
   transition: all 0.2s;
   font-size: 0.875rem;
 }
+
 .main .main-left .nav li.slide .slide-menu li a::after {
   content: "";
   position: absolute;
@@ -1010,20 +1017,20 @@ footer a {
   height: 2px;
   left: 0;
   bottom: 0;
-  background-color: #5e72e4;
+  background-color: #6366f1;
   background-color: var(--primary);
   transition: all 0.2s;
-  box-shadow: 0 0 1px #ccc;
 }
+
 .main .main-left .nav li.slide .slide-menu li a:hover::after {
-  color: #000;
   width: 100%;
 }
+
 .main .main-left .nav li.slide .slide-menu .active a {
-  color: #000;
+  color: #fff;
 }
+
 .main .main-left .nav li.slide .slide-menu .active a::after {
-  color: #000;
   width: 100%;
 }
 .main .main-left .nav li.slide:last-child > .menu::after {
@@ -1034,6 +1041,11 @@ footer a {
   flex-grow: 1;
   overflow-x: hidden;
   transition: all 0.2s;
+  background: #0f172a;
+  background-image: 
+    linear-gradient(rgba(99, 102, 241, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 .main .main-right #maincontent {
   position: relative;
@@ -1043,7 +1055,7 @@ footer a {
   margin: 0 1.25rem 1rem 1.25rem;
 }
 .main .main-right #maincontent .container p {
-  color: #32325d;
+  color: #cbd5e1;
   line-height: 1.5em;
 }
 .main .main-right #maincontent .container > div:nth-child(1).alert-message.warning > a {
@@ -1608,26 +1620,15 @@ input[name="traceroute"],
 input[name="nslookup"] {
   width: 80%;
 }
-/* fix progress bar */
 #swaptotal,
 #swapfree,
 #memfree,
 #membuff,
 #conns,
 #memtotal {
-    width: 200px !important;
-    height: 20px !important;
-    line-height: 20px !important;
-    border-radius: 100px !important;
-    background: rgba(94, 114, 228, 0.15) !important;
-    box-shadow: none !important;
-    margin: 12px auto 6px auto !important;
-    padding: 0 !important;
-    border: none !important;
-    position: relative !important;
-    z-index: 2 !important;
-    display: flex !important;
-    align-items: center !important;
+    height: 24px !important;
+    line-height: 24px !important;
+    margin: 6px 0 !important;
 }
 
 #swaptotal > div,
@@ -1636,17 +1637,8 @@ input[name="nslookup"] {
 #membuff > div,
 #conns > div,
 #memtotal > div {
-    width: 200px !important;
-    height: 20px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 100px !important;
-    background: transparent !important;
-    overflow: hidden !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    z-index: 3 !important;
+    height: 24px !important;
+    line-height: 24px !important;
 }
 
 #swaptotal > div > div,
@@ -1655,167 +1647,10 @@ input[name="nslookup"] {
 #membuff > div > div,
 #conns > div > div,
 #memtotal > div > div {
-    height: 22px !important;
-    line-height: 22px !important;
-    border-radius: 100px !important;
-    margin: -1px 0 -1px 0 !important;
-    padding: 0 10px !important;
-    background: linear-gradient(90deg, #5e72e4 0%, #6f7dd9 100%) !important;
-    border: none !important;
-    box-sizing: border-box !important;
-}
-
-/* 移除进度条周围所有背景 */
-#swaptotal ~ *,
-#swapfree ~ *,
-#memfree ~ *,
-#membuff ~ *,
-#conns ~ *,
-#memtotal ~ * {
-    background: transparent !important;
-}
-
-.cbi-value-field:has(#memfree),
-.cbi-value-field:has(#swaptotal),
-.cbi-value-field:has(#swapfree),
-.cbi-value-field:has(#membuff),
-.cbi-value-field:has(#conns),
-.cbi-value-field:has(#memtotal) {
-    background: transparent !important;
-    padding: 0 !important;
-}
-
-/* 移除包含进度条的表格单元格背景 */
-td:has(#memfree),
-td:has(#swaptotal),
-td:has(#swapfree),
-td:has(#membuff),
-td:has(#conns),
-td:has(#memtotal) {
-    background: transparent !important;
-    padding: 0 !important;
-}
-
-/* 移除进度条中间容器背景，保留外层底板和内层进度条 */
-#swaptotal > div,
-#swapfree > div,
-#memfree > div,
-#membuff > div,
-#conns > div,
-#memtotal > div {
-    background-color: transparent !important;
-    background-image: none !important;
-}
-
-/* 移除进度条表格单元格背景，不影响其他元素 */
-.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#memfree),
-.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#swaptotal),
-.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#swapfree),
-.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#membuff),
-.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#conns),
-.cbi-section-node > .cbi-section-table > tbody > tr > td:has(#memtotal),
-.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#memfree),
-.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#swaptotal),
-.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#swapfree),
-.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#membuff),
-.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#conns),
-.cbi-section-node > .cbi-section-table > tbody > tr > th:has(#memtotal) {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-/* 确保进度条外层容器只有我们想要的样式 */
-#memfree, #swaptotal, #swapfree, #membuff, #conns, #memtotal {
-    background: rgba(94, 114, 228, 0.15) !important;
-    border-radius: 100px !important;
-    overflow: visible !important;
-}
-
-/* 移除所有可能的背景框 - 使用更广泛的选择器 */
-.cbi-section-node > .cbi-section-table,
-.cbi-section-node > .cbi-section-table > tbody,
-.cbi-section-node > .cbi-section-table > tbody > tr,
-.cbi-section-node > .cbi-section-table > tbody > tr > * {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-}
-
-/* 移除进度条周围所有元素的背景 */
-.cbi-section-node:has(#memfree),
-.cbi-section-node:has(#swaptotal),
-.cbi-section-node:has(#swapfree),
-.cbi-section-node:has(#membuff),
-.cbi-section-node:has(#conns),
-.cbi-section-node:has(#memtotal),
-.cbi-section-node:has(#memfree) > *,
-.cbi-section-node:has(#swaptotal) > *,
-.cbi-section-node:has(#swapfree) > *,
-.cbi-section-node:has(#membuff) > *,
-.cbi-section-node:has(#conns) > *,
-.cbi-section-node:has(#memtotal) > * {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-}
-
-/* 移除表格行背景色 */
-.cbi-section-table-row {
-    background: transparent !important;
-}
-
-div > table > tbody > tr:nth-of-type(2n),
-div > .table > .tbody > .tr:nth-of-type(2n),
-.cbi-section-table-row:nth-of-type(2n) {
-    background-color: transparent !important;
-}
-
-.cbi-section-table-row td,
-.cbi-section-table-row .td {
-    background: transparent !important;
-}
-
-.cbi-section-table tr,
-.cbi-section-table td,
-.cbi-section-table .td {
-    background: transparent !important;
-}
-
-.cbi-section-table-row > .cbi-value-field {
-    border: none !important;
-    background: transparent !important;
-}
-
-.cbi-section-table-row > .cbi-value-field * {
-    border: none !important;
-    background: transparent !important;
-}
-
-.cbi-rowstyle-1,
-.cbi-rowstyle-2 {
-    background-color: transparent !important;
-}
-
-.cbi-section-node > .cbi-section-table > tbody > tr,
-.cbi-section-node > .cbi-section-table > tbody > td,
-.cbi-section-node > .cbi-section-table > tbody > th {
-    background: transparent !important;
-}
-
-.cbi-value-field,
-.cbi-value {
-    background: transparent !important;
-}
-
-table,
-table > tbody,
-table > tbody > tr,
-table > tbody > td,
-table > tbody > th {
-    background: transparent !important;
+    height: 24px !important;
+    line-height: 24px !important;
+    background-color: #7c5cbf !important;
+    background-color: var(--primary) !important;
 }
 
 #swaptotal small,
@@ -1824,7 +1659,7 @@ table > tbody > th {
 #membuff small,
 #conns small,
 #memtotal small {
-    color: #333 !important;
+    color: #fff !important;
     font-weight: 600 !important;
 }
 /* fix multiple table */
@@ -2282,40 +2117,51 @@ form .cbi-button,
 .main-right .cbi-button,
 .container .cbi-button {
   color: #fff !important;
-  background-color: #5e72e4 !important;
-  background-color: var(--primary) !important;
-  border-color: #5e72e4 !important;
-  border-color: var(--primary) !important;
-  border-radius: 4px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  border-color: rgba(99, 102, 241, 0.5) !important;
+  border-radius: 8px;
   padding: 6px 16px;
   border: 1px solid;
   display: inline-block;
   min-width: 80px;
   text-align: center;
+  box-shadow: 
+    0 4px 15px rgba(99, 102, 241, 0.3),
+    0 0 0 1px rgba(99, 102, 241, 0.2);
+  transition: all 0.3s ease;
 }
 
 .cbi-button:hover,
 .cbi-button-apply:hover,
 .cbi-button-save:hover,
 .cbi-button-edit:hover {
-  background-color: #6f7dd9 !important;
-  border-color: #6f7dd9 !important;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%) !important;
+  box-shadow: 
+    0 6px 20px rgba(99, 102, 241, 0.4),
+    0 0 0 1px rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px);
 }
 
 .cbi-button-reset,
 .cbi-button-remove {
-  background-color: #fb6340 !important;
-  border-color: #fb6340 !important;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  border-color: rgba(249, 115, 22, 0.5) !important;
+  box-shadow: 
+    0 4px 15px rgba(249, 115, 22, 0.3),
+    0 0 0 1px rgba(249, 115, 22, 0.2);
 }
 
 .cbi-button-add,
 .cbi-button-save,
 .cbi-button-find {
-  background-color: #2dce89 !important;
-  border-color: #2dce89 !important;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  border-color: rgba(34, 197, 94, 0.5) !important;
+  box-shadow: 
+    0 4px 15px rgba(34, 197, 94, 0.3),
+    0 0 0 1px rgba(34, 197, 94, 0.2);
 }
 
-/* Fix input visibility in light mode */
+/* Fix input visibility in dark mode */
 input[type="text"],
 input[type="password"],
 input[type="number"],
@@ -2337,13 +2183,15 @@ table select,
 .table select,
 .cbi-value-field input,
 .cbi-value-field select {
-  color: #333 !important;
-  background-color: #ffffff !important;
-  border: 1px solid #ccc !important;
-  border-radius: 4px;
-  padding: 6px 10px;
-  box-shadow: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  color: #cbd5e1 !important;
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  border: 1px solid rgba(99, 102, 241, 0.2) !important;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(99, 102, 241, 0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input[type="text"]:focus,
@@ -2356,19 +2204,23 @@ input[type="date"]:focus,
 input[type="time"]:focus,
 select:focus,
 textarea:focus {
-  border-color: #5e72e4 !important;
+  border-color: #6366f1 !important;
   border-color: var(--primary) !important;
   outline: none;
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(99, 102, 241, 0.3),
+    0 0 0 1px rgba(99, 102, 241, 0.3);
 }
 
-/* Fix checkbox visibility in light mode */
+/* Fix checkbox visibility in dark mode */
 input[type="checkbox"],
 input[type="radio"],
 .cbi-input-radio,
 .cbi-input-checkbox {
   width: 18px;
   height: 18px;
-  accent-color: #5e72e4;
+  accent-color: #6366f1;
   accent-color: var(--primary);
   cursor: pointer;
   opacity: 1 !important;
@@ -2376,6 +2228,7 @@ input[type="radio"],
   -webkit-appearance: none;
   appearance: none;
   padding: 0;
+  border-radius: 6px;
 }
 
 /* Fix checkbox/radio container background */
@@ -2385,16 +2238,18 @@ input[type="radio"],
 .cbi-value input[type="radio"],
 .cbi-section-table input[type="checkbox"],
 .cbi-section-table input[type="radio"] {
-  background: #fff !important;
-  border: 1px solid #ccc !important;
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 2px solid rgba(99, 102, 241, 0.3) !important;
 }
 
 input[type="checkbox"]:checked,
 input[type="radio"]:checked {
-  background: #5e72e4 !important;
-  background: var(--primary) !important;
-  border-color: #5e72e4 !important;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  border-color: #6366f1 !important;
   border-color: var(--primary) !important;
+  box-shadow: 
+    0 0 10px rgba(99, 102, 241, 0.5),
+    0 0 20px rgba(99, 102, 241, 0.3);
 }
 
 input[type="checkbox"]:checked::after {
@@ -2609,11 +2464,11 @@ table > thead > tr > th,
 }
 div > table > tbody > tr:nth-of-type(2n),
 div > .table > .tbody > .tr:nth-of-type(2n) {
-  background-color: #f9f9f9;
+  background-color: rgba(99, 102, 241, 0.05);
 }
 div > table > tbody > tr:nth-of-type(2n),
 div > .table > .tbody > .tr:nth-of-type(2n) {
-  background-color: #f9f9f9;
+  background-color: rgba(99, 102, 241, 0.05);
 }
 .danger {
   background-color: #f5365c !important;
@@ -2688,10 +2543,11 @@ h2 {
   font-size: 1.25rem;
   letter-spacing: 0.1rem;
   padding: 1rem 1.5rem;
-  color: #32325d;
-  border-radius: 0.375rem;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+  color: #e2e8f0;
+  border-radius: 12px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
 }
 #cbi-dropbear h2,
 #cbi-dropbear .cbi-map-descr,
@@ -2770,24 +2626,25 @@ table > tbody > tr > td,
 table > tfoot > tr > td,
 table > thead > tr > td {
   font-size: 0.875rem;
-  color: #525f7f;
+  color: #e2e8f0;
   line-height: 1.4em;
   vertical-align: middle !important;
   padding: 0.8rem 1.5rem;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid rgba(99, 102, 241, 0.1);
 }
+
 table > tbody > tr > th,
 table > tfoot > tr > th,
 table > thead > tr > th {
   padding-right: 1.5rem;
   padding-left: 1.5rem;
-  color: #8898aa;
-  background-color: #f6f9fc;
+  color: #94a3b8;
+  background-color: rgba(99, 102, 241, 0.05);
   font-size: 0.75rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   letter-spacing: 1px;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.15);
 }
 table > tbody > tr:first-child > td,
 table > tfoot > tr:first-child > td,
@@ -2801,7 +2658,7 @@ table > thead > tr:first-child > td {
   text-align: center;
 }
 fieldset > table > tbody > tr:nth-of-type(2n) {
-  background-color: #f9f9f9;
+  background-color: rgba(99, 102, 241, 0.05);
 }
 /* fix multiple table */
 table table {
@@ -3126,16 +2983,18 @@ select[multiple="multiple"] {
 }
 .cbi-section-remove:nth-of-type(2n),
 .cbi-section-node:nth-of-type(2n) {
-  background-color: #f9f9f9;
+  background-color: rgba(99, 102, 241, 0.05);
 }
+
 .cbi-section-node-tabbed {
   padding: 0;
   margin-top: 0;
 }
+
 .cbi-section-node {
-  background: #fff;
-  border: 0;
-  border-radius: 0.375rem;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 12px;
   margin-bottom: 0px;
   box-shadow: 0 0 0rem 0 rgba(136, 152, 170, 0.15);
   overflow-x: auto;
@@ -3508,10 +3367,13 @@ input[name="nslookup"] {
   margin-top: 0;
 }
 .cbi-section {
-  background: #fff;
-  border: 0;
-  border-radius: 0.375rem;
-  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(99, 102, 241, 0.05);
   overflow-x: auto;
   overflow-y: hidden;
 }
