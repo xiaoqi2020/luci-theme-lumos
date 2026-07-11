@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             setWidthImportant(mainLeft, '0');
             if (mainRight) {
-                mainRight.style.overflowY = 'auto';
+                mainRight.style.overflow = 'visible';
             }
             showSide = false;
         } else {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             setWidthImportant(mainLeft, '15rem');
             if (mainRight) {
-                mainRight.style.overflowY = 'hidden';
+                mainRight.style.overflow = 'visible';
             }
             showSide = true;
         }

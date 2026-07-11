@@ -66,14 +66,24 @@ body {
 }
 
 header::after {
-  background: linear-gradient(135deg, rgba(124, 92, 191, 0.15) 0%, rgba(168, 127, 232, 0.08) 50%, rgba(106, 140, 255, 0.12) 100%) !important;
+  background-color: transparent !important;
+}
+
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  height: calc(100% - 4rem);
 }
 
 .main .main-left {
+  float: left;
   width: 15rem;
   height: 100%;
-  flex-shrink: 0;
+  position: fixed;
+  z-index: 100;
   overflow-x: auto;
+  overflow-y: auto;
   background: linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%);
   box-shadow: 
     2px 0 20px rgba(99, 102, 241, 0.15),
@@ -82,7 +92,7 @@ header::after {
 }
 
 .main .main-left .sidenav-header .brand {
-  color: #ccc;
+  color: var(--font-color);
 }
 
 .main .main-left .nav .slide .slide-menu .active a {
@@ -90,7 +100,7 @@ header::after {
 }
 
 .main .main-left .nav .slide .slide-menu li a {
-  color: #cccccc;
+  color: var(--font-color);
 }
 
 .main .main-left .nav .slide .slide-menu li a::after {
@@ -191,14 +201,19 @@ header::after {
 }
 
 .main .main-right {
-  height: 100%;
-  flex-grow: 1;
-  overflow-x: hidden;
+  margin-left: 15rem;
   background: #0f172a;
   background-image: 
     linear-gradient(rgba(99, 102, 241, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(99, 102, 241, 0.02) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+
+.main .main-right #maincontent {
+}
+
+.main .main-right #maincontent .container {
+  overflow-x: hidden;
 }
 
 h2 {
@@ -282,16 +297,15 @@ header.bg-primary {
   z-index: 1000;
 }
 .showSide:hover {
-  color: #ccc !important;
+  color: var(--font-color) !important;
 }
 
 .cbi-map-descr {
-  color: #ccc;
+  color: var(--font-color);
 }
 
 .cbi-section {
-  background: rgba(30, 41, 59, 0.6);
-  backdrop-filter: blur(12px);
+  background: rgba(30, 41, 59, 0.8);
   border-radius: 12px;
   border: 1px solid rgba(99, 102, 241, 0.1);
   box-shadow: 
@@ -434,7 +448,7 @@ table>thead>tr>th {
 
 .cbi-section>h3:first-child,
 .panel-title {
-  color: #ccc;
+  color: var(--font-color);
   border-bottom: 0;
 }
 
@@ -443,8 +457,9 @@ table>thead>tr>th {
 }
 
 .cbi-button {
-  color: #ccc;
-  background-color: #2c2c2c;
+  color: #e2e8f0;
+  color: var(--font-color);
+  background-color: #1e293b;
 }
 
 .cbi-rowstyle-2 .cbi-button-up,
@@ -528,7 +543,7 @@ th h6, td h6 {
 }
 
 #syslog {
-  color: #ccc;
+  color: var(--font-color);
   background-color: #1e1e1e;
 }
 
@@ -554,7 +569,8 @@ th h6, td h6 {
 
 .tabs>li>a,
 .cbi-tabmenu>li>a {
-  color: #ccc !important;
+  color: #e2e8f0 !important;
+  color: var(--font-color) !important;
 }
 
 .cbi-tabmenu>li>a:hover,
@@ -575,7 +591,7 @@ th h6, td h6 {
 }
 
 .cbi-tab-descr {
-  color: #ccc;
+  color: var(--font-color);
 }
 
 .cbi-tabcontainer>.cbi-value:nth-of-type(2n),
@@ -584,12 +600,12 @@ th h6, td h6 {
 }
 
 .cbi-value-title {
-  color: #ccc;
+  color: var(--font-color);
 }
 
 select,
 input {
-  color: #ccc;
+  color: var(--font-color);
   background-color: transparent;
   border: 1px solid #3c3c3c !important;
   box-shadow: 0 3px 2px rgba(0,0,0,0.05);
@@ -620,7 +636,7 @@ select {
 #cbi-customfeedconf .cbi-map-descr,
 #cbi-download h2,
 #cbi-filelist h2 {
-  color: #ccc !important;
+  color: var(--font-color) !important;
 }
 
 .cbi-value-field>ul>li .ifacebadge {
@@ -628,14 +644,14 @@ select {
 }
 
 .cbi-section-descr {
-  color: #ccc;
+  color: var(--font-color);
 }
 
 /*textarea for dark mode*/
 textarea {
   border: 1px solid #3c3c3c !important;
   background-color: #1e1e1e;
-  color: #ccc;
+  color: var(--font-color);
 }
 
 .cbi-section-remove:nth-of-type(2n),
@@ -644,7 +660,7 @@ textarea {
 }
 
 .node-system-packages>.main table tr td:nth-last-child(1) {
-  color: #ccc;
+  color: var(--font-color);
 }
 
 .node-system-packages>.main .cbi-value>pre {
@@ -720,7 +736,7 @@ td.cbi-value-field var,
 }
 
 #diag-rc-output>pre {
-  color: #ccc;
+  color: var(--font-color);
   background-color: #1e1e1e;
 }
 
@@ -730,17 +746,17 @@ td.cbi-value-field var,
 }
 
 .node-services-vssr .block h4 {
-  color: #ccc !important;
+  color: var(--font-color) !important;
 }
 
 .node-services-vssr .status-bar {
-  color: #ccc;
+  color: var(--font-color);
   background: #333333f0;
   box-shadow: #00000094 10px 10px 30px 5px;
 }
 
 .node-services-vssr .cbi-section-table-row {
-  color: #ccc;
+  color: var(--font-color);
   background-color: #3c3c3c !important;
   box-shadow: 0 0 5px 0 rgba(0,0,0,0.35);
 }
@@ -752,7 +768,7 @@ td.cbi-value-field var,
 }
 
 .node-services-vssr .ssr-button {
-  color: #ccc;
+  color: var(--font-color);
 }
 
 .node-services-vssr .incon:nth-child(2) {
@@ -760,11 +776,11 @@ td.cbi-value-field var,
 }
 
 .main .main-right #maincontent .container p {
-  color: #ccc;
+  color: var(--font-color);
 }
 
 #xhr_poll_status>.label.success {
-  color: #ccc !important;
+  color: var(--font-color) !important;
   background-color: darkolivegreen !important;
 }
 
@@ -775,7 +791,7 @@ td.cbi-value-field var,
     background-color: darkorange;
   }
   50%{
-    color: #ccc;
+    color: var(--font-color);
     background-color: #333333;
   }
   100%{
@@ -865,7 +881,7 @@ fieldset[id^="cbi-apply-"] {
 }
 
 .node-services-vssr .block h4 span {
-  color: #ccc !important;
+  color: var(--font-color) !important;
 }
 
 /* luci-app-passwall */
@@ -877,7 +893,7 @@ fieldset[id^="cbi-apply-"] {
 
 /* luci-app-bypass */
 #cbi-bypass .status-bar {
-  color: #ccc;
+  color: var(--font-color);
   background: #333333f0;
   box-shadow: #00000094 10px 10px 30px 5px;
 }
@@ -939,7 +955,7 @@ fieldset[id^="cbi-apply-"] {
 /* luci-app-istorex (Network Guide) */
 #app #main #page .title,
 #app #main #page .desc {
-  color: #cccccc;
+  color: var(--font-color);
   background-color: #333333;
 }
 #app #main #page .network-message li:not(span):not(a) {
@@ -959,7 +975,7 @@ fieldset[id^="cbi-apply-"] {
 #app #main #page .flow-data span,
 #app #main #page .app-container_status-label_block span,
 #app #main #page .app-container .item-label span:not(#app #main #page .app-container .progress-value span) {
-  color: #cccccc;
+  color: var(--font-color);
 }
 #app #main #page .app-container_status-info span,
 #app #main #page .app-container_status-info span,
@@ -979,14 +995,14 @@ fieldset[id^="cbi-apply-"] {
   background-color: #555555;
 }
 #app #main #page .app-container_title .DeviceBlock ul {
-  background-color: #cccccc;
+  background-color: var(--font-color);
 }
 #actioner div.action,
 #actioner div.actioner-container {
   background-color: #3c3c3c;
 }
 #actioner div.action .title {
-  color: #cccccc;
+  color: var(--font-color);
 }
 #actioner div.action .desc {
   color: #cbcbcb;
@@ -1033,19 +1049,13 @@ fieldset[id^="cbi-apply-"] {
   }
   .cbi-section,
   fieldset {
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
-    backdrop-filter: blur(16px) saturate(150%);
-    background-color: rgba(51, 51, 51, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(99, 102, 241, 0.1);
   }
   .panel-title {
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     backdrop-filter: blur(16px) saturate(180%);
     background: linear-gradient(135deg, rgba(51, 51, 51, 0.9) 0%, rgba(51, 51, 51, 0.75) 100%);
-  }
-  body {
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
   }
 }
 
@@ -1306,7 +1316,7 @@ input[type="checkbox"]:checked::after {
 /* Fix checkbox/radio labels */
 input[type="checkbox"] + label,
 input[type="radio"] + label {
-  color: #ccc !important;
+  color: var(--font-color) !important;
   cursor: pointer;
 }
 
@@ -1343,7 +1353,7 @@ input[type="range"]::-moz-range-thumb {
 
 /* Fix file input */
 input[type="file"] {
-  color: #ccc;
+  color: var(--font-color);
   border: 1px solid #444;
   border-radius: 4px;
   padding: 4px;
@@ -1366,4 +1376,40 @@ select {
   background-repeat: no-repeat;
   background-position: right 8px center;
   padding-right: 30px;
+}
+
+.cbi-modal,
+.cbi-dialog,
+.cbi-popup,
+.cbi-map-modal,
+[class*="modal"],
+[class*="dialog"],
+[class*="popup"] {
+  background-color: var(--background-color) !important;
+  color: var(--font-color) !important;
+}
+
+.cbi-modal *,
+.cbi-dialog *,
+.cbi-popup *,
+.cbi-map-modal *,
+[class*="modal"] *,
+[class*="dialog"] *,
+[class*="popup"] * {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+.cbi-modal input,
+.cbi-modal select,
+.cbi-modal textarea,
+.cbi-dialog input,
+.cbi-dialog select,
+.cbi-dialog textarea,
+[class*="modal"] input,
+[class*="modal"] select,
+[class*="modal"] textarea {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: var(--font-color) !important;
 }
