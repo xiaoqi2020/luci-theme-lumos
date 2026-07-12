@@ -311,6 +311,7 @@ header.bg-primary {
   box-shadow: 
     0 4px 24px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(99, 102, 241, 0.05);
+  color: var(--font-color);
 }
 
 .panel-title {
@@ -556,7 +557,14 @@ th h6, td h6 {
 }
 
 .tabs {
-  background-color: #252526;
+  background-color: var(--background-color);
+  border-radius: 0.5rem;
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(99, 102, 241, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
 .tabs>li:hover,
@@ -583,11 +591,19 @@ th h6, td h6 {
 }
 
 .cbi-tabmenu>li {
-  background: #2d2d2d;
+  background: transparent;
 }
 
 .cbi-tabmenu {
   border-bottom: 0 solid #ddd !important;
+  background-color: var(--background-color);
+  border-radius: 0.5rem;
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(99, 102, 241, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
 .cbi-tab-descr {
@@ -1102,7 +1118,10 @@ fieldset:hover {
   }
   .main .main-right {
     width: 100%;
-    flex-grow: 1;
+    margin-left: 0;
+  }
+  header .container {
+    margin-left: 0;
   }
   .showSide {
     padding: 0.1rem;
@@ -1240,12 +1259,21 @@ input[type="radio"],
   accent-color: #6366f1;
   accent-color: var(--dark-primary);
   cursor: pointer;
-  opacity: 1 !important;
-  position: relative !important;
   -webkit-appearance: none;
   appearance: none;
   padding: 0;
   border-radius: 6px;
+  opacity: 0 !important;
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+.cbi-input-checkbox + .toggle {
+  opacity: 1;
+  position: relative;
+  pointer-events: auto;
 }
 
 /* Fix checkbox/radio container background */
