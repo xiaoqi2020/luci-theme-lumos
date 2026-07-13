@@ -21,6 +21,9 @@ on:
 env:
   TZ: Asia/Shanghai
 
+permissions:
+  contents: write
+
 jobs:
   job_check:
     name: Check Version
@@ -59,9 +62,7 @@ jobs:
           echo "has_update=${has_update}"
       - name: Generate new tag & release
         if: steps.check_version.outputs.has_update == 'true'
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
           name: ${{ steps.check_version.outputs.latest_version }}${{ steps.check_version.outputs.branch_suffix }}
           tag_name: ${{ steps.check_version.outputs.latest_version }}${{ steps.check_version.outputs.branch_suffix }}
@@ -144,10 +145,8 @@ jobs:
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
       - name: Upload LumOS packages to release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: steps.compile.outputs.status == 'success'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ needs.job_check.outputs.lumos_version }}${{ needs.job_check.outputs.branch_suffix }}
           files: ${{ env.FIRMWARE }}/base/luci-theme*.*
