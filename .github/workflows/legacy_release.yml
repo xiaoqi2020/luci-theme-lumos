@@ -1,11 +1,11 @@
-name: "Auto compile (OpenWrt)"
+name: "Auto compile (Legacy)"
 
 on:
   repository_dispatch:
   workflow_dispatch:
   push:
     branches:
-      - "openwrt"
+      - "main"
     paths:
       - "Makefile"
 
@@ -28,15 +28,15 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: "openwrt"
+          ref: "main"
       - name: Check version
         id: check_version
         env:
           url_release: https://api.github.com/repos/${{ github.repository }}/releases
         run: |
           pkg_version=$(grep -oP 'PKG_VERSION:=\K.*' Makefile)
-          latest_version="v${pkg_version}-openwrt"
-          latest_release=$(wget -qO- -t1 -T2 "${{env.url_release}}" | awk -F '"' '/tag_name/{print $4}' | grep openwrt | head -n 1)
+          latest_version="v${pkg_version}-legacy"
+          latest_release=$(wget -qO- -t1 -T2 "${{env.url_release}}" | awk -F '"' '/tag_name/{print $4}' | grep legacy | head -n 1)
           has_update=$([ "${latest_version}" != "${latest_release}" ] && echo true || echo false)
           echo "latest_version=${latest_version}" >> $GITHUB_OUTPUT
           echo "has_update=${has_update}" >> $GITHUB_OUTPUT
@@ -47,11 +47,11 @@ jobs:
         if: steps.check_version.outputs.has_update == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          name: For OpenWrt 24.x+ (APK)
+          name: For OpenWrt 18.06/19.07 (IPK)
           tag_name: ${{ steps.check_version.outputs.latest_version }}
 
   job_build_lumos:
-    name: Build LumOS (openwrt)
+    name: Build LumOS (legacy)
     needs: job_check
     if: needs.job_check.outputs.has_update == 'true'
     runs-on: ubuntu-latest
@@ -68,28 +68,28 @@ jobs:
         uses: actions/cache@v3
         with:
           path: sdk
-          key: openwrt-sdk-24.10-x86-64
+          key: openwrt-sdk-19.07-x86-64
 
       - name: Initialization environment
         if: steps.cache-sdk.outputs.cache-hit != 'true'
         env:
-          url_sdk: https://archive.openwrt.org/releases/24.10.0/targets/x86/64/openwrt-sdk-24.10.0-x86-64_gcc-13.3.0_musl.Linux-x86_64.tar.zst
+          url_sdk: https://archive.openwrt.org/releases/19.07.10/targets/x86/64/openwrt-sdk-19.07.10-x86-64_gcc-7.5.0_musl.Linux-x86_64.tar.xz
         run: |
           wget ${{ env.url_sdk }}
           file_name=$(echo ${{env.url_sdk}} | awk -F/ '{print $NF}')
-          mkdir sdk && tar --zstd -xvf $file_name -C ./sdk --strip-components=1
+          mkdir sdk && tar -xvf $file_name -C ./sdk --strip-components=1
           cd sdk
-          echo "src-git base https://github.com/openwrt/openwrt.git;main" > feeds.conf
-          echo "src-git-full packages https://github.com/openwrt/packages.git;master" >> feeds.conf
-          echo "src-git-full luci https://github.com/openwrt/luci.git;master" >> feeds.conf
-          echo "src-git-full routing https://git.openwrt.org/feed/routing.git;master" >> feeds.conf
-          git clone -b openwrt https://github.com/${{ github.repository }}.git package/downloads/luci-theme-lumos
+          echo "src-git base https://github.com/openwrt/openwrt.git;openwrt-19.07" > feeds.conf
+          echo "src-git-full packages https://github.com/openwrt/packages.git;openwrt-19.07" >> feeds.conf
+          echo "src-git-full luci https://github.com/openwrt/luci.git;openwrt-19.07" >> feeds.conf
+          echo "src-git-full routing https://git.openwrt.org/feed/routing.git;openwrt-19.07" >> feeds.conf
+          git clone -b main https://github.com/${{ github.repository }}.git package/downloads/luci-theme-lumos
           ./scripts/feeds update -a
           echo "CONFIG_PACKAGE_luci-theme-lumos=m" > .config
           ./scripts/feeds install -d n luci-theme-lumos
           make download -j8
 
-      - name: Configure LumOS (openwrt)
+      - name: Configure LumOS (legacy)
         run: |
           cd sdk
           ./scripts/feeds install luci-theme-lumos
@@ -101,7 +101,7 @@ jobs:
           echo "CONFIG_PACKAGE_luci-theme-lumos=m" >> .config
           make defconfig
 
-      - name: Compile LumOS (openwrt)
+      - name: Compile LumOS (legacy)
         id: compile
         run: |
           cd sdk
@@ -113,7 +113,7 @@ jobs:
           echo "status=success" >> $GITHUB_OUTPUT
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
-      - name: Upload LumOS (openwrt) packages to release
+      - name: Upload LumOS (legacy) packages to release
         uses: softprops/action-gh-release@v2
         if: steps.compile.outputs.status == 'success'
         with:
