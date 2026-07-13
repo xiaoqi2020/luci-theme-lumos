@@ -1,11 +1,18 @@
-name: "Auto compile (OpenWrt)"
+name: "Auto compile with OpenWrt SDK"
 
 on:
   repository_dispatch:
   workflow_dispatch:
+    inputs:
+      ssh:
+        description: "SSH connection to Actions"
+        required: false
+        default: "false"
   push:
     branches:
       - "openwrt"
+    paths:
+      - "Makefile"
 
 env:
   TZ: Asia/Shanghai
@@ -30,16 +37,11 @@ jobs:
       - name: Check version
         id: check_version
         env:
-          url_release: https://api.github.com/repos/${{ github.repository }}/releases
+          url_release: https://api.github.com/repos/${{ github.repository }}/releases/latest
         run: |
-          pkg_version=$(grep -oP 'PKG_VERSION:=\K.*' Makefile)
-          latest_version="v${pkg_version}-openwrt"
-          latest_release=$(wget -qO- -t1 -T2 "${{env.url_release}}" | awk -F '"' '/tag_name/{print $4}' | grep openwrt | head -n 1)
-          if [ -z "${latest_release}" ]; then
-            has_update="true"
-          else
-            has_update=$([ "${latest_version}" != "${latest_release}" ] && echo true || echo false)
-          fi
+          latest_version=$(grep -oP 'PKG_VERSION:=\K.*' Makefile | sed 's/^/v/' | sed 's/$/-openwrt/')
+          latest_release=$(wget -qO- -t1 -T2 ${{env.url_release}} | awk -F '"' '/tag_name/{print $4}')
+          has_update=$([ "${latest_version}" != "${latest_release}" ] && echo true || echo false)
           echo "latest_version=${latest_version}" >> $GITHUB_OUTPUT
           echo "has_update=${has_update}" >> $GITHUB_OUTPUT
           echo "latest_version: ${latest_version}"
@@ -60,6 +62,7 @@ jobs:
     steps:
       - name: Install packages
         run: |
+          echo "Install packages"
           sudo -E apt-get -qq update
           sudo -E apt-get -qq install zstd build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev python3-venv rsync unzip zlib1g-dev file wget
           sudo -E apt-get -qq autoremove --purge
