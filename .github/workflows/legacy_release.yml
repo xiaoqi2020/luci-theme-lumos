@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - "main"
-    paths:
-      - "Makefile"
 
 env:
   TZ: Asia/Shanghai
@@ -37,7 +35,11 @@ jobs:
           pkg_version=$(grep -oP 'PKG_VERSION:=\K.*' Makefile)
           latest_version="v${pkg_version}-legacy"
           latest_release=$(wget -qO- -t1 -T2 "${{env.url_release}}" | awk -F '"' '/tag_name/{print $4}' | grep legacy | head -n 1)
-          has_update=$([ "${latest_version}" != "${latest_release}" ] && echo true || echo false)
+          if [ -z "${latest_release}" ]; then
+            has_update="true"
+          else
+            has_update=$([ "${latest_version}" != "${latest_release}" ] && echo true || echo false)
+          fi
           echo "latest_version=${latest_version}" >> $GITHUB_OUTPUT
           echo "has_update=${has_update}" >> $GITHUB_OUTPUT
           echo "latest_version: ${latest_version}"
