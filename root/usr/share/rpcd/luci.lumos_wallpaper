@@ -1,0 +1,37 @@
+#!/bin/sh
+
+. /usr/share/libubox/jshn.sh
+
+case "$1" in
+	validate)
+		json_init
+		json_add_object methods
+		json_add_object get_url
+		json_close_object
+		json_close_object
+		json_send
+		;;
+	call)
+		case "$2" in
+			get_url)
+				json_init
+				WEB_PIC_SRC=$(uci -q get lumos.@global[0].online_wallpaper 2>/dev/null || echo '')
+				if [ -n "$WEB_PIC_SRC" ] && [ "$WEB_PIC_SRC" != "none" ]; then
+					picurl=$(/usr/libexec/lumos/online_wallpaper 2>/dev/null || echo '')
+				else
+					picurl=''
+				fi
+				json_add_string url "$picurl"
+				json_send
+				;;
+			*)
+				json_init
+				json_send
+				;;
+		esac
+		;;
+	*)
+		json_init
+		json_send
+		;;
+esac

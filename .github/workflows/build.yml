@@ -2,9 +2,9 @@ name: Build OpenWrt Package
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ openwrt ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ openwrt ]
   workflow_dispatch:
     inputs:
       target:
@@ -39,14 +39,13 @@ jobs:
         sudo apt-get install -y build-essential libncurses5-dev libncursesw5-dev \
           zlib1g-dev gawk git gettext libssl-dev xsltproc wget unzip python3 \
           python3-distutils python3-setuptools rsync flex bison patch curl \
-          python2 bc
-        sudo ln -sf /usr/bin/python2 /usr/bin/python
+          bc
 
-    - name: Clone OpenWrt 19.07
+    - name: Clone OpenWrt main branch (APK)
       uses: actions/checkout@v4
       with:
         repository: openwrt/openwrt
-        ref: openwrt-19.07
+        ref: main
         path: openwrt
         fetch-depth: 1
 
@@ -65,7 +64,6 @@ jobs:
       run: |
         cd openwrt
         ./scripts/feeds install luci-base
-        ./scripts/feeds install luci-lib-ipkg
 
     - name: Configure build for x86_64
       if: ${{ github.event.inputs.target == 'x86_64' || !github.event.inputs.target }}
@@ -77,7 +75,26 @@ jobs:
         echo "CONFIG_TARGET_x86_64_Generic=y" >> .config
         echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
-        echo "CONFIG_ALL=y" >> .config
+
+    - name: Configure build for arm_cortex-a9
+      if: ${{ github.event.inputs.target == 'arm_cortex-a9' }}
+      run: |
+        cd openwrt
+        rm -f .config
+        echo "CONFIG_TARGET_ath79=y" > .config
+        echo "CONFIG_TARGET_ath79_generic=y" >> .config
+        echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
+        echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
+
+    - name: Configure build for aarch64_generic
+      if: ${{ github.event.inputs.target == 'aarch64_generic' }}
+      run: |
+        cd openwrt
+        rm -f .config
+        echo "CONFIG_TARGET_armvirt=y" > .config
+        echo "CONFIG_TARGET_armvirt_64=y" >> .config
+        echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
+        echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
 
     - name: Build toolchain
       run: |
@@ -90,14 +107,18 @@ jobs:
         cd openwrt
         make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1
 
-    - name: Find built package
+    - name: Find built package (APK format)
       id: find_package
       run: |
         cd openwrt
-        PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
+        PACKAGE_PATH=$(find bin -name "luci-theme-lumos-*.apk" | head -1)
         if [ -z "$PACKAGE_PATH" ]; then
-          echo "Package not found!"
-          exit 1
+          echo "Package not found! Checking for ipk..."
+          PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
+          if [ -z "$PACKAGE_PATH" ]; then
+            echo "Package not found!"
+            exit 1
+          fi
         fi
         echo "package_path=$PACKAGE_PATH" >> $GITHUB_OUTPUT
         echo "Found package: $PACKAGE_PATH"
@@ -105,22 +126,27 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: luci-theme-lumos
+        name: luci-theme-lumos-${{ github.event.inputs.target || 'x86_64' }}
         path: openwrt/${{ steps.find_package.outputs.package_path }}
 
     - name: Create Release
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/openwrt' }}
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v1.0.0
-        name: LumOS Theme v1.0.0
+        tag_name: v1.1.0-openwrt
+        name: LumOS Theme v1.1.0 (OpenWrt 24.x+)
         body: |
-          **LumOS Theme** - OpenWrt LuCI theme
-          **Version**: 1.0.0
+          **LumOS Theme** - OpenWrt LuCI theme for OpenWrt 24.x+
+
+          **Version**: 1.1.0
 
           **Installation**:
           ```bash
-          opkg install luci-theme-lumos_*.ipk
+          # For APK-based systems (OpenWrt 24.x+)
+          apk add luci-theme-lumos-*.apk
+
+          # Or use opkg for older systems
+          # opkg install luci-theme-lumos_*.ipk
           ```
         draft: false
         prerelease: false

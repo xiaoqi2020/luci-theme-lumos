@@ -1,0 +1,147 @@
+.main {
+	display: flex;
+	flex-direction: row;
+	min-height: 100vh;
+}
+
+.main-left {
+	width: 240px;
+	background: rgba(30, 30, 30, var(--blur-opacity, 0.8));
+	backdrop-filter: blur(var(--blur-radius, 10px));
+	-webkit-backdrop-filter: blur(var(--blur-radius, 10px));
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 100;
+	overflow-y: auto;
+	transition: transform 0.3s ease;
+}
+
+.main-left.show {
+	transform: translateX(0);
+}
+
+.main-right {
+	flex: 1;
+	margin-left: 240px;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+	.main-left {
+		transform: translateX(-100%);
+		width: 280px;
+	}
+
+	.main-right {
+		margin-left: 0;
+	}
+}
+
+.darkMask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 99;
+	display: none;
+}
+
+.darkMask.show {
+	display: block;
+}
+
+.showSide {
+	display: none;
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 4px;
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.showSide:before {
+	content: '';
+	display: block;
+	width: 18px;
+	height: 3px;
+	background: #fff;
+	position: absolute;
+	top: 8px;
+	left: 6px;
+	box-shadow: 0 6px 0 #fff, 0 12px 0 #fff;
+}
+
+@media (max-width: 768px) {
+	.showSide {
+		display: block;
+	}
+}
+
+header .container {
+	position: relative;
+}
+
+header .brand {
+	margin-left: 40px;
+}
+
+.slide-menu {
+	display: none;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.slide.expand .slide-menu {
+	display: block;
+}
+
+.slide-menu li {
+	padding: 6px 15px 6px 30px;
+}
+
+.slide-menu li a {
+	display: block;
+	color: rgba(255, 255, 255, 0.8);
+	text-decoration: none;
+	font-size: 13px;
+	padding: 8px 12px;
+	border-radius: 4px;
+	transition: background 0.2s;
+}
+
+.slide-menu li a:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.nav > .slide > a {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.nav > .slide > a:after {
+	content: '>';
+	font-size: 12px;
+	transition: transform 0.3s;
+}
+
+.slide.expand > a:after {
+	transform: rotate(90deg);
+}
+
+.breadcrumb li {
+	display: inline-block;
+	margin-left: 5px;
+}
