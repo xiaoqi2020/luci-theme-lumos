@@ -2,9 +2,9 @@ name: Build OpenWrt Package
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ openwrt ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ openwrt ]
   workflow_dispatch:
     inputs:
       target:
@@ -40,13 +40,13 @@ jobs:
           zlib1g-dev gawk git gettext libssl-dev xsltproc wget unzip python3 \
           python3-distutils python3-setuptools rsync flex bison patch curl \
           python2 bc
-        sudo ln -sf /usr/bin/python2 /usr/bin/python
+        sudo ln -sf /usr/bin/python3 /usr/bin/python
 
-    - name: Clone OpenWrt 19.07
+    - name: Clone OpenWrt main
       uses: actions/checkout@v4
       with:
         repository: openwrt/openwrt
-        ref: openwrt-19.07
+        ref: main
         path: openwrt
         fetch-depth: 1
 
@@ -94,7 +94,10 @@ jobs:
       id: find_package
       run: |
         cd openwrt
-        PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
+        PACKAGE_PATH=$(find bin -name "luci-theme-lumos-*.apk" | head -1)
+        if [ -z "$PACKAGE_PATH" ]; then
+          PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
+        fi
         if [ -z "$PACKAGE_PATH" ]; then
           echo "Package not found!"
           exit 1
@@ -109,18 +112,18 @@ jobs:
         path: openwrt/${{ steps.find_package.outputs.package_path }}
 
     - name: Create Release
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/openwrt' }}
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v1.0.0
-        name: LumOS Theme v1.0.0
+        tag_name: v1.2.2-openwrt
+        name: LumOS
         body: |
           **LumOS Theme** - OpenWrt LuCI theme
-          **Version**: 1.0.0
+          **Version**: 1.2.2 (OpenWrt 24.x+)
 
           **Installation**:
           ```bash
-          opkg install luci-theme-lumos_*.ipk
+          apk add luci-theme-lumos-*.apk
           ```
         draft: false
         prerelease: false

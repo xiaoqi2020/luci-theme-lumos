@@ -1,0 +1,299 @@
+{#
+	Lumos is a clean HTML5 theme for LuCI. It is based on luci-theme-bootstrap and MUI and Lumos Template
+
+	luci-theme-lumos
+	Copyright 2026 xiaoqi <xiaoqi2020@gmail.com>
+
+	Have a bug? Please create an issue here on GitHub!
+	https://github.com/xiaoqi2020/luci-theme-lumos/issues
+
+	luci-theme-bootstrap:
+	Copyright 2008 Steven Barth <steven@midlink.org>
+	Copyright 2008-2016 Jo-Philipp Wich <jow@openwrt.org>
+	Copyright 2012 David Menting <david@nut-bolt.nl>
+
+	MUI:
+	https://github.com/muicss/mui
+	
+	Lumos Theme
+	https://demos.creative-tim.com/Lumos-dashboard/index.html
+
+	Licensed to the public under the Apache License 2.0
+#}
+
+{%
+	import 'luci.sys'
+	import 'luci.http'
+	import 'luci.dispatcher'
+	import 'luci.core'
+
+	var boardinfo = ubus.call('system', 'board')
+
+	http.prepare_content('text/html; charset=UTF-8')
+
+	var request = dispatcher.context.path
+	var request2 = dispatcher.context.request
+
+	var category = request[1]
+	var cattree = category && dispatcher.node(category)
+
+	var leaf = request2[#request2]
+
+	var tree = dispatcher.node()
+	var node = dispatcher.context.dispatched
+
+	var categories = dispatcher.node_childs(tree)
+
+	var c = tree
+	
+	for (var i = 0; i < #request; i++) {
+		var r = request[i]
+		if (c.nodes && c.nodes[r]) {
+			c = c.nodes[r]
+			c._menu_selected = true
+		}
+	}
+
+	function nodeurl(prefix, name, query) {
+		var u = url(prefix, name)
+		if (query) {
+			u = u + http.build_querystring(query)
+		}
+		return pcdata(u)
+	}
+
+	function render_tabmenu(prefix, node, level) {
+		if (!level) {
+			level = 1
+		}
+
+		var childs = dispatcher.node_childs(node)
+		if (#childs > 0) {
+			if (level > 2) {
+				write('<ul class="tabs">')
+			}
+
+			var selected_node
+			var selected_name
+
+			for (var i = 0; i < #childs; i++) {
+				var v = childs[i]
+				var nnode = node.nodes[v]
+				if (nnode._menu_selected) {
+					selected_node = nnode
+					selected_name = v
+				}
+
+				if (level > 2) {
+					write('<li class="tabmenu-item-%s %s"><a href="%s">%s</a></li>' %{
+						v, (nnode._menu_selected || (node.leaf && v == leaf)) && 'active' || '',
+						nodeurl(prefix, v, nnode.query),
+						striptags(translate(nnode.title))
+					})
+				}
+			}
+
+			if (level > 2) {
+				write('</ul>')
+			}
+
+			if (selected_node) {
+				render_tabmenu(prefix + '/' + selected_name, selected_node, level + 1)
+			}
+		}
+	}
+
+	function render_submenu(prefix, node) {
+		var childs = dispatcher.node_childs(node)
+		if (#childs > 0) {
+			write('<ul class="slide-menu">')
+
+			for (var i = 0; i < #childs; i++) {
+				var r = childs[i]
+				var nnode = node.nodes[r]
+				var title = pcdata(striptags(translate(nnode.title)))
+
+				write('<li><a data-title="%s" href="%s">%s</a></li>' %{
+					title,
+					nodeurl(prefix, r, nnode.query),
+					title
+				})
+			}
+
+			write('</ul>')
+		}
+	}
+
+	function render_topmenu() {
+		var childs = dispatcher.node_childs(cattree)
+		if (#childs > 0) {
+			write('<ul class="nav">')
+
+			for (var i = 0; i < #childs; i++) {
+				var r = childs[i]
+				var nnode = cattree.nodes[r]
+				var grandchildren = dispatcher.node_childs(nnode)
+
+				if (#grandchildren > 0) {
+					var title = pcdata(striptags(translate(nnode.title)))
+					var en_title = pcdata(striptags(nnode.title))
+					write('<li class="slide"><a class="menu" data-title="%s" href="#">%s</a>' %{
+						en_title,
+						title
+					})
+
+					render_submenu(category + '/' + r, nnode)
+					write('</li>')
+				} else {
+					var title = pcdata(striptags(translate(nnode.title)))
+					var en_title = pcdata(striptags(nnode.title))
+					write('<li class="slide"><a class="menu exit" data-title="%s" href="%s">%s</a></li>' %{
+						en_title,
+						nodeurl(category, r, nnode.query),
+						title
+					})
+				}
+			}
+
+			write('</ul>')
+		}
+	}
+
+	function render_changes() {
+		if (tree.nodes[category] && tree.nodes[category].ucidata) {
+			var ucichanges = 0
+			var changes = cursor():changes()
+			for (var i in changes) {
+				for (var j in changes[i]) {
+					for (var k in changes[i][j]) {
+						ucichanges++
+					}
+				}
+			}
+
+			if (ucichanges > 0) {
+				write('<a class="uci_change_indicator label notice" href="%s?redir=%s">%s: %d</a>' %{
+					url(category, 'uci/changes'),
+					http.urlencode(http.formvalue('redir') || table.concat(dispatcher.context.request, '/')),
+					translate('Unsaved Changes'),
+					ucichanges
+				})
+			}
+		}
+	}
+
+	var primary, blur_radius, blur_opacity
+	if (access('/etc/config/lumos')) {
+		primary = cursor():get_first('lumos', 'global', 'primary')
+		blur_radius = cursor():get_first('lumos', 'global', 'blur')
+		blur_opacity = cursor():get_first('lumos', 'global', 'transparency')
+	}
+-%}
+<!DOCTYPE html>
+<html lang="{{ dispatcher.lang }}">
+	
+<head>
+	<meta charset="utf-8">
+	<title>
+		{{ striptags( (boardinfo.hostname or '?') .. ( (node and node.title) and ' - ' .. translate(node.title) or '')) }}
+		- LuCI</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="x5-fullscreen" content="true">
+	<meta name="full-screen" content="yes">
+	<meta name="x5-page-mode" content="app">
+	<meta name="browsermode" content="application">
+	<meta name="msapplication-tap-highlight" content="no">
+
+	<meta name="application-name" content="{{ striptags( (boardinfo.hostname or '?') ) }} - LuCI">
+	<meta name="apple-mobile-web-app-title" content="{{ striptags( (boardinfo.hostname or '?') ) }} - LuCI">
+	<link rel="apple-touch-icon" sizes="60x60" href="{{ media }}/icon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ media }}/icon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="{{ media }}/icon/apple-icon-144x144.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="{{ media }}/icon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ media }}/icon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="{{ media }}/icon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ media }}/icon/favicon-16x16.png">
+	<link rel="manifest" href="{{ media }}/icon/manifest.json" crossorigin="use-credentials">
+	<link rel="stylesheet" href="{{ media }}/css/cascade.css{# ?v=PKG_VERSION #}">
+	<link rel="stylesheet" href="{{ media }}/css/theme.css{# ?v=PKG_VERSION #}">
+	<style title="text/css">
+		{% if (access('/etc/config/lumos')): %}
+		:root {
+			--primary: {{ primary }};
+			--blur-radius:{{ blur_radius }}px;
+			--blur-opacity:{{ blur_opacity }};
+		}
+		{% endif %}
+	</style>
+	<link rel="shortcut icon" href="{{ media }}/favicon.ico">
+	{% if (node?.css): %}
+	<link rel="stylesheet" href="{{ resource }}/{{ node.css }}">
+	{% endif %}
+	{% if (css): %}
+	<style title="text/css">
+		{{ css }}
+	</style>
+	{% endif %}
+	<script src="{{ dispatcher.build_url('admin/translations', dispatcher.lang) }}?v={{ version.luciversion }}"></script>
+	<script src="{{ resource }}/cbi.js?v={{ version.luciversion }}"></script>
+	<script src="{{ resource }}/luci.js?v={{ version.luciversion }}"></script>
+</head>
+
+<body
+	class="lang_{{ dispatcher.lang }} {{ node?.title ? striptags(node.title) : '' }} {% if (ctx.authsession): %}logged-in{% endif %}">
+
+	<div class="main">
+		<div class="main-left" id="mainmenu">
+			<div class="sidenav-header d-flex align-items-center">
+				<a class="brand" href="#">{{ boardinfo.hostname or '?' }}</a>
+			</div>
+			{% render_topmenu() %}
+		</div>
+		<div class="main-right">
+			<header class="bg-primary">
+				<div class="fill">
+					<div class="container">
+						<a class="showSide"></a>
+						<a class="brand" href="#">{{ boardinfo.hostname or '?' }}</a>
+						<div class="pull-right">
+							{% render_changes() %}
+							<span id="xhr_poll_status" style="display:none"
+								onclick="XHR.running() ? XHR.halt() : XHR.run()">
+								<span class="label success" id="xhr_poll_status_on"><span
+										class="mobile-hide">{{ translate('Auto Refresh') }}</span> {{ translate('on') }}</span>
+								<span class="label" id="xhr_poll_status_off" style="display:none"><span
+										class="mobile-hide">{{ translate('Auto Refresh') }}</span> {{ translate('off') }}</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</header>
+			<div class="darkMask"></div>
+			<div id="maincontent">
+				<div class="container">
+					{% if (luci.core.getuid() == 0 and luci.sys.user.getuser('root') and not luci.sys.user.getpasswd('root')): %}
+					<div class="alert-message warning">
+						<h4>{{ translate('No password set!') }}</h4>
+						<p>{{ translate('There is no password set on this router. Please configure a root password to protect the web interface and enable SSH.') }}</p>
+						<div class="right"><a class="btn"
+								href="{{ url('admin/system/admin') }}">{{ translate('Go to password configuration...') }}</a></div>
+					</div>
+					{% endif %}
+
+					<noscript>
+						<div class="alert-message warning">
+							<h4>{{ translate('JavaScript required!') }}</h4>
+							<p>{{ translate('You must enable JavaScript in your browser or LuCI will not work properly.') }}</p>
+						</div>
+					</noscript>
+
+					<div id="tabmenu">{% if (category): render_tabmenu(category, cattree) endif %}</div>
+
+					<script>
+						var luciLocation = {{ http.write_json(dispatcher.context.path) }};
+					</script>
+
+					<script src="{{ resource }}/menu-lumos.js?v={{ version.luciversion }}"></script>

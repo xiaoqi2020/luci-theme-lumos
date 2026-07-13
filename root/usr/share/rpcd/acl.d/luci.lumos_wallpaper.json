@@ -1,0 +1,15 @@
+{
+	"luci.lumos_wallpaper": {
+		"description": "Lumos Wallpaper Service",
+		"read": {
+			"ubus": {
+				"luci.lumos_wallpaper": [ "get_url" ]
+			}
+		},
+		"write": {
+			"ubus": {
+				"luci.lumos_wallpaper": [ "get_url" ]
+			}
+		}
+	}
+}

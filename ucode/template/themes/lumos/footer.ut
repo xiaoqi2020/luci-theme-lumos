@@ -1,4 +1,4 @@
-<%#
+{#
 	Lumos is a clean HTML5 theme for LuCI. It is based on luci-theme-material Lumos Template
 
 	luci-theme-lumos
@@ -28,49 +28,46 @@
 	https://icomoon.io/
 
 	Licensed to the public under the Apache License 2.0
--%>
+#}
 
-<%
-	local ver = require "luci.version"
-	local disp = require "luci.dispatcher"
-	local request  = disp.context.path
-	local category = request[1]
-	local tree = disp.node()
-	local categories = disp.node_childs(tree)
-%>
+{%
+	var request = dispatcher.context.path
+	var category = request[1]
+	var tree = dispatcher.node()
+	var categories = dispatcher.node_childs(tree)
+-%}
 </div>
 <footer>
 	<div class="ftc">
-		Powered by <%= ver.luciname %> (<%= ver.luciversion %>) / <a href="https://github.com/xiaoqi2020/luci-theme-lumos" target="_blank">xiaoqi</a> / QWRT <%= ver.distversion %>
-		<% if #categories > 1 then %>
+		Powered by {{ version.luciname }} ({{ version.luciversion }}) / <a href="https://github.com/xiaoqi2020/luci-theme-lumos" target="_blank">xiaoqi</a> / QWRT {{ version.distversion }}
+		{% if (#categories > 1): %}
 		<ul class="breadcrumb pull-right" id="modemenu">
-			<% for i, r in ipairs(categories) do %>
-			<li<% if request[1] == r then %> class="active" <%end%>><a
-					href="<%=controller%>/<%=r%>/"><%=striptags(translate(tree.nodes[r].title))%></a> <span
+			{% for (var i = 0; i < #categories; i++): %}
+			{% var r = categories[i] %}
+			<li{% if (request[1] == r): %} class="active" {% endif %}><a
+					href="{{ url(r) }}">{{ striptags(translate(tree.nodes[r].title)) }}</a> <span
 					class="divider">|</span></li>
-				<% end %>
+			{% endfor %}
 		</ul>
-		<% end %>
+		{% endif %}
 	</div>
 </footer>
 </div>
 </div>
 	<script>
 		if (window.innerHeight < 660) {
-			document.getElementsByClassName("ftc")[0].style.display = "none";
+			document.getElementsByClassName('ftc')[0].style.display = 'none';
 		} else {
-			document.getElementsByClassName("ftc")[0].style.display = "block";
+			document.getElementsByClassName('ftc')[0].style.display = 'block';
 		}
 
 		window.addEventListener('resize', function() {
 			if (window.innerHeight < 660) {
-				document.getElementsByClassName("ftc")[0].style.display = "none";
+				document.getElementsByClassName('ftc')[0].style.display = 'none';
 			} else {
-				document.getElementsByClassName("ftc")[0].style.display = "block";
+				document.getElementsByClassName('ftc')[0].style.display = 'block';
 			}
 		})
 	</script>
-
-	<script src="<%=media%>/js/styles-lumos.js<%# ?v=PKG_VERSION %>"></script>
 </body>
 </html>
