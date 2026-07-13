@@ -2,9 +2,9 @@ name: Build OpenWrt Package
 
 on:
   push:
-    branches: [ openwrt ]
+    branches: [ main, openwrt ]
   pull_request:
-    branches: [ openwrt ]
+    branches: [ main, openwrt ]
   workflow_dispatch:
     inputs:
       target:
@@ -33,6 +33,27 @@ jobs:
       with:
         path: luci-theme-lumos
 
+    - name: Determine build configuration
+      id: config
+      run: |
+        if [[ "${{ github.ref }}" == "refs/heads/openwrt" ]]; then
+          echo "BRANCH=openwrt" >> $GITHUB_OUTPUT
+          echo "OPENWRT_REF=main" >> $GITHUB_OUTPUT
+          echo "PKG_PATTERN=luci-theme-lumos-*.apk" >> $GITHUB_OUTPUT
+          echo "PKG_FALLBACK=luci-theme-lumos_*.ipk" >> $GITHUB_OUTPUT
+          echo "TAG_SUFFIX=-openwrt" >> $GITHUB_OUTPUT
+          echo "RELEASE_NAME=LumOS Theme v1.1.0 (OpenWrt 24.x+)" >> $GITHUB_OUTPUT
+          echo "ARTIFACT_SUFFIX=-openwrt" >> $GITHUB_OUTPUT
+        else
+          echo "BRANCH=legacy" >> $GITHUB_OUTPUT
+          echo "OPENWRT_REF=openwrt-19.07" >> $GITHUB_OUTPUT
+          echo "PKG_PATTERN=luci-theme-lumos_*.ipk" >> $GITHUB_OUTPUT
+          echo "PKG_FALLBACK=" >> $GITHUB_OUTPUT
+          echo "TAG_SUFFIX=-legacy" >> $GITHUB_OUTPUT
+          echo "RELEASE_NAME=LumOS Theme v1.0.0 (OpenWrt 18.06)" >> $GITHUB_OUTPUT
+          echo "ARTIFACT_SUFFIX=-legacy" >> $GITHUB_OUTPUT
+        fi
+
     - name: Set up environment
       run: |
         sudo apt-get update
@@ -41,11 +62,11 @@ jobs:
           python3-distutils python3-setuptools rsync flex bison patch curl \
           bc
 
-    - name: Clone OpenWrt main branch (APK)
+    - name: Clone OpenWrt ${{ steps.config.outputs.BRANCH }} branch
       uses: actions/checkout@v4
       with:
         repository: openwrt/openwrt
-        ref: main
+        ref: ${{ steps.config.outputs.OPENWRT_REF }}
         path: openwrt
         fetch-depth: 1
 
@@ -107,18 +128,18 @@ jobs:
         cd openwrt
         make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1
 
-    - name: Find built package (APK format)
+    - name: Find built package
       id: find_package
       run: |
         cd openwrt
-        PACKAGE_PATH=$(find bin -name "luci-theme-lumos-*.apk" | head -1)
+        PACKAGE_PATH=$(find bin -name "${{ steps.config.outputs.PKG_PATTERN }}" | head -1)
+        if [ -z "$PACKAGE_PATH" ] && [ -n "${{ steps.config.outputs.PKG_FALLBACK }}" ]; then
+          echo "Trying fallback pattern..."
+          PACKAGE_PATH=$(find bin -name "${{ steps.config.outputs.PKG_FALLBACK }}" | head -1)
+        fi
         if [ -z "$PACKAGE_PATH" ]; then
-          echo "Package not found! Checking for ipk..."
-          PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
-          if [ -z "$PACKAGE_PATH" ]; then
-            echo "Package not found!"
-            exit 1
-          fi
+          echo "Package not found!"
+          exit 1
         fi
         echo "package_path=$PACKAGE_PATH" >> $GITHUB_OUTPUT
         echo "Found package: $PACKAGE_PATH"
@@ -126,15 +147,15 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: luci-theme-lumos-${{ github.event.inputs.target || 'x86_64' }}
+        name: luci-theme-lumos-${{ github.event.inputs.target || 'x86_64' }}${{ steps.config.outputs.ARTIFACT_SUFFIX }}
         path: openwrt/${{ steps.find_package.outputs.package_path }}
 
-    - name: Create Release
+    - name: Create Release for openwrt branch
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/openwrt' }}
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v1.1.0-openwrt
-        name: LumOS Theme v1.1.0 (OpenWrt 24.x+)
+        tag_name: v1.1.0${{ steps.config.outputs.TAG_SUFFIX }}
+        name: ${{ steps.config.outputs.RELEASE_NAME }}
         body: |
           **LumOS Theme** - OpenWrt LuCI theme for OpenWrt 24.x+
 
@@ -144,9 +165,25 @@ jobs:
           ```bash
           # For APK-based systems (OpenWrt 24.x+)
           apk add luci-theme-lumos-*.apk
+          ```
+        draft: false
+        prerelease: false
+        files: openwrt/${{ steps.find_package.outputs.package_path }}
 
-          # Or use opkg for older systems
-          # opkg install luci-theme-lumos_*.ipk
+    - name: Create Release for legacy branch
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v1.0.0${{ steps.config.outputs.TAG_SUFFIX }}
+        name: ${{ steps.config.outputs.RELEASE_NAME }}
+        body: |
+          **LumOS Theme** - OpenWrt LuCI theme for OpenWrt 18.06
+
+          **Version**: 1.0.0
+
+          **Installation**:
+          ```bash
+          opkg install luci-theme-lumos_*.ipk
           ```
         draft: false
         prerelease: false
