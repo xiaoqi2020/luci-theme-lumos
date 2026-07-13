@@ -1,126 +1,130 @@
-name: "Auto compile with OpenWrt SDK"
+name: Build OpenWrt Package
 
 on:
-  repository_dispatch:
+  push:
+    branches: [ openwrt ]
+  pull_request:
+    branches: [ openwrt ]
   workflow_dispatch:
     inputs:
-      ssh:
-        description: "SSH connection to Actions"
-        required: false
-        default: "false"
-  push:
-    branches:
-      - "openwrt"
-    paths:
-      - "Makefile"
+      target:
+        description: 'Target platform'
+        required: true
+        default: 'x86_64'
+        type: choice
+        options:
+          - x86_64
+          - arm_cortex-a9
+          - aarch64_generic
 
 env:
-  TZ: Asia/Shanghai
-
-permissions:
-  contents: write
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  job_check:
-    if: github.repository == ${{ github.repository }}
-    name: Check Version
-    runs-on: ubuntu-latest
-    outputs:
-      lumos_version: ${{ steps.check_version.outputs.latest_version }}
-      has_update: ${{ steps.check_version.outputs.has_update }}
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 240
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@main
-        with:
-          fetch-depth: 0
-          ref: "openwrt"
-      - name: Check version
-        id: check_version
-        env:
-          url_release: https://api.github.com/repos/${{ github.repository }}/releases/latest
-        run: |
-          latest_version=$(grep -oP 'PKG_VERSION:=\K.*' Makefile | sed 's/^/v/' | sed 's/$/-openwrt/')
-          latest_release=$(wget -qO- -t1 -T2 ${{env.url_release}} | awk -F '"' '/tag_name/{print $4}')
-          has_update=$([ "${latest_version}" != "${latest_release}" ] && echo true || echo false)
-          echo "latest_version=${latest_version}" >> $GITHUB_OUTPUT
-          echo "has_update=${has_update}" >> $GITHUB_OUTPUT
-          echo "latest_version: ${latest_version}"
-          echo "latest_release: ${latest_release}"
-          echo "has_update: ${has_update}"
-      - name: Generate new tag & release
-        if: steps.check_version.outputs.has_update == 'true'
-        uses: softprops/action-gh-release@v2
-        with:
-          name: For OpenWrt 24.x+ (APK)
-          tag_name: ${{ steps.check_version.outputs.latest_version }}
+    - name: Checkout source code
+      uses: actions/checkout@v4
+      with:
+        path: luci-theme-lumos
 
-  job_build_lumos:
-    name: Build LumOS (openwrt)
-    needs: job_check
-    if: needs.job_check.outputs.has_update == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install packages
-        run: |
-          echo "Install packages"
-          sudo -E apt-get -qq update
-          sudo -E apt-get -qq install zstd build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev python3-venv rsync unzip zlib1g-dev file wget
-          sudo -E apt-get -qq autoremove --purge
-          sudo -E apt-get -qq clean
+    - name: Set up environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libncurses5-dev libncursesw5-dev \
+          zlib1g-dev gawk git gettext libssl-dev xsltproc wget unzip python3 \
+          python3-distutils python3-setuptools rsync flex bison patch curl \
+          python2 bc
+        sudo ln -sf /usr/bin/python3 /usr/bin/python
 
-      - name: Cache openwrt SDK
-        id: cache-sdk
-        uses: actions/cache@v3
-        with:
-          path: sdk
-          key: openwrt-sdk-24.10-x86-64
+    - name: Clone OpenWrt main
+      uses: actions/checkout@v4
+      with:
+        repository: openwrt/openwrt
+        ref: main
+        path: openwrt
+        fetch-depth: 1
 
-      - name: Initialization environment
-        if: steps.cache-sdk.outputs.cache-hit != 'true'
-        env:
-          url_sdk: https://archive.openwrt.org/releases/24.10.0/targets/x86/64/openwrt-sdk-24.10.0-x86-64_gcc-13.3.0_musl.Linux-x86_64.tar.zst
-        run: |
-          wget ${{ env.url_sdk }}
-          file_name=$(echo ${{env.url_sdk}} | awk -F/ '{print $NF}')
-          mkdir sdk && tar --zstd -xvf $file_name -C ./sdk --strip-components=1
-          cd sdk
-          echo "src-git base https://github.com/openwrt/openwrt.git;main" > feeds.conf
-          echo "src-git-full packages https://github.com/openwrt/packages.git;master" >> feeds.conf
-          echo "src-git-full luci https://github.com/openwrt/luci.git;master" >> feeds.conf
-          echo "src-git-full routing https://git.openwrt.org/feed/routing.git;master" >> feeds.conf
-          git clone -b openwrt https://github.com/${{ github.repository }}.git package/downloads/luci-theme-lumos
-          ./scripts/feeds update -a
-          echo "CONFIG_PACKAGE_luci-theme-lumos=m" > .config
-          ./scripts/feeds install -d n luci-theme-lumos
-          make download -j8
+    - name: Copy theme to package directory
+      run: |
+        cd openwrt
+        rm -rf package/luci-theme-lumos
+        cp -r ../luci-theme-lumos package/luci-theme-lumos
 
-      - name: Configure LumOS (openwrt)
-        run: |
-          cd sdk
-          ./scripts/feeds install luci-theme-lumos
-          echo "CONFIG_ALL_NONSHARED=n" > .config
-          echo "CONFIG_ALL_KMODS=n" >> .config
-          echo "CONFIG_ALL=n" >> .config
-          echo "CONFIG_AUTOREMOVE=n" >> .config
-          echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
-          echo "CONFIG_PACKAGE_luci-theme-lumos=m" >> .config
-          make defconfig
+    - name: Update feeds
+      run: |
+        cd openwrt
+        ./scripts/feeds update -a
 
-      - name: Compile LumOS (openwrt)
-        id: compile
-        run: |
-          cd sdk
-          echo "make package/luci-theme-lumos/{clean,compile} -j$(nproc)"
-          make package/luci-theme-lumos/{clean,compile} -j$(nproc)
-          mv bin/packages/x86_64/base/ ../
-          rm .config .config.old
-          cd ..
-          echo "status=success" >> $GITHUB_OUTPUT
-          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+    - name: Install luci feeds
+      run: |
+        cd openwrt
+        ./scripts/feeds install luci-base
+        ./scripts/feeds install luci-lib-ipkg
 
-      - name: Upload LumOS (openwrt) packages to release
-        uses: softprops/action-gh-release@v2
-        if: steps.compile.outputs.status == 'success'
-        with:
-          tag_name: ${{ needs.job_check.outputs.lumos_version }}
-          files: ${{ env.FIRMWARE }}/base/luci-theme*.*
+    - name: Configure build for x86_64
+      if: ${{ github.event.inputs.target == 'x86_64' || !github.event.inputs.target }}
+      run: |
+        cd openwrt
+        rm -f .config
+        echo "CONFIG_TARGET_x86=y" > .config
+        echo "CONFIG_TARGET_x86_64=y" >> .config
+        echo "CONFIG_TARGET_x86_64_Generic=y" >> .config
+        echo "CONFIG_PACKAGE_luci-theme-lumos=y" >> .config
+        echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
+        echo "CONFIG_ALL=y" >> .config
+
+    - name: Build toolchain
+      run: |
+        cd openwrt
+        make defconfig
+        make toolchain/install -j$(nproc) V=s 2>&1 | tail -50
+
+    - name: Build luci-theme-lumos
+      run: |
+        cd openwrt
+        make package/luci-theme-lumos/compile V=s -j$(nproc) 2>&1
+
+    - name: Find built package
+      id: find_package
+      run: |
+        cd openwrt
+        PACKAGE_PATH=$(find bin -name "luci-theme-lumos-*.apk" | head -1)
+        if [ -z "$PACKAGE_PATH" ]; then
+          PACKAGE_PATH=$(find bin -name "luci-theme-lumos_*.ipk" | head -1)
+        fi
+        if [ -z "$PACKAGE_PATH" ]; then
+          echo "Package not found!"
+          exit 1
+        fi
+        echo "package_path=$PACKAGE_PATH" >> $GITHUB_OUTPUT
+        echo "Found package: $PACKAGE_PATH"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: luci-theme-lumos
+        path: openwrt/${{ steps.find_package.outputs.package_path }}
+
+    - name: Create Release
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/openwrt' }}
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v1.2.2-openwrt
+        name: LumOS
+        body: |
+          **LumOS Theme** - OpenWrt LuCI theme
+          **Version**: 1.2.2 (OpenWrt 24.x+)
+
+          **Installation**:
+          ```bash
+          apk add luci-theme-lumos-*.apk
+          ```
+        draft: false
+        prerelease: false
+        files: openwrt/${{ steps.find_package.outputs.package_path }}
